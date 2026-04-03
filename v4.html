@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - ديسكورد</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 { text-align: center; margin-bottom: 20px; color: #5865F2; font-size: 24px; }
+        
+        .status-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .status-item:last-child { border-bottom: none; }
+        .status-label { color: rgba(255,255,255,0.7); }
+        .status-value { font-weight: bold; font-family: monospace; font-size: 12px; }
+        .status-ok { color: #57f287; }
+        .status-error { color: #ed4245; }
+        .status-warning { color: #feca57; }
+        
+        .error-details {
+            background: rgba(237, 66, 69, 0.1);
+            border: 1px solid rgba(237, 66, 69, 0.3);
+            border-radius: 8px;            padding: 12px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ed4245;
+            display: none;
+        }
+        .error-details.show { display: block; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: rgba(255,255,255,0.8); }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #5865F2;
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #5865F2, #7c3aed);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-retry {
+            background: rgba(254, 202, 87, 0.2);
+            border: 1px solid #feca57;
+            color: #feca57;
+            margin-top: 10px;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;            text-align: center;
+            font-size: 13px;
+            display: none;
+        }
+        .message.success { background: rgba(87,242,135,0.15); color: #57f287; display: block; }
+        .message.error { background: rgba(237,66,69,0.15); color: #ed4245; display: block; }
+        .message.info { background: rgba(88,101,242,0.15); color: #5865F2; display: block; }
+        
+        .notifications-panel {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .notifications-header h3 { font-size: 16px; color: #fff; }
+        .notif-list { max-height: 300px; overflow-y: auto; }
+        .notif-item {
+            background: rgba(88,101,242,0.1);
+            border-right: 3px solid #5865F2;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        .notif-item .time { color: rgba(255,255,255,0.5); font-size: 11px; margin-bottom: 4px; }
+        .notif-item .content { color: rgba(255,255,255,0.9); }
+        .empty-notifs { text-align: center; color: rgba(255,255,255,0.4); padding: 20px; font-size: 13px; }
+        
+        .help-box {
+            background: rgba(254,202,87,0.1);
+            border: 1px dashed rgba(254,202,87,0.4);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+        .help-box code {
+            background: rgba(0,0,0,0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #feca57;
+        }
+        .help-box ol { margin-right: 20px; margin-top: 8px; }        .help-box li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📨 تواصل معنا</h1>
+        
+        <!-- حالة الاتصال -->
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">🔗 التوكن:</span>
+                <span class="status-value" id="tokenStatus">جاري الفحص...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">📬 معرف القناة:</span>
+                <span class="status-value" id="channelStatus">جاري الفحص...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">🤖 حالة البوت:</span>
+                <span class="status-value" id="botStatus">جاري الفحص...</span>
+            </div>
+            <div id="errorDetails" class="error-details"></div>
+            <button id="retryBtn" class="btn btn-retry" style="display:none;" onclick="checkConfiguration()">🔄 إعادة المحاولة</button>
+        </div>
+        
+        <!-- مساعدة -->
+        <div class="help-box" id="helpBox" style="display:none;">
+            <strong>⚠️ خطوات الإصلاح:</strong>
+            <ol>
+                <li>تأكد أن البوت <code>NotifyMe</code> موجود في سيرفرك</li>
+                <li>تأكد من صلاحيات البوت في القناة:</li>
+                <ul style="margin-right: 20px; margin-top: 5px;">
+                    <li>✅ عرض القنوات</li>
+                    <li>✅ إرسال رسائل</li>
+                    <li>✅ قراءة سجل الرسائل</li>
+                </ul>
+                <li>تأكد أن معرف القناة صحيح</li>
+                <li>جرب دعوة البوت مجدداً للسيرفر</li>
+            </ol>
+        </div>
+        
+        <form id="discordForm">
+            <div class="form-group">
+                <label>👤 اسمك</label>
+                <input type="text" id="username" placeholder="اكتب اسمك..." required>
+            </div>
+            <div class="form-group">
+                <label>💬 رسالتك</label>
+                <textarea id="message" placeholder="اكتب رسالتك..." required></textarea>
+            </div>            <button type="submit" class="btn" id="submitBtn" disabled>
+                ⏳ جاري التحميل...
+            </button>
+        </form>
+        
+        <div class="message" id="statusMessage"></div>
+        
+        <!-- الإشعارات -->
+        <div class="notifications-panel">
+            <div class="notifications-header">
+                <h3>🔔 الإشعارات</h3>
+                <button class="btn" style="width:auto;padding:8px 15px;font-size:12px;" id="refreshBtn" disabled>🔄</button>
+            </div>
+            <div class="notif-list" id="notifList">
+                <div class="empty-notifs">📭 لا توجد إشعارات</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // ⚙️ الإعدادات
+        // =============================================
+        const TOKEN_RAW_URL = "https://gist.githubusercontent.com/HABGIT286/e59a9c2234eee5afd597f46b71efec43/raw/f29d6706d72e9066bbb2446992b6b18cb54ae607/vv";
+        const NOTIFY_BOT_ID = "1487859880915243040";
+        const CHANNEL_ID = "1487849862140657894";
+        
+        let BOT_TOKEN = null;
+        let notifications = [];
+
+        // =============================================
+        // 🔍 فحص الإعدادات مع تفاصيل الخطأ
+        // =============================================
+        async function checkConfiguration() {
+            const tokenStatus = document.getElementById('tokenStatus');
+            const channelStatus = document.getElementById('channelStatus');
+            const botStatus = document.getElementById('botStatus');
+            const submitBtn = document.getElementById('submitBtn');
+            const helpBox = document.getElementById('helpBox');
+            const errorDetails = document.getElementById('errorDetails');
+            const retryBtn = document.getElementById('retryBtn');
+            
+            errorDetails.classList.remove('show');
+            retryBtn.style.display = 'none';
+            
+            // فحص التوكن
+            try {
+                tokenStatus.textContent = "جاري الجلب...";
+                const res = await fetch(TOKEN_RAW_URL);
+                if (res.ok) {                    BOT_TOKEN = (await res.text()).trim();
+                    if (BOT_TOKEN && BOT_TOKEN.length > 50) {
+                        tokenStatus.textContent = "✅ موجود";
+                        tokenStatus.className = "status-value status-ok";
+                    } else {
+                        tokenStatus.textContent = "❌ غير صالح";
+                        tokenStatus.className = "status-value status-error";
+                        errorDetails.textContent = "⚠️ التوكن قصير جداً أو فارغ";
+                        errorDetails.classList.add('show');
+                    }
+                } else {
+                    tokenStatus.textContent = `❌ ${res.status}`;
+                    tokenStatus.className = "status-value status-error";
+                    errorDetails.textContent = `فشل جلب التوكن من الرابط. الخطأ: ${res.status} ${res.statusText}`;
+                    errorDetails.classList.add('show');
+                    retryBtn.style.display = 'block';
+                    return;
+                }
+            } catch (e) {
+                tokenStatus.textContent = "❌ فشل";
+                tokenStatus.className = "status-value status-error";
+                errorDetails.textContent = `خطأ في الاتصال: ${e.message}. تأكد من أن الرابط صحيح وأن الإنترنت يعمل.`;
+                errorDetails.classList.add('show');
+                retryBtn.style.display = 'block';
+                return;
+            }
+            
+            // فحص معرف القناة
+            if (!CHANNEL_ID || CHANNEL_ID.length < 17) {
+                channelStatus.textContent = "❌ غير صالح";
+                channelStatus.className = "status-value status-error";
+                errorDetails.textContent = "معرف القناة غير صالح أو فارغ";
+                errorDetails.classList.add('show');
+                helpBox.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.textContent = "⚠️ تحقق من CHANNEL_ID";
+                retryBtn.style.display = 'block';
+                return;
+            } else {
+                channelStatus.textContent = CHANNEL_ID.slice(0, 10) + "...";
+                channelStatus.className = "status-value status-ok";
+            }
+            
+            // اختبار الاتصال بالقناة
+            try {
+                botStatus.textContent = "جاري الاختبار...";
+                const testRes = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}`, {
+                    headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
+                });
+                                if (testRes.ok) {
+                    const channelData = await testRes.json();
+                    botStatus.textContent = "✅ متصل";
+                    botStatus.className = "status-value status-ok";
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "إرسال 🚀";
+                    document.getElementById('refreshBtn').disabled = false;
+                    helpBox.style.display = 'none';
+                    console.log("✅ القناة:", channelData.name);
+                } else {
+                    const err = await testRes.json().catch(() => ({}));
+                    botStatus.textContent = `❌ ${testRes.status}`;
+                    botStatus.className = "status-value status-error";
+                    
+                    let errorMsg = "";
+                    switch(testRes.status) {
+                        case 401:
+                            errorMsg = "التوكن غير صالح أو منتهي الصلاحية";
+                            break;
+                        case 403:
+                            errorMsg = "البوت ليس لديه صلاحيات للوصول لهذه القناة. تأكد من وجود البوت في السيرفر وصلاحياته.";
+                            break;
+                        case 404:
+                            errorMsg = "القناة غير موجودة. تحقق من معرف القناة.";
+                            break;
+                        case 429:
+                            errorMsg = "تم تجاوز حد الطلبات. انتظر قليلاً وحاول مجدداً.";
+                            break;
+                        default:
+                            errorMsg = err.message || `خطأ غير معروف: ${testRes.status}`;
+                    }
+                    
+                    errorDetails.textContent = `⚠️ ${errorMsg}\n\nتفاصيل: ${JSON.stringify(err, null, 2)}`;
+                    errorDetails.classList.add('show');
+                    helpBox.style.display = 'block';
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "❌ فشل الاتصال";
+                    retryBtn.style.display = 'block';
+                }
+            } catch (e) {
+                botStatus.textContent = "❌ خطأ";
+                botStatus.className = "status-value status-error";
+                errorDetails.textContent = `خطأ في الاتصال بـ Discord API: ${e.message}\n\nتأكد من:\n1. اتصال الإنترنت\n2. أن البوت موجود في السيرفر\n3. صحة التوكن`;
+                errorDetails.classList.add('show');
+                helpBox.style.display = 'block';
+                submitBtn.disabled = true;
+                submitBtn.textContent = "❌ خطأ في الاتصال";
+                retryBtn.style.display = 'block';
+            }
+        }
+        // =============================================
+        // 📤 إرسال الرسالة
+        // =============================================
+        document.getElementById('discordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const statusMsg = document.getElementById('statusMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = "جاري الإرسال... ⏳";
+            statusMsg.className = "message";
+            
+            try {
+                const content = `📨 من **${username}**:\n${message}`;
+                
+                const res = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bot ${BOT_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content })
+                });
+                
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.message || `HTTP ${res.status}`);
+                }
+                
+                statusMsg.textContent = "✅ تم الإرسال بنجاح!";
+                statusMsg.className = "message success";
+                document.getElementById('discordForm').reset();
+                
+                setTimeout(fetchNotifications, 1000);
+                
+            } catch (error) {
+                statusMsg.textContent = `❌ خطأ: ${error.message}`;
+                statusMsg.className = "message error";
+                console.error(error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "إرسال 🚀";
+            }
+        });
+
+        // =============================================        // 📥 جلب الإشعارات
+        // =============================================
+        async function fetchNotifications() {
+            if (!BOT_TOKEN || !CHANNEL_ID) return;
+            
+            try {
+                const res = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=10`, {
+                    headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
+                });
+                
+                if (!res.ok) throw new Error("فشل جلب الرسائل");
+                
+                const messages = await res.json();
+                const notifList = document.getElementById('notifList');
+                
+                const relevantMsgs = messages.filter(m => 
+                    m.author.id !== NOTIFY_BOT_ID && 
+                    !m.content.includes('📨 من **')
+                );
+                
+                if (relevantMsgs.length === 0) {
+                    notifList.innerHTML = '<div class="empty-notifs">📭 لا توجد رسائل جديدة</div>';
+                    return;
+                }
+                
+                notifList.innerHTML = relevantMsgs.map(msg => {
+                    const time = new Date(msg.timestamp).toLocaleTimeString('ar-EG');
+                    const author = msg.author.global_name || msg.author.username;
+                    return `
+                        <div class="notif-item">
+                            <div class="time">👤 ${author} • 🕐 ${time}</div>
+                            <div class="content">${msg.content.slice(0, 100)}${msg.content.length > 100 ? '...' : ''}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error("فشل جلب الإشعارات:", error);
+            }
+        }
+
+        document.getElementById('refreshBtn').addEventListener('click', fetchNotifications);
+
+        // =============================================
+        // 🚀 التشغيل
+        // =============================================
+        checkConfiguration();
+        
+        setInterval(() => {
+            if (BOT_TOKEN && CHANNEL_ID) {                fetchNotifications();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
