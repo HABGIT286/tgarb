@@ -7,348 +7,312 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             padding: 20px;
+            gap: 25px;
+            flex-wrap: wrap;
             color: #fff;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        h1 { text-align: center; margin-bottom: 20px; color: #5865F2; font-size: 24px; }
-        
-        .status-box {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 13px;
-        }
-        .status-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .status-item:last-child { border-bottom: none; }
-        .status-label { color: rgba(255,255,255,0.7); }
-        .status-value { font-weight: bold; font-family: monospace; font-size: 12px; }
-        .status-ok { color: #57f287; }
-        .status-error { color: #ed4245; }
-        .status-warning { color: #feca57; }
-        
-        .error-details {
-            background: rgba(237, 66, 69, 0.1);
-            border: 1px solid rgba(237, 66, 69, 0.3);
-            border-radius: 8px;            padding: 12px;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #ed4245;
-            display: none;
-        }
-        .error-details.show { display: block; }
-        
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: rgba(255,255,255,0.8); }
-        .form-group input, .form-group textarea {
+            padding: 35px;
             width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            font-size: 14px;
-            font-family: inherit;
+            max-width: 520px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #5865F2;
-        }
-        .form-group textarea { height: 100px; resize: vertical; }
-        
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #5865F2, #7c3aed);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn-retry {
-            background: rgba(254, 202, 87, 0.2);
-            border: 1px solid #feca57;
-            color: #feca57;
-            margin-top: 10px;
-        }
-        
-        .message {
-            padding: 12px;
-            border-radius: 10px;
-            margin-top: 15px;            text-align: center;
-            font-size: 13px;
-            display: none;
-        }
-        .message.success { background: rgba(87,242,135,0.15); color: #57f287; display: block; }
-        .message.error { background: rgba(237,66,69,0.15); color: #ed4245; display: block; }
-        .message.info { background: rgba(88,101,242,0.15); color: #5865F2; display: block; }
-        
         .notifications-panel {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            align-self: flex-start;
+            position: sticky;
+            top: 20px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
         .notifications-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            justify-content: space-between;
+            margin-bottom: 15px;            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .notifications-header h3 { font-size: 16px; color: #fff; }
-        .notif-list { max-height: 300px; overflow-y: auto; }
-        .notif-item {
-            background: rgba(88,101,242,0.1);
+        .notifications-header h3 {
+            color: #fff;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .badge {
+            background: #eb459e;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            display: none;
+        }
+        .badge.show { display: inline-block; }
+        .notification-item {
+            background: rgba(88, 101, 242, 0.1);
             border-right: 3px solid #5865F2;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 8px;
-            font-size: 12px;
-        }
-        .notif-item .time { color: rgba(255,255,255,0.5); font-size: 11px; margin-bottom: 4px; }
-        .notif-item .content { color: rgba(255,255,255,0.9); }
-        .empty-notifs { text-align: center; color: rgba(255,255,255,0.4); padding: 20px; font-size: 13px; }
-        
-        .help-box {
-            background: rgba(254,202,87,0.1);
-            border: 1px dashed rgba(254,202,87,0.4);
             border-radius: 10px;
-            padding: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .notification-item .header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .notification-item .author {
+            font-weight: bold;
+            color: #fff;
+            font-size: 13px;
+        }
+        .notification-item .bot-tag {
+            background: #5865F2;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }        .notification-item .time {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            margin-right: auto;
+        }
+        .notification-item .content {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.4;
+            word-break: break-word;
+            font-size: 13px;
+        }
+        .notification-item .embed-image {
+            max-width: 100%;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+        .empty-notifs {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            padding: 30px 15px;
+            font-size: 13px;
+        }
+        .refresh-btn {
+            background: rgba(88, 101, 242, 0.2);
+            color: #5865F2;
+            border: 1px solid #5865F2;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .refresh-btn:hover { background: #5865F2; color: #fff; }
+        .icon-discord { text-align: center; margin-bottom: 15px; }
+        .icon-discord svg { width: 55px; height: 55px; fill: #5865F2; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .container h1 { color: #fff; text-align: center; margin-bottom: 8px; font-size: 26px; }
+        .container p.subtitle { color: rgba(255,255,255,0.6); text-align: center; margin-bottom: 20px; font-size: 13px; }
+        .status-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 12px;
             margin-bottom: 20px;
             font-size: 12px;
-            line-height: 1.8;
         }
-        .help-box code {
-            background: rgba(0,0,0,0.3);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #feca57;
+        .status-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .status-row:last-child { border-bottom: none; }
+        .status-label { color: rgba(255,255,255,0.6); }
+        .status-value { font-weight: bold; font-family: monospace; font-size: 11px; }
+        .status-ok { color: #57f287; }
+        .status-error { color: #ed4245; }        .form-group { margin-bottom: 16px; }
+        .form-group label { color: #fff; display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 13px 16px; border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px; background: rgba(255,255,255,0.05); color: #fff;
+            font-size: 14px; font-family: inherit; outline: none;
         }
-        .help-box ol { margin-right: 20px; margin-top: 8px; }        .help-box li { margin-bottom: 5px; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #5865F2; background: rgba(88,101,242,0.1);
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .form-group select option { background: #302b63; color: #fff; }
+        .submit-btn {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, #5865F2, #7c3aed);
+            color: #fff; border: none; border-radius: 12px; font-size: 16px;
+            font-weight: 700; cursor: pointer;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(88,101,242,0.4); }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .message { text-align: center; padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 13px; display: none; }
+        .message.success { display: block; background: rgba(87,242,135,0.15); color: #57f287; }
+        .message.error { display: block; background: rgba(237,66,69,0.15); color: #ed4245; }
+        @media (max-width: 900px) { body { flex-direction: column; } .notifications-panel { position: static; max-height: 300px; } }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(88,101,242,0.5); border-radius: 10px; }
     </style>
 </head>
 <body>
+
     <div class="container">
+        <div class="icon-discord">
+            <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        </div>
+
         <h1>📨 تواصل معنا</h1>
-        
-        <!-- حالة الاتصال -->
-        <div class="status-box">
-            <div class="status-item">
+        <p class="subtitle">أرسل رسالتك وستصل فوراً لسيرفر ديسكورد</p>
+
+        <div class="status-info">
+            <div class="status-row">
+                <span class="status-label">📬 القناة:</span>
+                <span class="status-value" id="channelStatus">1487849862...</span>
+            </div>
+            <div class="status-row">
                 <span class="status-label">🔗 التوكن:</span>
                 <span class="status-value" id="tokenStatus">جاري الفحص...</span>
             </div>
-            <div class="status-item">
-                <span class="status-label">📬 معرف القناة:</span>
-                <span class="status-value" id="channelStatus">جاري الفحص...</span>
-            </div>
-            <div class="status-item">
-                <span class="status-label">🤖 حالة البوت:</span>
-                <span class="status-value" id="botStatus">جاري الفحص...</span>
-            </div>
-            <div id="errorDetails" class="error-details"></div>
-            <button id="retryBtn" class="btn btn-retry" style="display:none;" onclick="checkConfiguration()">🔄 إعادة المحاولة</button>
+            <div class="status-row">
+                <span class="status-label">🤖 البوت:</span>
+                <span class="status-value" id="botStatus">جاري الفحص...</span>            </div>
         </div>
-        
-        <!-- مساعدة -->
-        <div class="help-box" id="helpBox" style="display:none;">
-            <strong>⚠️ خطوات الإصلاح:</strong>
-            <ol>
-                <li>تأكد أن البوت <code>NotifyMe</code> موجود في سيرفرك</li>
-                <li>تأكد من صلاحيات البوت في القناة:</li>
-                <ul style="margin-right: 20px; margin-top: 5px;">
-                    <li>✅ عرض القنوات</li>
-                    <li>✅ إرسال رسائل</li>
-                    <li>✅ قراءة سجل الرسائل</li>
-                </ul>
-                <li>تأكد أن معرف القناة صحيح</li>
-                <li>جرب دعوة البوت مجدداً للسيرفر</li>
-            </ol>
-        </div>
-        
+
         <form id="discordForm">
             <div class="form-group">
                 <label>👤 اسمك</label>
                 <input type="text" id="username" placeholder="اكتب اسمك..." required>
             </div>
             <div class="form-group">
-                <label>💬 رسالتك</label>
+                <label>📧 البريد الإلكتروني</label>
+                <input type="email" id="email" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>📂 نوع الرسالة</label>
+                <select id="category" required>
+                    <option value="" disabled selected>اختر نوع الرسالة...</option>
+                    <option value="استفسار">❓ استفسار</option>
+                    <option value="اقتراح">💡 اقتراح</option>
+                    <option value="مشكلة">🐛 مشكلة</option>
+                    <option value="طلب انضمام">🤝 طلب انضمام</option>
+                    <option value="أخرى">📝 أخرى</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>💬 الرسالة</label>
                 <textarea id="message" placeholder="اكتب رسالتك..." required></textarea>
-            </div>            <button type="submit" class="btn" id="submitBtn" disabled>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
                 ⏳ جاري التحميل...
             </button>
         </form>
-        
         <div class="message" id="statusMessage"></div>
-        
-        <!-- الإشعارات -->
-        <div class="notifications-panel">
-            <div class="notifications-header">
-                <h3>🔔 الإشعارات</h3>
-                <button class="btn" style="width:auto;padding:8px 15px;font-size:12px;" id="refreshBtn" disabled>🔄</button>
+    </div>
+
+    <div class="notifications-panel">
+        <div class="notifications-header">
+            <h3>🔔 إشعارات القناة</h3>
+            <div>
+                <span class="badge" id="notifCount">0</span>
+                <button class="refresh-btn" id="refreshBtn" disabled>🔄</button>
             </div>
-            <div class="notif-list" id="notifList">
-                <div class="empty-notifs">📭 لا توجد إشعارات</div>
-            </div>
+        </div>
+        <div id="notifList">
+            <div class="empty-notifs">📭 في انتظار الإشعارات...</div>
         </div>
     </div>
 
     <script>
         // =============================================
-        // ⚙️ الإعدادات
-        // =============================================
-        const TOKEN_RAW_URL = "https://gist.githubusercontent.com/HABGIT286/e59a9c2234eee5afd597f46b71efec43/raw/f29d6706d72e9066bbb2446992b6b18cb54ae607/vv";
-        const NOTIFY_BOT_ID = "1487859880915243040";
+        // ⚙️ معلوماتك الكاملة - جاهزة        // =============================================
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1488385339465666670/7UZvl6exvDxaB4BEqWAAv6bEBavGFpTEhWQ8cMl2BCSMK0TDQTCXc4p_ZmPQP19kWiS0";
+        const TOKEN_RAW_URL = "https://gist.githubusercontent.com/HABGIT286/e19f12f9f123262cc0ea879e7721ae3d/raw/2dd673523a30e582ca061364b34b9631be7a1df6/bb";
+        const BOT_ID = "1488385339465666670";
         const CHANNEL_ID = "1487849862140657894";
         
         let BOT_TOKEN = null;
-        let notifications = [];
+        let lastMessageId = null;
 
         // =============================================
-        // 🔍 فحص الإعدادات مع تفاصيل الخطأ
+        // 🔍 فحص الاتصال
         // =============================================
-        async function checkConfiguration() {
+        async function checkConnection() {
             const tokenStatus = document.getElementById('tokenStatus');
-            const channelStatus = document.getElementById('channelStatus');
             const botStatus = document.getElementById('botStatus');
             const submitBtn = document.getElementById('submitBtn');
-            const helpBox = document.getElementById('helpBox');
-            const errorDetails = document.getElementById('errorDetails');
-            const retryBtn = document.getElementById('retryBtn');
+            const refreshBtn = document.getElementById('refreshBtn');
             
-            errorDetails.classList.remove('show');
-            retryBtn.style.display = 'none';
-            
-            // فحص التوكن
             try {
                 tokenStatus.textContent = "جاري الجلب...";
                 const res = await fetch(TOKEN_RAW_URL);
-                if (res.ok) {                    BOT_TOKEN = (await res.text()).trim();
+                if (res.ok) {
+                    BOT_TOKEN = (await res.text()).trim();
                     if (BOT_TOKEN && BOT_TOKEN.length > 50) {
                         tokenStatus.textContent = "✅ موجود";
                         tokenStatus.className = "status-value status-ok";
-                    } else {
-                        tokenStatus.textContent = "❌ غير صالح";
+                        
+                        // اختبار البوت
+                        try {
+                            botStatus.textContent = "جاري الاختبار...";
+                            const testRes = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}`, {
+                                headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
+                            });
+                            
+                            if (testRes.ok) {
+                                botStatus.textContent = "✅ متصل";
+                                botStatus.className = "status-value status-ok";
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = "إرسال 🚀";
+                                refreshBtn.disabled = false;
+                                fetchNotifications();
+                            } else {
+                                botStatus.textContent = `❌ ${testRes.status}`;
+                                botStatus.className = "status-value status-error";
+                            }
+                        } catch (e) {
+                            botStatus.textContent = "❌ خطأ";
+                            botStatus.className = "status-value status-error";
+                        }
+                    } else {                        tokenStatus.textContent = "❌ غير صالح";
                         tokenStatus.className = "status-value status-error";
-                        errorDetails.textContent = "⚠️ التوكن قصير جداً أو فارغ";
-                        errorDetails.classList.add('show');
                     }
                 } else {
-                    tokenStatus.textContent = `❌ ${res.status}`;
+                    tokenStatus.textContent = "❌ فشل";
                     tokenStatus.className = "status-value status-error";
-                    errorDetails.textContent = `فشل جلب التوكن من الرابط. الخطأ: ${res.status} ${res.statusText}`;
-                    errorDetails.classList.add('show');
-                    retryBtn.style.display = 'block';
-                    return;
                 }
             } catch (e) {
-                tokenStatus.textContent = "❌ فشل";
+                tokenStatus.textContent = "❌ خطأ";
                 tokenStatus.className = "status-value status-error";
-                errorDetails.textContent = `خطأ في الاتصال: ${e.message}. تأكد من أن الرابط صحيح وأن الإنترنت يعمل.`;
-                errorDetails.classList.add('show');
-                retryBtn.style.display = 'block';
-                return;
-            }
-            
-            // فحص معرف القناة
-            if (!CHANNEL_ID || CHANNEL_ID.length < 17) {
-                channelStatus.textContent = "❌ غير صالح";
-                channelStatus.className = "status-value status-error";
-                errorDetails.textContent = "معرف القناة غير صالح أو فارغ";
-                errorDetails.classList.add('show');
-                helpBox.style.display = 'block';
-                submitBtn.disabled = true;
-                submitBtn.textContent = "⚠️ تحقق من CHANNEL_ID";
-                retryBtn.style.display = 'block';
-                return;
-            } else {
-                channelStatus.textContent = CHANNEL_ID.slice(0, 10) + "...";
-                channelStatus.className = "status-value status-ok";
-            }
-            
-            // اختبار الاتصال بالقناة
-            try {
-                botStatus.textContent = "جاري الاختبار...";
-                const testRes = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}`, {
-                    headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
-                });
-                                if (testRes.ok) {
-                    const channelData = await testRes.json();
-                    botStatus.textContent = "✅ متصل";
-                    botStatus.className = "status-value status-ok";
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "إرسال 🚀";
-                    document.getElementById('refreshBtn').disabled = false;
-                    helpBox.style.display = 'none';
-                    console.log("✅ القناة:", channelData.name);
-                } else {
-                    const err = await testRes.json().catch(() => ({}));
-                    botStatus.textContent = `❌ ${testRes.status}`;
-                    botStatus.className = "status-value status-error";
-                    
-                    let errorMsg = "";
-                    switch(testRes.status) {
-                        case 401:
-                            errorMsg = "التوكن غير صالح أو منتهي الصلاحية";
-                            break;
-                        case 403:
-                            errorMsg = "البوت ليس لديه صلاحيات للوصول لهذه القناة. تأكد من وجود البوت في السيرفر وصلاحياته.";
-                            break;
-                        case 404:
-                            errorMsg = "القناة غير موجودة. تحقق من معرف القناة.";
-                            break;
-                        case 429:
-                            errorMsg = "تم تجاوز حد الطلبات. انتظر قليلاً وحاول مجدداً.";
-                            break;
-                        default:
-                            errorMsg = err.message || `خطأ غير معروف: ${testRes.status}`;
-                    }
-                    
-                    errorDetails.textContent = `⚠️ ${errorMsg}\n\nتفاصيل: ${JSON.stringify(err, null, 2)}`;
-                    errorDetails.classList.add('show');
-                    helpBox.style.display = 'block';
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = "❌ فشل الاتصال";
-                    retryBtn.style.display = 'block';
-                }
-            } catch (e) {
-                botStatus.textContent = "❌ خطأ";
-                botStatus.className = "status-value status-error";
-                errorDetails.textContent = `خطأ في الاتصال بـ Discord API: ${e.message}\n\nتأكد من:\n1. اتصال الإنترنت\n2. أن البوت موجود في السيرفر\n3. صحة التوكن`;
-                errorDetails.classList.add('show');
-                helpBox.style.display = 'block';
-                submitBtn.disabled = true;
-                submitBtn.textContent = "❌ خطأ في الاتصال";
-                retryBtn.style.display = 'block';
             }
         }
+
         // =============================================
         // 📤 إرسال الرسالة
         // =============================================
         document.getElementById('discordForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const category = document.getElementById('category').value;
             const message = document.getElementById('message').value.trim();
             const submitBtn = document.getElementById('submitBtn');
             const statusMsg = document.getElementById('statusMessage');
@@ -358,90 +322,121 @@
             statusMsg.className = "message";
             
             try {
-                const content = `📨 من **${username}**:\n${message}`;
+                const payload = {
+                    content: null,
+                    embeds: [{
+                        title: "📨 رسالة جديدة من الموقع",
+                        color: 5793266,
+                        fields: [
+                            { name: "👤 الاسم", value: username, inline: true },
+                            { name: "📧 البريد", value: email, inline: true },
+                            { name: "📂 النوع", value: category, inline: true },
+                            { name: "💬 الرسالة", value: message }
+                        ],
+                        footer: { text: "📅 " + new Date().toLocaleString('ar-EG') },
+                        thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/2111/2111646.png" }
+                    }]
+                };
                 
-                const res = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages`, {
+                const response = await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bot ${BOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ content })
-                });
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)                });
                 
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    throw new Error(err.message || `HTTP ${res.status}`);
+                if (response.ok || response.status === 204) {
+                    statusMsg.textContent = "✅ تم الإرسال بنجاح!";
+                    statusMsg.className = "message success";
+                    document.getElementById('discordForm').reset();
+                    setTimeout(fetchNotifications, 1000);
+                } else {
+                    throw new Error("فشل الإرسال");
                 }
-                
-                statusMsg.textContent = "✅ تم الإرسال بنجاح!";
-                statusMsg.className = "message success";
-                document.getElementById('discordForm').reset();
-                
-                setTimeout(fetchNotifications, 1000);
-                
             } catch (error) {
                 statusMsg.textContent = `❌ خطأ: ${error.message}`;
                 statusMsg.className = "message error";
-                console.error(error);
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = "إرسال 🚀";
+                submitBtn.textContent = "إرسال عبر ديسكورد 🚀";
             }
         });
 
-        // =============================================        // 📥 جلب الإشعارات
+        // =============================================
+        // 📥 جلب الإشعارات
         // =============================================
         async function fetchNotifications() {
-            if (!BOT_TOKEN || !CHANNEL_ID) return;
+            if (!BOT_TOKEN) return;
             
             try {
-                const res = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=10`, {
+                const res = await fetch(`https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=15`, {
                     headers: { 'Authorization': `Bot ${BOT_TOKEN}` }
                 });
                 
-                if (!res.ok) throw new Error("فشل جلب الرسائل");
+                if (!res.ok) {
+                    console.log(`❌ فشل جلب الرسائل: ${res.status}`);
+                    return;
+                }
                 
                 const messages = await res.json();
                 const notifList = document.getElementById('notifList');
                 
-                const relevantMsgs = messages.filter(m => 
-                    m.author.id !== NOTIFY_BOT_ID && 
-                    !m.content.includes('📨 من **')
+                // فلترة: تجاهل رسائل البوت نفسه ورسائل الموقع
+                const relevant = messages.filter(m => 
+                    m.author.id !== BOT_ID && 
+                    !m.content.includes('📨 رسالة جديدة من الموقع')
                 );
                 
-                if (relevantMsgs.length === 0) {
-                    notifList.innerHTML = '<div class="empty-notifs">📭 لا توجد رسائل جديدة</div>';
+                if (relevant.length === 0) {
+                    notifList.innerHTML = '<div class="empty-notifs">📭 لا توجد إشعارات جديدة</div>';
                     return;
                 }
                 
-                notifList.innerHTML = relevantMsgs.map(msg => {
-                    const time = new Date(msg.timestamp).toLocaleTimeString('ar-EG');
-                    const author = msg.author.global_name || msg.author.username;
+                notifList.innerHTML = relevant.map(msg => {                    const time = new Date(msg.timestamp).toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit'});
+                    const author = msg.author.global_name || msg.author.username || 'مستخدم';
+                    const isBot = msg.author.bot;
+                    
+                    let content = msg.content;
+                    if (msg.embeds && msg.embeds.length > 0 && msg.embeds[0].title) {
+                        content += `\n**${msg.embeds[0].title}**`;
+                    }
+                    
                     return `
-                        <div class="notif-item">
-                            <div class="time">👤 ${author} • 🕐 ${time}</div>
-                            <div class="content">${msg.content.slice(0, 100)}${msg.content.length > 100 ? '...' : ''}</div>
+                        <div class="notification-item">
+                            <div class="header">
+                                <span class="author">${author}</span>
+                                ${isBot ? '<span class="bot-tag">BOT</span>' : ''}
+                                <span class="time">🕐 ${time}</span>
+                            </div>
+                            <div class="content">${content.slice(0,120)}${content.length>120?'...':''}</div>
+                            ${msg.attachments && msg.attachments.length > 0 ? `<img src="${msg.attachments[0].url}" class="embed-image">` : ''}
+                            ${msg.embeds && msg.embeds.length > 0 && msg.embeds[0].image ? `<img src="${msg.embeds[0].image.url}" class="embed-image">` : ''}
                         </div>
                     `;
                 }).join('');
                 
+                // تحديث العداد
+                const newMsgs = relevant.filter(m => m.id !== lastMessageId);
+                if (newMsgs.length > 0) {
+                    lastMessageId = relevant[0].id;
+                    const badge = document.getElementById('notifCount');
+                    badge.textContent = newMsgs.length;
+                    badge.classList.add('show');
+                }
+                
             } catch (error) {
-                console.error("فشل جلب الإشعارات:", error);
+                console.error("❌ فشل جلب الإشعارات:", error);
             }
         }
 
-        document.getElementById('refreshBtn').addEventListener('click', fetchNotifications);
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            fetchNotifications();
+            document.getElementById('notifCount').classList.remove('show');
+        });
 
         // =============================================
         // 🚀 التشغيل
         // =============================================
-        checkConfiguration();
-        
-        setInterval(() => {
-            if (BOT_TOKEN && CHANNEL_ID) {                fetchNotifications();
-            }
-        }, 5000);
+        checkConnection();
+        setInterval(() => { if (BOT_TOKEN) fetchNotifications(); }, 5000);
     </script>
 </body>
 </html>
