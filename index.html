@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎰 روليت الحظ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+:root {
+  --primary: #6c5ce7;
+  --secondary: #00cec9;
+  --accent: #fd79a8;
+  --gold: #fdcb6e;
+  --dark: #0a0a1a;
+  --darker: #050510;
+  --card-bg: rgba(255,255,255,0.05);
+  --glass: rgba(255,255,255,0.08);
+  --success: #00b894;
+  --danger: #e17055;
+  --neon-blue: #00f5ff;
+  --neon-purple: #bf5af2;
+  --neon-pink: #ff375f;
+  --neon-green: #30d158;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--darker);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== PARTICLE BACKGROUND ===== */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */.bg-animation {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(108,92,231,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,206,201,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(253,121,168,0.1) 0%, transparent 50%),
+    var(--darker);
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 30px 0;
+  position: relative;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  position: relative;
+  display: inline-block;
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+.header h1::after {
+  content: '🎰';
+  position: absolute;
+  left: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes titleGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-65%) scale(1.2); }
+}
+
+.header p {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+/* ===== NAVIGATION TABS ===== */
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.nav-tab {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 50px;
+  background: var(--glass);
+  color: rgba(255,255,255,0.7);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-tab::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;}
+
+.nav-tab:hover::before {
+  left: 100%;
+}
+
+.nav-tab:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108,92,231,0.3);
+}
+
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--neon-purple));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(108,92,231,0.4);
+  border-color: transparent;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  display: none;
+  animation: fadeInUp 0.6s ease;
+}
+
+.section.active {
+  display: block;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 30px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.glass-card::before {
+  content: '';  position: absolute;
+  top: -1px; left: -1px;
+  right: -1px; bottom: -1px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(108,92,231,0.3), transparent, rgba(0,206,201,0.3));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-title .icon {
+  font-size: 1.8rem;
+}
+
+/* ===== REGISTRATION FORM ===== */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 16px;  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 20px rgba(108,92,231,0.2);
+  background: rgba(255,255,255,0.08);
+}
+
+.form-input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+/* ===== NUMBER GRID ===== */
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.number-btn {
+  padding: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.number-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.5s ease;
+  transform: translate(-50%, -50%);}
+
+.number-btn:hover::after {
+  width: 100px;
+  height: 100px;
+}
+
+.number-btn:hover {
+  border-color: var(--primary);
+  background: rgba(108,92,231,0.2);
+  transform: scale(1.05);
+}
+
+.number-btn.selected {
+  background: linear-gradient(135deg, var(--primary), var(--neon-purple));
+  border-color: transparent;
+  box-shadow: 0 5px 20px rgba(108,92,231,0.4);
+  transform: scale(1.05);
+}
+
+.number-btn.taken {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.2);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 16px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--neon-purple));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(108,92,231,0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(108,92,231,0.5);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), var(--neon-green));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(0,184,148,0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,184,148,0.5);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), var(--neon-pink));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(225,112,85,0.3);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(225,112,85,0.5);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), #f39c12);
+  color: #000;
+  box-shadow: 0 8px 30px rgba(253,203,110,0.3);
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(253,203,110,0.5);}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ===== PLAYERS LIST ===== */
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.player-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.player-card.active-player {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(253,203,110,0.2);
+  animation: activePulse 2s ease-in-out infinite;
+}
+
+.player-card.active-player::before {
+  background: linear-gradient(90deg, var(--gold), #f39c12);
+  height: 4px;
+}
+
+@keyframes activePulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(253,203,110,0.2); }
+  50% { box-shadow: 0 0 50px rgba(253,203,110,0.4); }
+}
+.player-card.eliminated {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+.player-card.eliminated::before {
+  background: var(--danger);
+}
+
+.player-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--neon-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 0 auto 10px;
+  box-shadow: 0 5px 15px rgba(108,92,231,0.3);
+}
+
+.player-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.player-status {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.player-wins {
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-top: 5px;
+}
+
+.eliminated-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--danger);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;  font-weight: 700;
+}
+
+/* ===== ROULETTE WHEEL ===== */
+.roulette-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+}
+
+.wheel-wrapper {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 40px solid var(--gold);
+  z-index: 10;
+  filter: drop-shadow(0 5px 15px rgba(253,203,110,0.5));
+  animation: pointerPulse 1s ease-in-out infinite;
+}
+
+@keyframes pointerPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+}
+
+#wheel-canvas {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 50px rgba(108,92,231,0.3),
+    0 0 100px rgba(108,92,231,0.1),
+    inset 0 0 50px rgba(0,0,0,0.3);
+  transition: filter 0.3s;
+}
+
+#wheel-canvas.spinning {  filter: brightness(1.2);
+}
+
+/* ===== SPIN BUTTON ===== */
+.spin-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #f39c12);
+  border: 4px solid rgba(255,255,255,0.3);
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: 900;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  box-shadow: 0 5px 30px rgba(253,203,110,0.5);
+  transition: all 0.3s ease;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.spin-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 8px 40px rgba(253,203,110,0.7);
+}
+
+.spin-btn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== CURRENT TURN DISPLAY ===== */
+.current-turn {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.current-turn .label {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 10px;
+}
+.current-turn .name {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.current-turn .number {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  margin-top: 5px;
+}
+
+/* ===== ELIMINATION PANEL ===== */
+.elimination-panel {
+  text-align: center;
+  padding: 20px;
+}
+
+.elimination-panel h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--danger);
+}
+
+.elimination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.eliminate-btn {
+  padding: 12px;
+  border: 2px solid rgba(225,112,85,0.3);
+  border-radius: 12px;
+  background: rgba(225,112,85,0.1);
+  color: #fff;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.eliminate-btn:hover {
+  background: rgba(225,112,85,0.3);  border-color: var(--danger);
+  transform: scale(1.05);
+}
+
+/* ===== HISTORY / LOG ===== */
+.log-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+.log-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.log-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: rgba(255,255,255,0.03);
+  border-right: 3px solid;
+  animation: logSlideIn 0.4s ease;
+  transition: background 0.3s;
+}
+
+.log-entry:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.log-entry.spin-log { border-color: var(--primary); }
+.log-entry.eliminate-log { border-color: var(--danger); }
+.log-entry.win-log { border-color: var(--gold); }
+.log-entry.join-log { border-color: var(--success); }
+
+@keyframes logSlideIn {
+  from { opacity: 0; transform: translateX(20px); }  to { opacity: 1; transform: translateX(0); }
+}
+
+.log-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.log-text {
+  flex: 1;
+}
+
+.log-text .main-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.log-text .time-text {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  margin-top: 3px;
+}
+
+/* ===== WINNER MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(20,20,50,0.95), rgba(10,10,30,0.95));
+  border-radius: 30px;
+  border: 1px solid rgba(253,203,110,0.3);  padding: 50px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content .trophy {
+  font-size: 5rem;
+  animation: trophyBounce 1s ease-in-out infinite;
+}
+
+@keyframes trophyBounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  75% { transform: scale(1.1) rotate(5deg); }
+}
+
+.modal-content h2 {
+  font-size: 2rem;
+  margin: 20px 0 10px;
+  background: linear-gradient(135deg, var(--gold), #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-content .winner-name {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 10px 0;
+}
+
+.modal-content .winner-stats {
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 25px;
+}
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;  pointer-events: none;
+  z-index: 1001;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg) scale(0); opacity: 0; }
+}
+
+/* ===== STATS TABLE ===== */
+.stats-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.stats-table th {
+  padding: 12px 15px;
+  text-align: right;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stats-table td {
+  padding: 14px 15px;
+  background: rgba(255,255,255,0.03);
+}
+
+.stats-table tr td:first-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.stats-table tr td:last-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.stats-table tbody tr {
+  transition: all 0.3s ease;}
+
+.stats-table tbody tr:hover td {
+  background: rgba(255,255,255,0.08);
+}
+
+.rank-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+.rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; }
+.rank-3 { background: linear-gradient(135deg, #cd7f32, #a06020); color: #fff; }
+.rank-other { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+
+/* ===== ROUND INFO ===== */
+.round-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: var(--glass);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+}
+
+.round-info .round-num {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.round-info .players-count {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== NOTIFICATION ===== */
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;  transform: translateX(-50%) translateY(-100px);
+  padding: 15px 30px;
+  border-radius: 16px;
+  font-weight: 700;
+  z-index: 2000;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.notification.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.notification.success {
+  background: rgba(0,184,148,0.9);
+}
+
+.notification.error {
+  background: rgba(225,112,85,0.9);
+}
+
+.notification.info {
+  background: rgba(108,92,231,0.9);
+}
+
+.notification.warning {
+  background: rgba(253,203,110,0.9);
+  color: #000;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255,255,255,0.3);
+}
+
+.empty-state .icon {
+  font-size: 4rem;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .header h1::after {
+    display: none;
+  }
+  
+  .number-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .wheel-wrapper {
+    width: 300px;
+    height: 300px;
+  }
+  
+  #wheel-canvas {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .players-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .glass-card {
+    padding: 20px;
+  }
+  
+  .modal-content {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .number-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .nav-tab {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== LOADING SPINNER ===== */
+.spinner {
+  display: inline-block;
+  width: 20px;  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== GLOW EFFECTS ===== */
+.glow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+  margin: 20px 0;
+  border-radius: 1px;
+}
+
+/* ===== WINNER CROWN ===== */
+.crown {
+  display: inline-block;
+  animation: crownFloat 2s ease-in-out infinite;
+}
+
+@keyframes crownFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* ===== NEW GAME BUTTON ===== */
+.new-game-btn {
+  margin-top: 15px;
+}
+
+/* ===== TOOLTIP ===== */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  font-size: 0.75rem;  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  bottom: calc(100% + 8px);
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ===== ELIMINATION ANIMATION ===== */
+@keyframes eliminateFlash {
+  0% { box-shadow: 0 0 0 0 rgba(225,112,85,0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(225,112,85,0); }
+  100% { box-shadow: 0 0 0 0 rgba(225,112,85,0); }
+}
+
+.eliminate-flash {
+  animation: eliminateFlash 1s ease;
+}
+
+/* ===== RESULT DISPLAY ===== */
+.result-display {
+  text-align: center;
+  padding: 30px;
+  margin: 20px 0;
+  display: none;
+}
+
+.result-display.show {
+  display: block;  animation: fadeInUp 0.5s ease;
+}
+
+.result-display .result-number {
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.result-display .result-player {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-animation"></div>
+<canvas id="particles-canvas"></canvas>
+
+<!-- NOTIFICATION -->
+<div id="notification" class="notification"></div>
+
+<!-- CONFETTI CONTAINER -->
+<div id="confetti-container" class="confetti-container"></div>
+
+<!-- WINNER MODAL -->
+<div id="winnerModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="trophy">🏆</div>
+    <h2>🎉 الفائز 🎉</h2>
+    <div id="winnerName" class="winner-name"></div>
+    <p id="winnerStats" class="winner-stats"></p>
+    <button class="btn btn-gold" onclick="closeWinnerModal()">👑 رائع!</button>
+  </div>
+</div>
+
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <h1>روليت الحظ</h1>
+    <p>لعبة الإثارة والتحدي - من يبقى حتى النهاية؟</p>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs">    <button class="nav-tab active" onclick="showSection('register')">📝 التسجيل</button>
+    <button class="nav-tab" onclick="showSection('players')">👥 اللاعبين</button>
+    <button class="nav-tab" onclick="showSection('game')">🎰 اللعبة</button>
+    <button class="nav-tab" onclick="showSection('history')">📋 السجل</button>
+    <button class="nav-tab" onclick="showSection('stats')">🏆 الإحصائيات</button>
+  </div>
+
+  <!-- ===== REGISTER SECTION ===== -->
+  <div id="section-register" class="section active">
+    <div class="glass-card">
+      <div class="card-title">
+        <span class="icon">📝</span>
+        تسجيل لاعب جديد
+      </div>
+      
+      <div class="form-group">
+        <label>👤 اسم اللاعب</label>
+        <input type="text" id="playerName" class="form-input" placeholder="أدخل اسمك..." maxlength="20">
+      </div>
+
+      <div class="form-group">
+        <label>🔢 اختر رقمك المميز (الأرقام المحجوزة باللون الرمادي)</label>
+        <div id="numberGrid" class="number-grid"></div>
+      </div>
+
+      <button class="btn btn-primary" id="registerBtn" onclick="registerPlayer()">
+        ✅ تسجيل
+      </button>
+
+      <div class="glow-line"></div>
+
+      <div style="text-align:center;">
+        <p style="color:rgba(255,255,255,0.4); margin-bottom:15px;">
+          عدد اللاعبين المسجلين: <strong id="playerCount" style="color:var(--secondary)">0</strong>
+        </p>
+        <button class="btn btn-success" id="startGameBtn" onclick="startGame()" disabled>
+          🚀 بدء اللعبة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PLAYERS SECTION ===== -->
+  <div id="section-players" class="section">
+    <div class="glass-card">
+      <div class="card-title">
+        <span class="icon">👥</span>
+        اللاعبين المسجلين
+      </div>
+      <div id="playersGrid" class="players-grid"></div>      <div id="emptyPlayers" class="empty-state" style="display:none;">
+        <div class="icon">👥</div>
+        <p>لا يوجد لاعبين مسجلين بعد</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GAME SECTION ===== -->
+  <div id="section-game" class="section">
+    <!-- Round Info -->
+    <div class="round-info">
+      <span class="round-num">🔄 الجولة: <span id="roundNum">1</span></span>
+      <span class="players-count">اللاعبين المتبقين: <span id="remainingPlayers">0</span></span>
+    </div>
+
+    <!-- Current Turn -->
+    <div class="current-turn" id="currentTurn" style="display:none;">
+      <div class="label">🎯 دور اللاعب</div>
+      <div class="name" id="turnPlayerName">-</div>
+      <div class="number" id="turnPlayerNumber">-</div>
+    </div>
+
+    <!-- Roulette Wheel -->
+    <div class="roulette-container" id="rouletteContainer">
+      <div class="wheel-wrapper">
+        <div class="wheel-pointer"></div>
+        <canvas id="wheel-canvas" width="400" height="400"></canvas>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎯</button>
+      </div>
+    </div>
+
+    <!-- Result Display -->
+    <div class="result-display" id="resultDisplay">
+      <div class="result-number" id="resultNumber"></div>
+      <div class="result-player" id="resultPlayer"></div>
+    </div>
+
+    <!-- Elimination Panel -->
+    <div class="glass-card" id="eliminationPanel" style="display:none;">
+      <div class="card-title">
+        <span class="icon">⚡</span>
+        <span id="eliminatorName" style="color:var(--danger)"></span> يطرد لاعب!
+      </div>
+      <p style="color:rgba(255,255,255,0.5); margin-bottom:15px;">اختر لاعباً لإقصائه من اللعبة:</p>
+      <div id="eliminationGrid" class="elimination-grid"></div>
+    </div>
+
+    <!-- Game Over -->
+    <div class="glass-card" id="gameOverPanel" style="display:none;">
+      <div style="text-align:center; padding:20px;">        <div style="font-size:4rem;">🏆</div>
+        <h2 style="margin:15px 0; color:var(--gold);">انتهت اللعبة!</h2>
+        <p id="gameOverWinner" style="font-size:1.5rem; font-weight:700;"></p>
+        <button class="btn btn-gold new-game-btn" onclick="newGame()">🔄 لعبة جديدة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HISTORY SECTION ===== -->
+  <div id="section-history" class="section">
+    <div class="glass-card">
+      <div class="card-title">
+        <span class="icon">📋</span>
+        سجل الأحداث
+      </div>
+      <div id="logContainer" class="log-container">
+        <div id="emptyLog" class="empty-state">
+          <div class="icon">📋</div>
+          <p>لا توجد أحداث بعد</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STATS SECTION ===== -->
+  <div id="section-stats" class="section">
+    <div class="glass-card">
+      <div class="card-title">
+        <span class="icon">🏆</span>
+        إحصائيات اللاعبين
+      </div>
+      <div id="statsContent">
+        <table class="stats-table" id="statsTable">
+          <thead>
+            <tr>
+              <th>المركز</th>
+              <th>اللاعب</th>
+              <th>الرقم</th>
+              <th>عدد الفوز</th>
+              <th>عدد الطرد</th>
+              <th>عدد الطرد منه</th>
+            </tr>
+          </thead>
+          <tbody id="statsBody"></tbody>
+        </table>
+        <div id="emptyStats" class="empty-state">
+          <div class="icon">🏆</div>
+          <p>لا توجد إحصائيات بعد</p>
+        </div>
+      </div>    </div>
+  </div>
+</div>
+
+<script>
+// ===== GAME STATE =====
+let players = [];
+let gameHistory = [];
+let gameStats = {};
+let currentRound = 1;
+let currentTurnIndex = 0;
+let activePlayers = [];
+let isSpinning = false;
+let selectedNumber = null;
+let gameStarted = false;
+let eliminatedBy = {}; // track who eliminated whom
+let playerEliminatedCount = {}; // how many times each player eliminated someone
+
+// ===== WHEEL CONFIG =====
+const WHEEL_COLORS = [
+  '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6',
+  '#1abc9c', '#e67e22', '#2980b9', '#27ae60', '#8e44ad',
+  '#d35400', '#16a085', '#c0392b', '#2c3e50', '#f1c40f',
+  '#7f8c8d', '#e84393', '#00b894', '#6c5ce7', '#fdcb6e',
+  '#e17055', '#00cec9', '#636e72', '#a29bfe', '#fab1a0',
+  '#55efc4', '#fd79a8', '#74b9ff', '#ffeaa7', '#dfe6e9',
+  '#b2bec3', '#0984e3', '#00b894', '#e17055', '#6c5ce7', '#fdcb6e'
+];
+
+// ===== PARTICLES =====
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function initParticles() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  particles = [];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2 + 0.5,
+      alpha: Math.random() * 0.5 + 0.1,
+      color: ['#6c5ce7', '#00cec9', '#fd79a8', '#fdcb6e'][Math.floor(Math.random() * 4)]
+    });
+  }
+}
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+    
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.alpha;
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+window.addEventListener('resize', initParticles);
+
+// ===== NOTIFICATION =====
+function showNotification(message, type = 'info') {
+  const notif = document.getElementById('notification');
+  notif.textContent = message;
+  notif.className = `notification ${type} show`;
+  setTimeout(() => notif.classList.remove('show'), 3000);
+}
+
+// ===== SECTION NAVIGATION =====
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`section-${name}`).classList.add('active');
+  event.target.classList.add('active');
+  
+  if (name === 'players') renderPlayers();
+  if (name === 'history') renderHistory();
+  if (name === 'stats') renderStats();
+  if (name === 'game') updateGameUI();
+}
+
+// ===== NUMBER GRID =====
+function initNumberGrid() {
+  const grid = document.getElementById('numberGrid');
+  grid.innerHTML = '';  const takenNumbers = players.map(p => p.number);
+  
+  for (let i = 1; i <= 36; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'number-btn';
+    btn.textContent = i;
+    
+    if (takenNumbers.includes(i)) {
+      btn.classList.add('taken');
+      btn.disabled = true;
+    }
+    
+    btn.onclick = () => selectNumber(i, btn);
+    grid.appendChild(btn);
+  }
+}
+
+function selectNumber(num, btn) {
+  if (btn.classList.contains('taken')) return;
+  
+  document.querySelectorAll('.number-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedNumber = num;
+}
+
+// ===== REGISTER PLAYER =====
+function registerPlayer() {
+  const nameInput = document.getElementById('playerName');
+  const name = nameInput.value.trim();
+  
+  if (!name) {
+    showNotification('❌ أدخل اسم اللاعب', 'error');
+    return;
+  }
+  
+  if (!selectedNumber) {
+    showNotification('❌ اختر رقم مميز', 'error');
+    return;
+  }
+  
+  if (players.find(p => p.name.toLowerCase() === name.toLowerCase())) {
+    showNotification('❌ هذا الاسم مسجل بالفعل', 'error');
+    return;
+  }
+  
+  const player = {
+    id: Date.now(),
+    name: name,
+    number: selectedNumber,
+    wins: gameStats[name]?.wins || 0,    eliminated: false,
+    eliminatedBy: null
+  };
+  
+  players.push(player);
+  gameStats[name] = gameStats[name] || { wins: 0, eliminatedBy: 0, eliminatedOthers: 0 };
+  
+  addLog('join', `${name} انضم بالرقم ${player.number}`, '👤');
+  showNotification(`✅ تم تسجيل ${name} بنجاح!`, 'success');
+  
+  nameInput.value = '';
+  selectedNumber = null;
+  document.querySelectorAll('.number-btn').forEach(b => b.classList.remove('selected'));
+  initNumberGrid();
+  updatePlayerCount();
+}
+
+function updatePlayerCount() {
+  document.getElementById('playerCount').textContent = players.length;
+  document.getElementById('startGameBtn').disabled = players.length < 2;
+}
+
+// ===== RENDER PLAYERS =====
+function renderPlayers() {
+  const grid = document.getElementById('playersGrid');
+  const empty = document.getElementById('emptyPlayers');
+  
+  if (players.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  
+  empty.style.display = 'none';
+  grid.innerHTML = players.map(p => {
+    const stats = gameStats[p.name] || {};
+    return `
+      <div class="player-card ${p.eliminated ? 'eliminated' : ''} ${activePlayers.includes(p.id) && gameStarted ? 'active-player' : ''}" id="player-${p.id}">
+        ${p.eliminated ? '<span class="eliminated-badge">❌ مقصي</span>' : ''}
+        <div class="player-number">${p.number}</div>
+        <div class="player-name">${p.name}</div>
+        <div class="player-status">${p.eliminated ? 'أقصي من اللعبة' : '✅ نشط'}</div>
+        <div class="player-wins">🏆 فوز: ${stats.wins || 0} | طرد: ${stats.eliminatedOthers || 0}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== START GAME =====
+function startGame() {  if (players.length < 2) {
+    showNotification('❌ تحتاج لاعبين اثنين على الأقل', 'error');
+    return;
+  }
+  
+  gameStarted = true;
+  currentRound = 1;
+  activePlayers = players.map(p => p.id);
+  currentTurnIndex = 0;
+  
+  addLog('spin', '🎰 بدأت اللعبة!', '🚀');
+  showNotification('🎰 بدأت اللعبة! حظاً سعيداً للجميع', 'info');
+  
+  drawWheel();
+  updateGameUI();
+  showSection('game');
+  document.querySelectorAll('.nav-tab')[2].classList.add('active');
+}
+
+// ===== UPDATE GAME UI =====
+function updateGameUI() {
+  document.getElementById('roundNum').textContent = currentRound;
+  document.getElementById('remainingPlayers').textContent = activePlayers.length;
+  
+  if (activePlayers.length > 0 && gameStarted) {
+    const currentPlayer = players.find(p => p.id === activePlayers[currentTurnIndex % activePlayers.length]);
+    if (currentPlayer) {
+      document.getElementById('currentTurn').style.display = 'block';
+      document.getElementById('turnPlayerName').textContent = currentPlayer.name;
+      document.getElementById('turnPlayerNumber').textContent = `الرقم: ${currentPlayer.number}`;
+    }
+  }
+  
+  if (activePlayers.length === 1 && gameStarted) {
+    gameOver();
+  }
+}
+
+// ===== DRAW WHEEL =====
+function drawWheel(rotation = 0) {
+  const canvas = document.getElementById('wheel-canvas');
+  const ctx = canvas.getContext('2d');
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const radius = cx - 5;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  const activePlayerList = activePlayers.map(id => players.find(p => p.id === id)).filter(Boolean);
+  const segments = activePlayerList;  
+  if (segments.length === 0) return;
+  
+  const arc = (2 * Math.PI) / segments.length;
+  
+  // Draw segments
+  segments.forEach((player, i) => {
+    const angle = i * arc + rotation;
+    
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, angle, angle + arc);
+    ctx.closePath();
+    
+    const colorIndex = player.number % WHEEL_COLORS.length;
+    ctx.fillStyle = WHEEL_COLORS[colorIndex];
+    ctx.fill();
+    
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw number text
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle + arc / 2);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 18px Tajawal';
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 4;
+    ctx.fillText(player.number, radius * 0.65, 6);
+    ctx.font = '12px Tajawal';
+    ctx.fillText(player.name.substring(0, 6), radius * 0.45, 5);
+    ctx.restore();
+  });
+  
+  // Outer ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+  
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(10,10,26,0.8)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Center glow
+  const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 45);
+  gradient.addColorStop(0, 'rgba(108,92,231,0.3)');
+  gradient.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+}
+
+// ===== SPIN WHEEL =====
+function spinWheel() {
+  if (isSpinning) return;
+  if (activePlayers.length < 2) return;
+  
+  isSpinning = true;
+  const spinBtn = document.getElementById('spinBtn');
+  spinBtn.disabled = true;
+  
+  const canvas = document.getElementById('wheel-canvas');
+  canvas.classList.add('spinning');
+  
+  document.getElementById('resultDisplay').classList.remove('show');
+  document.getElementById('eliminationPanel').style.display = 'none';
+  
+  const activePlayerList = activePlayers.map(id => players.find(p => p.id === id)).filter(Boolean);
+  const arc = (2 * Math.PI) / activePlayerList.length;
+  
+  // Random winner
+  const winnerIndex = Math.floor(Math.random() * activePlayerList.length);
+  const winner = activePlayerList[winnerIndex];
+  
+  // Calculate target angle (pointer is at top = -π/2)
+  const targetAngle = (2 * Math.PI * 5) + (2 * Math.PI) - (winnerIndex * arc + arc / 2) - Math.PI / 2;
+  
+  let currentRotation = 0;
+  const duration = 4000;
+  const startTime = Date.now();
+  
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+  
+  function animate() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutCubic(progress);    
+    currentRotation = eased * targetAngle;
+    drawWheel(currentRotation);
+    
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Spin complete
+      canvas.classList.remove('spinning');
+      isSpinning = false;
+      spinBtn.disabled = false;
+      
+      // Show result
+      showResult(winner);
+    }
+  }
+  
+  animate();
+}
+
+// ===== SHOW RESULT =====
+function showResult(winner) {
+  const resultDisplay = document.getElementById('resultDisplay');
+  document.getElementById('resultNumber').textContent = `الرقم: ${winner.number}`;
+  document.getElementById('resultPlayer').textContent = `🎯 ${winner.name}`;
+  resultDisplay.classList.add('show');
+  
+  addLog('spin', `${winner.name} (رقم ${winner.number}) فاز بالدور!`, '🎯');
+  
+  // Show elimination panel
+  setTimeout(() => {
+    showEliminationPanel(winner);
+  }, 1000);
+}
+
+// ===== ELIMINATION PANEL =====
+function showEliminationPanel(eliminator) {
+  const panel = document.getElementById('eliminationPanel');
+  const grid = document.getElementById('eliminationGrid');
+  
+  document.getElementById('eliminatorName').textContent = eliminator.name;
+  
+  const otherPlayers = activePlayers
+    .filter(id => id !== eliminator.id)
+    .map(id => players.find(p => p.id === id))
+    .filter(Boolean);
+  
+  if (otherPlayers.length === 0) {
+    // Only one player left - they win!
+    gameOver();    return;
+  }
+  
+  grid.innerHTML = otherPlayers.map(p => `
+    <button class="eliminate-btn" onclick="eliminatePlayer(${p.id}, ${eliminator.id})">
+      ❌ ${p.name} (${p.number})
+    </button>
+  `).join('');
+  
+  panel.style.display = 'block';
+}
+
+// ===== ELIMINATE PLAYER =====
+function eliminatePlayer(targetId, eliminatorId) {
+  const target = players.find(p => p.id === targetId);
+  const eliminator = players.find(p => p.id === eliminatorId);
+  
+  if (!target || !eliminator) return;
+  
+  // Remove from active
+  activePlayers = activePlayers.filter(id => id !== targetId);
+  
+  target.eliminated = true;
+  target.eliminatedBy = eliminator.name;
+  
+  // Update stats
+  if (!gameStats[eliminator.name]) gameStats[eliminator.name] = { wins: 0, eliminatedBy: 0, eliminatedOthers: 0 };
+  if (!gameStats[target.name]) gameStats[target.name] = { wins: 0, eliminatedBy: 0, eliminatedOthers: 0 };
+  
+  gameStats[eliminator.name].eliminatedOthers = (gameStats[eliminator.name].eliminatedOthers || 0) + 1;
+  gameStats[target.name].eliminatedBy = (gameStats[target.name].eliminatedBy || 0) + 1;
+  
+  // Flash animation
+  const card = document.getElementById(`player-${targetId}`);
+  if (card) card.classList.add('eliminate-flash');
+  
+  addLog('eliminate', `${eliminator.name} طرد ${target.name} (رقم ${target.number})`, '💥');
+  showNotification(`💥 ${target.name} أُقصي من اللعبة!`, 'error');
+  
+  // Hide panels
+  document.getElementById('eliminationPanel').style.display = 'none';
+  document.getElementById('resultDisplay').classList.remove('show');
+  
+  // Next round
+  if (activePlayers.length > 1) {
+    currentRound++;
+    currentTurnIndex = currentTurnIndex % activePlayers.length;
+    
+    setTimeout(() => {
+      drawWheel(0);      updateGameUI();
+    }, 500);
+  } else if (activePlayers.length === 1) {
+    setTimeout(() => gameOver(), 500);
+  }
+}
+
+// ===== GAME OVER =====
+function gameOver() {
+  const winnerId = activePlayers[0];
+  const winner = players.find(p => p.id === winnerId);
+  
+  if (!winner) return;
+  
+  // Update wins
+  if (!gameStats[winner.name]) gameStats[winner.name] = { wins: 0, eliminatedBy: 0, eliminatedOthers: 0 };
+  gameStats[winner.name].wins = (gameStats[winner.name].wins || 0) + 1;
+  
+  addLog('win', `🏆 ${winner.name} فاز باللعبة! (رقم ${winner.number})`, '👑');
+  
+  // Show winner modal
+  document.getElementById('winnerName').textContent = winner.name;
+  document.getElementById('winnerStats').textContent = `رقم ${winner.number} | فوز رقم ${gameStats[winner.name].wins}`;
+  document.getElementById('winnerModal').classList.add('show');
+  
+  // Confetti
+  launchConfetti();
+  
+  // Show game over panel
+  document.getElementById('gameOverPanel').style.display = 'block';
+  document.getElementById('gameOverWinner').innerHTML = `<span class="crown">👑</span> ${winner.name} <span class="crown">👑</span>`;
+  
+  // Hide game elements
+  document.getElementById('currentTurn').style.display = 'none';
+  document.getElementById('rouletteContainer').style.display = 'none';
+  document.getElementById('resultDisplay').classList.remove('show');
+  document.getElementById('eliminationPanel').style.display = 'none';
+}
+
+// ===== NEW GAME =====
+function newGame() {
+  gameStarted = false;
+  currentRound = 1;
+  currentTurnIndex = 0;
+  activePlayers = [];
+  
+  players.forEach(p => {
+    p.eliminated = false;
+    p.eliminatedBy = null;
+  });  
+  document.getElementById('gameOverPanel').style.display = 'none';
+  document.getElementById('rouletteContainer').style.display = 'block';
+  document.getElementById('spinBtn').disabled = false;
+  
+  activePlayers = players.map(p => p.id);
+  
+  addLog('spin', '🔄 لعبة جديدة بدأت!', '🚀');
+  showNotification('🔄 لعبة جديدة! حظاً سعيداً', 'info');
+  
+  drawWheel();
+  updateGameUI();
+}
+
+// ===== CLOSE WINNER MODAL =====
+function closeWinnerModal() {
+  document.getElementById('winnerModal').classList.remove('show');
+}
+
+// ===== CONFETTI =====
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#fd79a8', '#fdcb6e', '#00cec9'];
+  
+  for (let i = 0; i < 150; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = Math.random() * 10 + 5 + 'px';
+    piece.style.height = Math.random() * 10 + 5 + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    piece.style.animationDuration = Math.random() * 2 + 2 + 's';
+    piece.style.animationDelay = Math.random() * 2 + 's';
+    container.appendChild(piece);
+  }
+  
+  setTimeout(() => container.innerHTML = '', 5000);
+}
+
+// ===== LOG =====
+function addLog(type, text, icon) {
+  const entry = {
+    type,
+    text,
+    icon,
+    time: new Date().toLocaleTimeString('ar-SA'),
+    id: Date.now()
+  };
+    gameHistory.unshift(entry);
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('logContainer');
+  const empty = document.getElementById('emptyLog');
+  
+  if (gameHistory.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  
+  empty.style.display = 'none';
+  container.innerHTML = gameHistory.map(entry => `
+    <div class="log-entry ${entry.type}-log">
+      <span class="log-icon">${entry.icon}</span>
+      <div class="log-text">
+        <div class="main-text">${entry.text}</div>
+        <div class="time-text">${entry.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== STATS =====
+function renderStats() {
+  const tbody = document.getElementById('statsBody');
+  const empty = document.getElementById('emptyStats');
+  const table = document.getElementById('statsTable');
+  
+  if (players.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  
+  table.style.display = 'table';
+  empty.style.display = 'none';
+  
+  const sorted = [...players].sort((a, b) => {
+    const winsA = gameStats[a.name]?.wins || 0;
+    const winsB = gameStats[b.name]?.wins || 0;
+    return winsB - winsA;
+  });
+  
+  tbody.innerHTML = sorted.map((p, i) => {
+    const stats = gameStats[p.name] || {};
+    const rank = i + 1;    const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+    const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+    
+    return `
+      <tr>
+        <td><span class="rank-badge ${rankClass}">${rankIcon}</span></td>
+        <td style="font-weight:700">${p.name} ${p.eliminated ? '<span style="color:var(--danger);font-size:0.8rem;">❌</span>' : ''}</td>
+        <td style="color:var(--secondary); font-weight:700;">${p.number}</td>
+        <td style="color:var(--gold); font-weight:700;">🏆 ${stats.wins || 0}</td>
+        <td style="color:var(--danger);">${stats.eliminatedOthers || 0}</td>
+        <td style="color:rgba(255,255,255,0.4);">${stats.eliminatedBy || 0}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ===== INIT =====
+initNumberGrid();
+updatePlayerCount();
+
+// Keyboard shortcut
+document.getElementById('playerName').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') registerPlayer();
+});
+</script>
+
+</body>
+  </html>
