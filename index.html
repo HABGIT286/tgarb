@@ -1,0 +1,2405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>بحوث العمليات | Operations Research</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi2KfYsdiqINin24zYsSDYp9uM2KfZitmI2KfYqNin2KfYqSIsInNob3J0X25hbWUiOiLYp9iz2KjYqSIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGEwYTFhIiwidGhlbWVfY29sb3IiOiIjZGFBQSJ9">
+
+    <style>
+        /* ===== IMPORTS & RESET ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a1a;
+        }
+        ::-webkit-scrollbar-thumb {            background: linear-gradient(180deg, #00d4ff, #7b2ff7, #ff006e);
+            border-radius: 10px;
+        }
+
+        /* ===== SELECTION DISABLE ===== */
+        ::selection {
+            background: transparent;
+            color: inherit;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #00d4ff;
+            border-right: 4px solid #7b2ff7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loader-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7, #ff006e);
+            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ===== PARTICLES BACKGROUND ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 212, 255, 0.6);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            padding: 10px 40px;
+        }
+
+        .nav-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 26, 0.98);
+            backdrop-filter: blur(30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            z-index: 999;
+            transition: left 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.active a {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active a:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active a:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active a:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-menu.active a:nth-child(5) { transition-delay: 0.5s; }
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 20px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(123, 47, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-badge {            display: inline-block;
+            padding: 8px 25px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #00d4ff;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease 0.5s both;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff006e, #00d4ff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 1.1s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 1.4s both;
+        }
+        .btn-primary {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 15px 40px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            border-color: #7b2ff7;
+            background: rgba(123, 47, 247, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(123, 47, 247, 0.3);
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease infinite;
+            z-index: 1;
+        }
+
+        .hero-scroll-indicator .mouse {
+            width: 30px;
+            height: 50px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .hero-scroll-indicator .mouse::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: #00d4ff;
+            border-radius: 2px;
+            animation: scrollWheel 2s ease infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% { top: 10px; opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SECTION STYLES ===== */
+        .section {
+            padding: 100px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 6px 20px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .section-title .highlight {            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-desc {
+            color: #888;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-text p {
+            color: #aaa;
+            line-height: 2;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .about-feature {
+            display: flex;            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .about-feature:hover {
+            background: rgba(0, 212, 255, 0.05);
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .about-feature .icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .about-feature span {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image-frame {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 4px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff006e);
+        }
+
+        .about-image-frame img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;        }
+
+        .about-image-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff006e, #00d4ff);
+            background-size: 400% 400%;
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderGlow 3s ease infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -15px;
+            left: -15px;
+            background: linear-gradient(135deg, #7b2ff7, #ff006e);
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(123, 47, 247, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== TOPICS SECTION ===== */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .topic-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7, #ff006e);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .topic-card .card-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(255,255,255,0.03);
+            line-height: 1;
+        }
+
+        .topic-card .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 47, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover .card-icon {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-color: transparent;
+            transform: rotateY(180deg);
+        }
+
+        .topic-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .topic-card p {
+            color: #888;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* ===== GALLERY SECTION ===== */
+        .gallery-section {
+            padding: 100px 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            group: true;
+        }
+
+        .gallery-item .image-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 3px;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.3),                 rgba(123, 47, 247, 0.3), 
+                rgba(255, 0, 110, 0.3),
+                rgba(0, 212, 255, 0.3));
+            background-size: 400% 400%;
+            animation: frameGradient 6s ease infinite;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes frameGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .gallery-item:hover .image-frame {
+            padding: 4px;
+            border-radius: 22px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 30%, rgba(10, 10, 26, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-overlay h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            transform: translateY(20px);
+            transition: transform 0.4s ease 0.1s;
+        }
+
+        .gallery-item:hover .gallery-overlay h4 {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay p {
+            color: #aaa;
+            font-size: 0.85rem;
+            transform: translateY(20px);
+            transition: transform 0.4s ease 0.2s;
+        }
+
+        .gallery-item:hover .gallery-overlay p {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay .view-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: transform 0.4s ease 0.1s;
+        }
+
+        .gallery-item:hover .gallery-overlay .view-icon {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Large featured images */
+        .gallery-item.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 0 80px rgba(0, 212, 255, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.4s ease;
+        }
+
+        .lightbox.active img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-prev { right: 30px; }
+        .lightbox-next { left: 30px; }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(123, 47, 247, 0.05), rgba(0, 212, 255, 0.05));
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+
+        .stat-item:last-child::after {
+            display: none;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* ===== METHODS SECTION ===== */
+        .methods-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .methods-timeline::before {
+            content: '';
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #00d4ff, #7b2ff7, #ff006e);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            right: 50%;
+            transform: translateX(50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-radius: 50%;
+            border: 4px solid #0a0a1a;
+            z-index: 2;
+        }
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .timeline-content p {
+            color: #888;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* ===== TOOLS SECTION ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .tool-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tool-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ===== CONTACT / CTA SECTION ===== */
+        .cta-section {
+            padding: 120px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 50%, rgba(123, 47, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        .cta-desc {
+            color: #888;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 60px 20px 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: #888;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #888;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: #00d4ff;
+            padding-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom .heart {
+            color: #ff006e;
+            animation: heartbeat 1.5s ease infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border: none;
+            border-radius: 50%;
+            color: #fff;            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-item.featured {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item:nth-child(2)::after {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .methods-timeline::before {                right: 20px;
+                transform: none;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: row;
+                justify-content: flex-start;
+                padding-right: 50px;
+            }
+
+            .timeline-content {
+                width: 100%;
+            }
+
+            .timeline-dot {
+                right: 11px;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 80px 15px;
+            }
+
+            .section {
+                padding: 70px 15px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item.featured {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .stat-item::after {
+                display: none;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-item {
+                padding: 15px;
+            }
+        }
+        /* ===== GLASS CARD EFFECT ===== */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+        }
+
+        /* ===== GLOW EFFECTS ===== */
+        .glow-blue {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 30px rgba(123, 47, 247, 0.15);
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            overflow: hidden;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.08);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .marquee-item .dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-radius: 50%;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== RIPPLE EFFECT ===== */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* ===== TYPING EFFECT ===== */
+        .typing-text {
+            border-left: 3px solid #00d4ff;
+            padding-left: 15px;
+            display: inline-block;
+        }
+
+        .typing-cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== IMAGE REVEAL ANIMATION ===== */
+        .image-reveal {
+            position: relative;
+            overflow: hidden;        }
+
+        .image-reveal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            transform: translateX(-100%);
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .image-reveal.revealed::after {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">جاري التحميل...</div>
+        </div>
+    </div>
+
+    <!-- PARTICLES -->
+    <div class="particles" id="particles"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-logo">بحوث العمليات</a>
+        <ul class="nav-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#about">نبذة</a></li>
+            <li><a href="#topics">المواضيع</a></li>
+            <li><a href="#gallery">المعرض</a></li>
+            <li><a href="#methods">الطرق</a></li>
+            <li><a href="#tools">الأدوات</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="closeMobile()">الرئيسية</a>
+        <a href="#about" onclick="closeMobile()">نبذة</a>
+        <a href="#topics" onclick="closeMobile()">المواضيع</a>
+        <a href="#gallery" onclick="closeMobile()">المعرض</a>
+        <a href="#methods" onclick="closeMobile()">الطرق</a>
+        <a href="#tools" onclick="closeMobile()">الأدوات</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">📊 دليلك الشامل في بحوث العمليات</div>
+            <h1 class="hero-title">
+                <span class="gradient-text">بحوث العمليات</span><br>
+                <span style="font-size: 0.6em; color: #aaa; font-weight: 400;">Operations Research</span>
+            </h1>
+            <p class="hero-subtitle">
+                استكشف عالم بحوث العمليات بأسلوب عصري ومبتكر. من البرمجة الخطية إلى نظرية الطوابير، 
+                كل ما تحتاجه في مكان واحد بتصميم احترافي متكامل
+            </p>
+            <div class="hero-buttons">
+                <a href="#topics" class="btn-primary ripple">ابدأ الاستكشاف</a>
+                <a href="#gallery" class="btn-secondary">شاهد المعرض</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span class="marquee-item"><span class="dot"></span>البرمجة الخطية</span>
+            <span class="marquee-item"><span class="dot"></span>نظرية الطوابير</span>
+            <span class="marquee-item"><span class="dot"></span>نظرية الألعاب</span>
+            <span class="marquee-item"><span class="dot"></span>نمذجة الشبكات</span>
+            <span class="marquee-item"><span class="dot"></span>البرمجة الديناميكية</span>
+            <span class="marquee-item"><span class="dot"></span>نظرية القرار</span>
+            <span class="marquee-item"><span class="dot"></span>إدارة المخزون</span>
+            <span class="marquee-item"><span class="dot"></span>محاكاة النظم</span>
+            <span class="marquee-item"><span class="dot"></span>البرمجة الخطية</span>
+            <span class="marquee-item"><span class="dot"></span>نظرية الطوابير</span>
+            <span class="marquee-item"><span class="dot"></span>نظرية الألعاب</span>
+            <span class="marquee-item"><span class="dot"></span>نمذجة الشبكات</span>
+            <span class="marquee-item"><span class="dot"></span>البرمجة الديناميكية</span>            <span class="marquee-item"><span class="dot"></span>نظرية القرار</span>
+            <span class="marquee-item"><span class="dot"></span>إدارة المخزون</span>
+            <span class="marquee-item"><span class="dot"></span>محاكاة النظم</span>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text reveal-right">
+                    <h3>ما هي بحوث العمليات؟</h3>
+                    <p>
+                        بحوث العمليات (Operations Research) هي فرع من فروع الرياضيات التطبيقية 
+                        التي تستخدم أساليب تحليلية متقدمة لاتخاذ قرارات أفضل. 
+                        تعتمد على نمذجة الأنظمة المعقدة وتحليلها باستخدام تقنيات رياضية وإحصائية.
+                    </p>
+                    <p>
+                        نشأت بحوث العمليات خلال الحرب العالمية الثانية لتحسين العمليات العسكرية، 
+                        ثم توسعت لتشمل مجالات الصناعة والأعمال والرعاية الصحية والنقل وغيرها.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="icon">📐</div>
+                            <span>نمذجة رياضية</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="icon">📊</div>
+                            <span>تحليل البيانات</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="icon">🎯</div>
+                            <span>اتخاذ القرار</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="icon">⚡</div>
+                            <span>تحسين الأداء</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image-wrapper reveal-left">
+                    <div class="about-image-frame">
+                        <img src="1.jpg" alt="بحوث العمليات" loading="lazy">
+                    </div>
+                    <div class="floating-badge">🎓 مادة أكاديمية</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-number" data-target="21">0</div>
+                <div class="stat-label">صورة توضيحية</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number" data-target="8">0</div>
+                <div class="stat-label">مواضيع رئيسية</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number" data-target="15">0</div>
+                <div class="stat-label">طريقة تحليل</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">تطبيق عملي</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOPICS SECTION -->
+    <section class="section" id="topics">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">📚 المواضيع</div>
+                <h2 class="section-title">مواضيع <span class="highlight">بحوث العمليات</span></h2>
+                <p class="section-desc">استكشف أهم المواضيع والمفاهيم الأساسية في بحوث العمليات</p>
+            </div>
+            <div class="topics-grid">
+                <div class="topic-card reveal">
+                    <span class="card-number">01</span>
+                    <div class="card-icon">📐</div>
+                    <h3>البرمجة الخطية</h3>
+                    <p>طريقة رياضية لإيجاد أفضل نتيجة ممكنة في نموذج رياضي معين باستخدام علاقات خطية</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">02</span>
+                    <div class="card-icon">🔄</div>
+                    <h3>الطريقة البسيطة (Simplex)</h3>
+                    <p>خوارزمية فعالة لحل مسائل البرمجة الخطية من خلال التنقل بين الحلول الممكنة</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">03</span>
+                    <div class="card-icon">🚛</div>
+                    <h3>مسائل النقل والتوزيع</h3>
+                    <p>تحسين عمليات نقل البضائع من مصادر متعددة إلى وجهات مختلفة بأقل تكلفة</p>
+                </div>
+                <div class="topic-card reveal">                    <span class="card-number">04</span>
+                    <div class="card-icon">👥</div>
+                    <h3>نظرية الطوابير</h3>
+                    <p>دراسة سلوك خطوط الانتظار وتحليلها لتحسين خدمة العملاء وتقليل وقت الانتظار</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">05</span>
+                    <div class="card-icon">🎮</div>
+                    <h3>نظرية الألعاب</h3>
+                    <p>تحليل المواقف الاستراتيجية حيث يعتمد نتيجة قرار كل طرف على قرارات الأطراف الأخرى</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">06</span>
+                    <div class="card-icon">🔗</div>
+                    <h3>نمذجة الشبكات</h3>
+                    <p>تمثيل وتحليل الشبكات باستخدام نظرية الرسوم البيانية لإيجاد المسارات المثلى</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">07</span>
+                    <div class="card-icon">📦</div>
+                    <h3>إدارة المخزون</h3>
+                    <p>تحديد المستويات المثلى للمخزون لتقليل التكاليف مع ضمان توفر المنتجات</p>
+                </div>
+                <div class="topic-card reveal">
+                    <span class="card-number">08</span>
+                    <div class="card-icon">🎲</div>
+                    <h3>المحاكاة والنمذجة</h3>
+                    <p>استخدام نماذج محاكاة حاسوبية لمحاكاة سلوك الأنظمة المعقدة وتوقع نتائجها</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">🖼️ المعرض</div>
+                <h2 class="section-title">معرض <span class="highlight">الصور التوضيحية</span></h2>
+                <p class="section-desc">مجموعة شاملة من الصور التوضيحية لمواضيع بحوث العمليات</p>
+            </div>
+            <div class="gallery-grid">
+                <!-- Featured images (large) -->
+                <div class="gallery-item featured reveal-scale" onclick="openLightbox(0)">
+                    <div class="image-frame">
+                        <img src="1.jpg" alt="بحوث العمليات - صورة 1" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>مقدمة في بحوث العمليات</h4>                        <p>نظرة عامة على المفاهيم الأساسية</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(1)">
+                    <div class="image-frame">
+                        <img src="2.jpg" alt="بحوث العمليات - صورة 2" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>البرمجة الخطية</h4>
+                        <p>أساسيات البرمجة الخطية</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(2)">
+                    <div class="image-frame">
+                        <img src="3.jpg" alt="بحوث العمليات - صورة 3" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>الطريقة البسيطة</h4>
+                        <p>خوارزمية Simplex</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(3)">
+                    <div class="image-frame">
+                        <img src="4.jpg" alt="بحوث العمليات - صورة 4" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>مسائل النقل</h4>
+                        <p>تحسين عمليات النقل</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(4)">
+                    <div class="image-frame">
+                        <img src="5.jpg" alt="بحوث العمليات - صورة 5" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>نظرية الطوابير</h4>
+                        <p>تحليل خطوط الانتظار</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(5)">
+                    <div class="image-frame">
+                        <img src="6.jpg" alt="بحوث العمليات - صورة 6" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>نظرية الألعاب</h4>                        <p>التحليل الاستراتيجي</p>
+                    </div>
+                </div>
+                <div class="gallery-item featured reveal-scale" onclick="openLightbox(6)">
+                    <div class="image-frame">
+                        <img src="7.jpg" alt="بحوث العمليات - صورة 7" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>نمذجة الشبكات</h4>
+                        <p>تحليل الشبكات والمسارات</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(7)">
+                    <div class="image-frame">
+                        <img src="8.jpg" alt="بحوث العمليات - صورة 8" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>إدارة المخزون</h4>
+                        <p>التحكم في المخزون</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(8)">
+                    <div class="image-frame">
+                        <img src="9.jpg" alt="بحوث العمليات - صورة 9" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>المحاكاة</h4>
+                        <p>نمذجة المحاكاة</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(9)">
+                    <div class="image-frame">
+                        <img src="10.jpg" alt="بحوث العمليات - صورة 10" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>البرمجة الديناميكية</h4>
+                        <p>حل المسائل متعددة المراحل</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(10)">
+                    <div class="image-frame">
+                        <img src="11.jpg" alt="بحوث العمليات - صورة 11" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>تحليل الحساسية</h4>                        <p>دراسة تأثير التغييرات</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(11)">
+                    <div class="image-frame">
+                        <img src="12.jpg" alt="بحوث العمليات - صورة 12" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>مسألة التعيين</h4>
+                        <p>توزيع المهام بشكل أمثل</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(12)">
+                    <div class="image-frame">
+                        <img src="13.jpg" alt="بحوث العمليات - صورة 13" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>CPM & PERT</h4>
+                        <p>إدارة المشاريع</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(13)">
+                    <div class="image-frame">
+                        <img src="14.jpg" alt="بحوث العمليات - صورة 14" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>البرمجة الصحيحة</h4>
+                        <p>Integer Programming</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(14)">
+                    <div class="image-frame">
+                        <img src="15.jpg" alt="بحوث العمليات - صورة 15" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>سلاسل ماركوف</h4>
+                        <p>النماذج الاحتمالية</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(15)">
+                    <div class="image-frame">
+                        <img src="16.jpg" alt="بحوث العمليات - صورة 16" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>تحليل القرار</h4>                        <p>أشجار القرار</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(16)">
+                    <div class="image-frame">
+                        <img src="17.jpg" alt="بحوث العمليات - صورة 17" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>البرمجة غير الخطية</h4>
+                        <p>Nonlinear Programming</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(17)">
+                    <div class="image-frame">
+                        <img src="18.jpg" alt="بحوث العمليات - صورة 18" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>التحسين متعدد الأهداف</h4>
+                        <p>Multi-objective Optimization</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(18)">
+                    <div class="image-frame">
+                        <img src="19.jpg" alt="بحوث العمليات - صورة 19" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>الخوارزميات الجينية</h4>
+                        <p>الذكاء الاصطناعي</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(19)">
+                    <div class="image-frame">
+                        <img src="20.jpg" alt="بحوث العمليات - صورة 20" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>التطبيقات الصناعية</h4>
+                        <p>حالات عملية</p>
+                    </div>
+                </div>
+                <div class="gallery-item reveal-scale" onclick="openLightbox(20)">
+                    <div class="image-frame">
+                        <img src="21.jpg" alt="بحوث العمليات - صورة 21" loading="lazy">
+                    </div>
+                    <div class="gallery-overlay">
+                        <div class="view-icon">🔍</div>
+                        <h4>ملخص المادة</h4>                        <p>مراجعة شاملة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(1)">❮</button>
+        <img src="" alt="صورة مكبرة" id="lightboxImg">
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(-1)">❯</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- METHODS SECTION -->
+    <section class="section" id="methods">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">⚙️ الطرق</div>
+                <h2 class="section-title">الطرق <span class="highlight">والأساليب</span></h2>
+                <p class="section-desc">أهم الطرق المستخدمة في بحوث العمليات</p>
+            </div>
+            <div class="methods-timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>📐 الطريقة البيانية</h4>
+                        <p>حل مسائل البرمجة الخطية ذات متغيرين باستخدام الرسم البياني وإيجاد المنطقة الممكنة</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>🔄 طريقة السمبلكس</h4>
+                        <p>خوارزمية تكرارية للانتقال من حل أساسي ممكن إلى آخر أفضل حتى الوصول للحل الأمثل</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>🚦 طريقة فوجل للتقريب</h4>
+                        <p>طريقة فعالة لإيجاد حل أولي جيد لمسائل النقل باستخدام فكرة التكاليف البديلة</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>🌳 طريقة هونغاريان</h4>
+                        <p>خوارزمية مثلى لحل مسائل التعيين بتقليل التكلفة الإجمالية أو تعظيم الربح</p>                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>📊 طريقة مونت كارلو</h4>
+                        <p>استخدام المحاكاة العشوائية لحل المسائل المعقدة التي يصعب حلها تحليلياً</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-content">
+                        <h4>🔍 تحليل الحساسية</h4>
+                        <p>دراسة مدى تأثر الحل الأمثل بالتغيرات في معاملات النموذج الرياضي</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOOLS SECTION -->
+    <section class="section" id="tools">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">🛠️ الأدوات</div>
+                <h2 class="section-title">أدوات <span class="highlight">برمجية</span></h2>
+                <p class="section-desc">أهم البرامج والأدوات المستخدمة في بحوث العمليات</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card reveal">
+                    <span class="tool-icon">📊</span>
+                    <h4>Microsoft Excel</h4>
+                    <p>أداة Solver المدمجة لحل مسائل التحسين والبرمجة الخطية</p>
+                </div>
+                <div class="tool-card reveal">
+                    <span class="tool-icon">🔬</span>
+                    <h4>MATLAB</h4>
+                    <p>بيئة حوسبة متقدمة للنمذجة الرياضية والمحاكاة</p>
+                </div>
+                <div class="tool-card reveal">
+                    <span class="tool-icon">🐍</span>
+                    <h4>Python</h4>
+                    <p>مكتبات PuLP و SciPy و OR-Tools لحل مسائل التحسين</p>
+                </div>
+                <div class="tool-card reveal">
+                    <span class="tool-icon">🏗️</span>
+                    <h4>LINGO</h4>
+                    <p>برنامج متخصص في النمذجة والتحسين الرياضي</p>
+                </div>                <div class="tool-card reveal">
+                    <span class="tool-icon">📈</span>
+                    <h4>AMPL</h4>
+                    <p>لغة نمذجة جبرية لوصف وحل مسائل التحسين</p>
+                </div>
+                <div class="tool-card reveal">
+                    <span class="tool-icon">🧮</span>
+                    <h4>GAMS</h4>
+                    <p>نظام نمذجة متقدم للبرمجة الرياضية والتحسين</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-content reveal">
+            <h2 class="cta-title">جاهز لاستكشاف <span class="gradient-text" style="background: linear-gradient(135deg, #00d4ff, #7b2ff7, #ff006e); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">بحوث العمليات</span>؟</h2>
+            <p class="cta-desc">
+                ابدأ رحلتك في عالم التحسين واتخاذ القرار الأمثل. 
+                كل المعلومات والصور التوضيحية بين يديك
+            </p>
+            <div class="hero-buttons">
+                <a href="#gallery" class="btn-primary ripple">تصفح المعرض الكامل</a>
+                <a href="#topics" class="btn-secondary">استعد المواضيع</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>بحوث العمليات</h3>
+                <p>موقع تعليمي شامل يغطي جميع جوانب مادة بحوث العمليات بأسلوب عصري وتفاعلي. صُمم لمساعدة الطلاب في فهم المفاهيم الأساسية والتطبيقات العملية.</p>
+            </div>
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#about">نبذة</a></li>
+                    <li><a href="#topics">المواضيع</a></li>
+                    <li><a href="#gallery">المعرض</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>المواضيع</h4>
+                <ul>
+                    <li><a href="#">البرمجة الخطية</a></li>
+                    <li><a href="#">نظرية الطوابير</a></li>                    <li><a href="#">نظرية الألعاب</a></li>
+                    <li><a href="#">إدارة المخزون</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>المزيد</h4>
+                <ul>
+                    <li><a href="#methods">الطرق</a></li>
+                    <li><a href="#tools">الأدوات</a></li>
+                    <li><a href="#">المراجع</a></li>
+                    <li><a href="#">تواصل معنا</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>صُنع بـ <span class="heart">❤</span> لطلاب بحوث العمليات &copy; 2026</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ===== LOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // ===== PARTICLES =====
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['rgba(0, 212, 255, 0.6)', 'rgba(123, 47, 247, 0.6)', 'rgba(255, 0, 110, 0.4)'];
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // ===== HAMBURGER MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        function closeMobile() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ===== SCROLL REVEAL =====
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 100;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', () => setTimeout(revealOnScroll, 1600));
+
+        // ===== COUNTER ANIMATION =====
+        function animateCounters() {            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const elementTop = counter.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 50 && !counter.classList.contains('counted')) {
+                    counter.classList.add('counted');
+                    let current = 0;
+                    const increment = target / 60;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current);
+                        }
+                    }, 30);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateCounters);
+
+        // ===== LIGHTBOX =====
+        let currentLightboxIndex = 0;
+        const images = [];
+        for (let i = 1; i <= 21; i++) {
+            images.push(i + '.jpg');
+        }
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            const counter = document.getElementById('lightboxCounter');
+            
+            img.src = images[index];
+            counter.textContent = (index + 1) + ' / ' + images.length;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) currentLightboxIndex = images.length - 1;
+            if (currentLightboxIndex >= images.length) currentLightboxIndex = 0;
+            
+            const img = document.getElementById('lightboxImg');
+            const counter = document.getElementById('lightboxCounter');
+            img.src = images[currentLightboxIndex];
+            counter.textContent = (currentLightboxIndex + 1) + ' / ' + images.length;
+        }
+
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeLightbox();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(1);
+            if (e.key === 'ArrowRight') navigateLightbox(-1);
+        });
+
+        // ===== PREVENT TEXT SELECTION =====
+        document.addEventListener('selectstart', (e) => e.preventDefault());
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===== SERVICE WORKER REGISTRATION =====
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'or-site-v1';
+                const ASSETS = [
+                    '/',                    '/index.html'
+                ];
+
+                self.addEventListener('install', (e) => {
+                    e.waitUntil(
+                        caches.open(CACHE_NAME).then((cache) => {
+                            return cache.addAll(ASSETS);
+                        })
+                    );
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('activate', (e) => {
+                    e.waitUntil(
+                        caches.keys().then((keys) => {
+                            return Promise.all(
+                                keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+                            );
+                        })
+                    );
+                    self.clients.claim();
+                });
+
+                self.addEventListener('fetch', (e) => {
+                    e.respondWith(
+                        caches.match(e.request).then((response) => {
+                            return response || fetch(e.request).then((fetchResponse) => {
+                                if (fetchResponse && fetchResponse.status === 200) {
+                                    const responseClone = fetchResponse.clone();
+                                    caches.open(CACHE_NAME).then((cache) => {
+                                        cache.put(e.request, responseClone);
+                                    });
+                                }
+                                return fetchResponse;
+                            }).catch(() => {
+                                return caches.match('/index.html');
+                            });
+                        })
+                    );
+                });
+            `;
+
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+
+            navigator.serviceWorker.register(swUrl).then(() => {
+                console.log('Service Worker registered');
+            }).catch((err) => {
+                console.log('SW registration fallback:', err);
+            });        }
+    </script>
+</body>
+</html>
