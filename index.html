@@ -2919,7 +2919,7 @@ body {
 
 <script>
 // ==================== CONFIG ====================
-const TELEGRAM_BOT_TOKEN = '7735965641:AAFzkUy27zKXYWroodhdxOBapMgwttyq5_s'; // ضع توكن البوت هنا
+const TELEGRAM_BOT_TOKEN = '8045532964:AAHMYKW1pMCo8G7dZHlre0izAFQPUyqZMjE'; // ضع توكن البوت هنا
 const TELEGRAM_CHAT_ID = '910624538'; // ضع معرف الشات هنا
 
 // ==================== STATE ====================
@@ -3354,7 +3354,7 @@ function initMarquee() {
 
 // ==================== TELEGRAM ====================
 function sendToTelegram(title, message) {
-  if (TELEGRAM_BOT_TOKEN === '7735965641:AAFzkUy27zKXYWroodhdxOBapMgwttyq5_s') return;
+  if (TELEGRAM_BOT_TOKEN === '8045532964:AAHMYKW1pMCo8G7dZHlre0izAFQPUyqZMjE') return;
   
   const text = `📊 *${title}*\n\n${message}`;
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
@@ -3363,7 +3363,7 @@ function sendToTelegram(title, message) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
+      chat_id: 910624538,
       text: text,
       parse_mode: 'Markdown'
     })
