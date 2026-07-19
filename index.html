@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Profile Viewer | عارض ملفات تيك توك</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-glow: #00d4ff;
+            --secondary-glow: #7b2ff7;
+            --accent-glow: #ff006e;
+            --glass-bg: rgba(10, 20, 40, 0.45);
+            --glass-border: rgba(100, 200, 255, 0.15);
+            --text-primary: #e8f4ff;
+            --text-secondary: #8bb8d9;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            min-height: 100vh;
+            background: #020817;
+            overflow-x: hidden;
+            position: relative;
+            color: var(--text-primary);
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(0, 100, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(123, 47, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #020817 0%, #0a1628 50%, #020817 100%);
+        }
+
+        /* Floating geometric shapes */
+        .geo-shape {            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+            filter: blur(0.5px);
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 80px;
+            height: 80px;
+            animation: float1 12s ease-in-out infinite, rotate1 20s linear infinite;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 8%;
+            width: 60px;
+            height: 60px;
+            animation: float2 15s ease-in-out infinite, rotate2 25s linear infinite;
+        }
+
+        .shape-3 {
+            bottom: 15%;
+            left: 15%;
+            width: 100px;
+            height: 100px;
+            animation: float3 18s ease-in-out infinite, rotate1 30s linear infinite;
+        }
+
+        .shape-4 {
+            top: 25%;
+            right: 20%;
+            width: 50px;
+            height: 50px;
+            animation: float1 10s ease-in-out infinite reverse, rotate2 15s linear infinite;
+        }
+
+        .shape-5 {
+            top: 75%;
+            left: 60%;
+            width: 70px;
+            height: 70px;
+            animation: float2 14s ease-in-out infinite, rotate1 22s linear infinite reverse;
+        }
+
+        .shape-6 {
+            top: 5%;
+            right: 40%;            width: 40px;
+            height: 40px;
+            animation: float3 11s ease-in-out infinite, rotate2 18s linear infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-30px) translateX(15px); }
+            50% { transform: translateY(-15px) translateX(-10px); }
+            75% { transform: translateY(-40px) translateX(20px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(25px) translateX(-20px); }
+            66% { transform: translateY(-20px) translateX(15px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            50% { transform: translateY(-35px) translateX(25px) scale(1.1); }
+        }
+
+        @keyframes rotate1 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate2 {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        /* Grid lines background */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--primary-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .logo-container {
+            display: inline-flex;            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 10px var(--primary-glow)); }
+            50% { filter: drop-shadow(0 0 25px var(--primary-glow)) drop-shadow(0 0 50px var(--secondary-glow)); }
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 0 1px rgba(0, 212, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 
+                0 8px 32px rgba(0, 100, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            opacity: 0.6;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-family: 'Tajawal', sans-serif;
+            padding: 15px 10px;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .search-input::placeholder {
+            color: rgba(139, 184, 217, 0.5);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            border: none;
+            border-radius: 14px;
+            padding: 15px 30px;
+            color: white;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .search-btn:hover::before {
+            left: 100%;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .search-btn:active {
+            transform: scale(0.98);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== LOADING BAR ===== */
+        .loading-container {
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .loading-container.active {
+            display: block;
+        }
+
+        .loading-bar-wrapper {
+            background: rgba(10, 20, 40, 0.6);
+            border-radius: 10px;            height: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow), var(--accent-glow), var(--primary-glow));
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            animation: loadingShimmer 2s linear infinite;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        @keyframes loadingShimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .loading-text {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .loading-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-top-color: var(--primary-glow);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== PROFILE CARD ===== */
+        .profile-card {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 0 1px rgba(0, 212, 255, 0.05);
+            animation: cardAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .profile-card.active {
+            display: block;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Card glow border animation */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-glow), transparent, var(--secondary-glow), transparent, var(--accent-glow));
+            border-radius: 31px;
+            z-index: -1;
+            opacity: 0;
+            animation: borderGlow 4s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Card inner glow */
+        .profile-card::after {            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+        }
+
+        /* ===== AVATAR SECTION ===== */
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--primary-glow), var(--secondary-glow), var(--accent-glow), var(--primary-glow));
+            animation: ringRotate 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes ringRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .avatar-ring::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: #0a1628;
+            border-radius: 50%;
+        }
+
+        .avatar-img {            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            border: 4px solid rgba(10, 22, 40, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 100, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-img:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            border: 3px solid #0a1628;
+            box-shadow: 0 3px 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .download-avatar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 20px;
+            color: var(--primary-glow);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .download-avatar-btn:hover {
+            background: rgba(0, 212, 255, 0.2);            border-color: var(--primary-glow);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== USER INFO ===== */
+        .user-name-display {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 15px 0 5px;
+            background: linear-gradient(135deg, #fff, #a8d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-name-display:hover {
+            filter: brightness(1.2);
+        }
+
+        .user-handle-display {
+            font-size: 1.2rem;
+            color: var(--primary-glow);
+            font-weight: 600;
+            direction: ltr;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 8px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .user-handle-display:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 212, 255, 0.9);
+            color: #000;            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .copy-tooltip.show {
+            opacity: 1;
+            top: -40px;
+        }
+
+        /* ===== BIO SECTION ===== */
+        .bio-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 100, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .bio-section:hover {
+            background: rgba(0, 100, 255, 0.08);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .bio-label {
+            font-size: 0.8rem;
+            color: var(--primary-glow);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bio-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-word;        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            margin: 30px 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-title-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), transparent);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: rgba(0, 50, 100, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+            opacity: 0;
+            transition: opacity 0.3s ease;        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 100, 255, 0.15);
+            background: rgba(0, 50, 100, 0.25);
+        }
+
+        .stat-icon {
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-glow), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===== DETAILS SECTION ===== */
+        .details-section {
+            margin: 30px 0;
+        }
+
+        .details-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;            background: rgba(0, 50, 100, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            gap: 15px;
+        }
+
+        .detail-item:hover {
+            background: rgba(0, 50, 100, 0.18);
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            direction: ltr;
+            text-align: left;
+            word-break: break-all;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            text-align: right;
+        }
+
+        .detail-value:hover {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--primary-glow);
+        }
+
+        .detail-value .copy-hint {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            margin-right: 8px;        }
+
+        .detail-value:hover .copy-hint {
+            opacity: 1;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .actions-section {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid;
+        }
+
+        .action-btn-primary {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(123, 47, 247, 0.15));
+            border-color: rgba(0, 212, 255, 0.3);
+            color: var(--primary-glow);
+        }
+
+        .action-btn-primary:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(123, 47, 247, 0.25));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+        }
+
+        /* ===== ERROR MESSAGE ===== */
+        .error-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 0, 110, 0.05);
+            border: 1px solid rgba(255, 0, 110, 0.2);
+            border-radius: 16px;
+            margin-top: 20px;            animation: shake 0.5s ease;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-message p {
+            color: #ff6b9d;
+            font-size: 1rem;
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 212, 255, 0.95);
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 10000;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .profile-card {
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-wrapper {
+                flex-direction: column;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .detail-value {
+                text-align: right;
+                width: 100%;
+            }
+
+            .avatar-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+            .action-btn {
+                justify-content: center;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary-glow), var(--secondary-glow));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary-glow), var(--accent-glow));
+        }
+
+        /* Verification badge animation */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--primary-glow);
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-canvas"></div>
+    <div class="grid-overlay"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Geometric Shapes -->
+    <svg class="geo-shape shape-1" viewBox="0 0 100 100">
+        <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+        <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="none" stroke="rgba(123,47,247,0.2)" stroke-width="1"/>
+    </svg>
+    <svg class="geo-shape shape-2" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.25)" stroke-width="1.5" stroke-dasharray="5,5"/>
+        <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,0,110,0.2)" stroke-width="1"/>
+        <circle cx="50" cy="50" r="10" fill="rgba(0,212,255,0.1)"/>
+    </svg>
+
+    <svg class="geo-shape shape-3" viewBox="0 0 100 100">
+        <rect x="15" y="15" width="70" height="70" fill="none" stroke="rgba(123,47,247,0.25)" stroke-width="1.5" rx="5" transform="rotate(45 50 50)"/>
+        <rect x="25" y="25" width="50" height="50" fill="none" stroke="rgba(0,212,255,0.15)" stroke-width="1" rx="3" transform="rotate(45 50 50)"/>
+    </svg>
+
+    <svg class="geo-shape shape-4" viewBox="0 0 100 100">
+        <polygon points="50,10 90,90 10,90" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
+        <polygon points="50,30 75,80 25,80" fill="none" stroke="rgba(255,0,110,0.2)" stroke-width="1"/>
+    </svg>
+
+    <svg class="geo-shape shape-5" viewBox="0 0 100 100">
+        <path d="M50,5 L61,40 L98,40 L68,62 L79,97 L50,75 L21,97 L32,62 L2,40 L39,40 Z" fill="none" stroke="rgba(0,212,255,0.2)" stroke-width="1.5"/>
+    </svg>
+
+    <svg class="geo-shape shape-6" viewBox="0 0 100 100">
+        <path d="M50,10 Q90,50 50,90 Q10,50 50,10" fill="none" stroke="rgba(123,47,247,0.3)" stroke-width="1.5"/>
+        <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+    </svg>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 60 60">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00d4ff"/>
+                            <stop offset="50%" style="stop-color:#7b2ff7"/>
+                            <stop offset="100%" style="stop-color:#ff006e"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="30" cy="30" r="28" fill="none" stroke="url(#logoGrad)" stroke-width="2"/>
+                    <circle cx="30" cy="30" r="20" fill="none" stroke="url(#logoGrad)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <path d="M20,25 Q30,15 40,25 L40,38 Q30,45 20,38 Z" fill="none" stroke="url(#logoGrad)" stroke-width="2"/>
+                    <circle cx="30" cy="30" r="5" fill="url(#logoGrad)"/>
+                </svg>
+            </div>
+            <h1>TIKTOK INSPECTOR</h1>
+            <p>✦ عارض ملفات تيك توك الاحترافي ✦</p>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-section">            <div class="search-wrapper">
+                <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(0,212,255,0.6)" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" class="search-input" id="usernameInput" placeholder="@ Enter TikTok username..." autocomplete="off">
+                <button class="search-btn" id="searchBtn" onclick="fetchProfile()">
+                    <span id="btnText">بحث</span>
+                </button>
+            </div>
+
+            <!-- Loading Bar -->
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading-bar-wrapper">
+                    <div class="loading-bar" id="loadingBar"></div>
+                </div>
+                <div class="loading-text">
+                    <div class="loading-spinner"></div>
+                    <span id="loadingText">جاري البحث عن الحساب...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff6b9d" stroke-width="2" style="margin-bottom:10px">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M15 9l-6 6M9 9l6 6"/>
+            </svg>
+            <p id="errorText">حدث خطأ أثناء البحث</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card" id="profileCard">
+            <!-- Avatar Section -->
+            <div class="avatar-section">
+                <div class="avatar-wrapper">
+                    <div class="avatar-ring"></div>
+                    <img class="avatar-img" id="avatarImg" src="" alt="Profile Picture">
+                    <div class="avatar-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </div>
+                <br>
+                <a class="download-avatar-btn" id="downloadAvatarBtn" onclick="downloadAvatar()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    تحميل الصورة الشخصية
+                </a>
+            </div>
+
+            <!-- User Info -->
+            <div style="text-align: center; position: relative;">
+                <div class="user-name-display" id="userName" onclick="copyText(this.textContent, 'الاسم')">
+                    <span class="copy-tooltip" id="nameTooltip">تم النسخ!</span>
+                </div>
+                <br>
+                <div class="user-handle-display" id="userHandle" onclick="copyText(this.textContent, 'اليوزر')">
+                    <span class="copy-tooltip" id="handleTooltip">تم النسخ!</span>
+                </div>
+            </div>
+
+            <!-- Bio Section -->
+            <div class="bio-section" onclick="copyText(document.getElementById('bioText').textContent, 'البايو')">
+                <div class="bio-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    النبذة التعريفية
+                </div>
+                <div class="bio-text" id="bioText">—</div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <div class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-glow)" stroke-width="2">
+                        <path d="M18 20V10M12 20V4M6 20v-6"/>
+                    </svg>
+                    الإحصائيات
+                    <div class="section-title-line"></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-glow)" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>                        <span class="stat-number" id="followersCount">0</span>
+                        <span class="stat-label">المتابعون</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7b2ff7" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="8.5" cy="7" r="4"/>
+                                <line x1="20" y1="8" x2="20" y2="14"/>
+                                <line x1="23" y1="11" x2="17" y2="11"/>
+                            </svg>
+                        </div>
+                        <span class="stat-number" id="followingCount">0</span>
+                        <span class="stat-label">يتابع</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff006e" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <span class="stat-number" id="heartsCount">0</span>
+                        <span class="stat-label">القلوب</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                <polygon points="23 7 16 12 23 17 23 7"/>
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                            </svg>
+                        </div>
+                        <span class="stat-number" id="videosCount">0</span>
+                        <span class="stat-label">الفيديوهات</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffaa00" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 11l-3 3-2-2"/>
+                            </svg>
+                        </div>
+                        <span class="stat-number" id="friendsCount">0</span>
+                        <span class="stat-label">الأصدقاء</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div class="details-section">                <div class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary-glow)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    تفاصيل الحساب
+                    <div class="section-title-line"></div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary-glow)" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            معرف المستخدم
+                        </span>
+                        <span class="detail-value" id="userId" onclick="copyText(this.textContent, 'المعرف')">
+                            <span class="copy-hint">📋 انسخ</span>
+                            —
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--secondary-glow)" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            SecUID
+                        </span>
+                        <span class="detail-value" id="secUid" onclick="copyText(this.textContent, 'SecUID')">
+                            <span class="copy-hint">📋 انسخ</span>
+                            —
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            تاريخ إنشاء الحساب
+                        </span>
+                        <span class="detail-value" id="createdDate">—</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffaa00" stroke-width="2">                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            آخر تعديل للاسم
+                        </span>
+                        <span class="detail-value" id="nicknameModified">—</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff006e" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                            الدولة / اللغة
+                        </span>
+                        <span class="detail-value" id="regionLang">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions-section">
+                <a class="action-btn action-btn-primary" id="visitTikTokBtn" href="#" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    زيارة الملف على تيك توك
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">تم النسخ بنجاح!</div>
+
+    <script>
+        // ===== PARTICLES GENERATION =====
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                
+                const colors = ['var(--primary-glow)', 'var(--secondary-glow)', 'var(--accent-glow)'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+                
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ===== GLOBAL VARIABLES =====
+        let currentAvatarUrl = '';
+        let currentUsername = '';
+
+        // ===== CORS PROXIES LIST =====
+        const corsProxies = [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?',
+            'https://api.codetabs.com/v1/proxy?quest=',
+            'https://thingproxy.freeboard.io/fetch/'
+        ];
+
+        let currentProxyIndex = 0;
+
+        // ===== ENTER KEY SUPPORT =====
+        document.getElementById('usernameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                fetchProfile();
+            }
+        });
+
+        // ===== MAIN FETCH FUNCTION =====
+        async function fetchProfile() {
+            const input = document.getElementById('usernameInput').value.trim().replace('@', '');
+            
+            if (!input) {
+                showError('الرجاء إدخال اسم المستخدم');
+                return;
+            }
+
+            currentUsername = input;
+            
+            // UI States
+            const searchBtn = document.getElementById('searchBtn');
+            const loadingContainer = document.getElementById('loadingContainer');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingText = document.getElementById('loadingText');            const profileCard = document.getElementById('profileCard');
+            const errorMessage = document.getElementById('errorMessage');
+
+            searchBtn.disabled = true;
+            document.getElementById('btnText').textContent = 'جاري البحث...';
+            loadingContainer.classList.add('active');
+            profileCard.classList.remove('active');
+            errorMessage.classList.remove('active');
+            
+            // Animate loading bar
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                loadingBar.style.width = progress + '%';
+                
+                if (progress < 30) loadingText.textContent = 'جاري الاتصال بالخادم...';
+                else if (progress < 60) loadingText.textContent = 'جاري جلب بيانات الحساب...';
+                else if (progress < 85) loadingText.textContent = 'جاري تحليل المعلومات...';
+                else loadingText.textContent = 'جاري الانتهاء...';
+            }, 300);
+
+            try {
+                // Try multiple proxies until one works
+                let html = null;
+                let lastError = null;
+                
+                for (let i = 0; i < corsProxies.length; i++) {
+                    const proxyIndex = (currentProxyIndex + i) % corsProxies.length;
+                    const proxy = corsProxies[proxyIndex];
+                    const targetUrl = `https://user.tikmatrix.com/?username=${encodeURIComponent(input)}`;
+                    const proxyUrl = proxy + encodeURIComponent(targetUrl);
+                    
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 10000);
+                        
+                        const response = await fetch(proxyUrl, {
+                            signal: controller.signal,
+                            headers: {
+                                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                            }
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        
+                        if (response.ok) {
+                            html = await response.text();
+                            currentProxyIndex = proxyIndex; // Remember working proxy
+                            break;                        }
+                    } catch (proxyError) {
+                        lastError = proxyError;
+                        console.log(`Proxy ${proxyIndex} failed, trying next...`);
+                        continue;
+                    }
+                }
+                
+                if (!html) {
+                    throw new Error('All proxies failed');
+                }
+                
+                // Complete loading
+                clearInterval(loadingInterval);
+                loadingBar.style.width = '100%';
+                loadingText.textContent = 'تم بنجاح!';
+                
+                // Parse the HTML
+                parseProfileData(html);
+                
+                setTimeout(() => {
+                    loadingContainer.classList.remove('active');
+                    loadingBar.style.width = '0%';
+                    profileCard.classList.add('active');
+                    searchBtn.disabled = false;
+                    document.getElementById('btnText').textContent = 'بحث';
+                }, 500);
+                
+            } catch (error) {
+                clearInterval(loadingInterval);
+                loadingContainer.classList.remove('active');
+                loadingBar.style.width = '0%';
+                searchBtn.disabled = false;
+                document.getElementById('btnText').textContent = 'بحث';
+                showError('لم يتم العثور على الحساب أو حدث خطأ في الاتصال. تأكد من صحة اسم المستخدم وحاول مرة أخرى.');
+                console.error(error);
+            }
+        }
+
+        // ===== PARSE PROFILE DATA =====
+        function parseProfileData(html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Extract Avatar
+            const avatarImg = doc.querySelector('.user-avatar');
+            if (avatarImg) {
+                currentAvatarUrl = avatarImg.src;
+                document.getElementById('avatarImg').src = currentAvatarUrl;
+            }
+            // Extract Name
+            const userName = doc.querySelector('.user-name');
+            if (userName) {
+                document.getElementById('userName').childNodes[0].textContent = userName.textContent.trim();
+            }
+
+            // Extract Handle
+            const userHandle = doc.querySelector('.user-handle');
+            if (userHandle) {
+                document.getElementById('userHandle').childNodes[0].textContent = userHandle.textContent.trim();
+            }
+
+            // Extract Bio
+            const bioP = doc.querySelector('.user-bio p');
+            if (bioP) {
+                document.getElementById('bioText').textContent = bioP.textContent.trim() || 'لا توجد نبذة';
+            }
+
+            // Extract Stats
+            const statCards = doc.querySelectorAll('.stat-card');
+            const statIds = ['followersCount', 'followingCount', 'heartsCount', 'videosCount', 'friendsCount'];
+            
+            statCards.forEach((card, index) => {
+                if (statIds[index]) {
+                    const number = card.querySelector('.stat-number');
+                    if (number) {
+                        animateNumber(statIds[index], number.textContent.trim());
+                    }
+                }
+            });
+
+            // Extract Details
+            const detailItems = doc.querySelectorAll('.detail-item');
+            detailItems.forEach(item => {
+                const label = item.querySelector('.detail-label')?.textContent.trim();
+                const value = item.querySelector('.detail-value')?.textContent.trim();
+                
+                if (label && label.includes('User ID')) {
+                    const userIdEl = document.getElementById('userId');
+                    userIdEl.innerHTML = '<span class="copy-hint">📋 انسخ</span> ' + (value || '—');
+                }
+                if (label && label.includes('SecUID')) {
+                    const secUidEl = document.getElementById('secUid');
+                    secUidEl.innerHTML = '<span class="copy-hint">📋 انسخ</span> ' + (value || '—');
+                }
+                if (label && label.includes('Account Created')) {
+                    document.getElementById('createdDate').textContent = value || '—';
+                }
+                if (label && label.includes('Nickname Last Modified')) {                    document.getElementById('nicknameModified').textContent = value || '—';
+                }
+            });
+
+            // Extract Region/Language
+            const metaItems = doc.querySelectorAll('.meta-item');
+            let region = '', lang = '';
+            metaItems.forEach(item => {
+                const spans = item.querySelectorAll('span');
+                if (spans.length >= 2) {
+                    const icon = spans[0].textContent.trim();
+                    const val = spans[1].textContent.trim();
+                    if (icon.includes('🌍')) region = val;
+                    if (icon.includes('🌐')) lang = val;
+                }
+            });
+            document.getElementById('regionLang').textContent = `${region !== 'N/A' ? region : '—'} / ${lang !== 'N/A' ? lang : '—'}`;
+
+            // Visit TikTok button
+            document.getElementById('visitTikTokBtn').href = `https://tiktok.com/@${currentUsername}`;
+        }
+
+        // ===== ANIMATE NUMBERS =====
+        function animateNumber(elementId, targetStr) {
+            const el = document.getElementById(elementId);
+            const target = parseInt(targetStr.replace(/,/g, '')) || 0;
+            const duration = 1500;
+            const start = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * target);
+                el.textContent = current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // ===== COPY TEXT =====
+        function copyText(text, label) {
+            const cleanText = text.replace('📋 انسخ', '').trim();
+            navigator.clipboard.writeText(cleanText).then(() => {
+                showToast(`تم نسخ ${label} بنجاح!`);            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = cleanText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(`تم نسخ ${label} بنجاح!`);
+            });
+        }
+
+        // ===== DOWNLOAD AVATAR =====
+        async function downloadAvatar() {
+            if (!currentAvatarUrl) return;
+            
+            showToast('جاري تحميل الصورة...');
+            
+            try {
+                const response = await fetch(currentAvatarUrl);
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `tiktok_${currentUsername}_avatar.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('تم تحميل الصورة بنجاح!');
+            } catch (e) {
+                // Fallback: open in new tab
+                window.open(currentAvatarUrl, '_blank');
+                showToast('تم فتح الصورة في نافذة جديدة');
+            }
+        }
+
+        // ===== SHOW ERROR =====
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorMessage.classList.add('active');
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('active');
+            }, 5000);
+        }
+
+        // ===== SHOW TOAST =====
+        function showToast(message) {            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // ===== MOUSE GLOW EFFECT =====
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.background = `
+                radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(0, 100, 255, 0.04), transparent 40%),
+                radial-gradient(ellipse at 20% 50%, rgba(0, 100, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(123, 47, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #020817 0%, #0a1628 50%, #020817 100%)
+            `;
+        });
+    </script>
+</body>
+</html>
