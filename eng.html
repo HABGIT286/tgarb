@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Grammar Master Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;-moz-user-select:none;-ms-user-select;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;outline:none;}
+input,textarea{-webkit-user-select:text;user-select:text;}
+img,a,button,*{-webkit-touch-callout:none;}
+body{
+  font-family:'Cairo',sans-serif;
+  background: 
+    linear-gradient(rgba(5,5,16,0.7), rgba(5,5,16,0.85)),
+    url('A.jpg') center/cover no-repeat fixed;
+  min-height:100vh;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+}
+
+
+/* === Prevent blue highlight & selection === */
+*::selection{background:transparent;color:inherit;}
+*::-moz-selection{background:transparent;color:inherit;}
+*:focus{outline:none;}
+button,input,div,span,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+input::selection{background:rgba(255,215,0,0.3);color:#fff;}
+
+/* === Scrollbar === */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#667eea,#f093fb);border-radius:3px;}
+
+/* === Variables === */
+:root{
+--p:#667eea;--s:#764ba2;--a:#f093fb;--g:#ffd700;
+--ok:#00e676;--er:#ff5252;
+--glass:rgba(255,255,255,0.04);
+--gb:rgba(255,255,255,0.08);
+}
+
+/* === Animated BG === */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.bg::before{content:'';position:absolute;inset:-50%;background:radial-gradient(circle at 20% 30%,rgba(102,126,234,0.08),transparent 40%),radial-gradient(circle at 80% 70%,rgba(240,147,251,0.06),transparent 40%),radial-gradient(circle at 50% 50%,rgba(118,75,162,0.05),transparent 50%);animation:bgMove 20s ease-in-out infinite;}
+@keyframes bgMove{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-20px,-30px) scale(1.05);}}
+
+.ptcl{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;animation:ptclAnim var(--d,8s) linear infinite;}
+@keyframes ptclAnim{0%{opacity:0;transform:translateY(100vh) scale(0);}10%{opacity:.6;}90%{opacity:.6;}100%{opacity:0;transform:translateY(-10vh) scale(1);}}
+
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.3;animation:orbF 15s ease-in-out infinite;}
+@keyframes orbF{0%,100%{transform:translate(0,0);}33%{transform:translate(40px,-50px);}66%{transform:translate(-30px,30px);}}
+
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(102,126,234,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(102,126,234,0.03) 1px,transparent 1px);background-size:60px 60px;animation:gridM 30s linear infinite;}
+@keyframes gridM{to{background-position:60px 60px;}}
+
+/* === Main === */
+.app{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px;}
+
+/* === Glass Card === */
+.card{background:var(--glass);backdrop-filter:blur(30px) saturate(1.5);-webkit-backdrop-filter:blur(30px) saturate(1.5);border:1px solid var(--gb);border-radius:28px;padding:35px;box-shadow:0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06),0 0 0 1px rgba(255,255,255,0.02);position:relative;overflow:hidden;width:100%;max-width:900px;animation:cardIn .7s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);}
+.card::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(102,126,234,0.03),transparent,rgba(240,147,251,0.03),transparent);animation:cardGlow 10s linear infinite;pointer-events:none;}
+@keyframes cardGlow{to{transform:rotate(360deg);}}
+
+/* === Title === */
+.ttl{font-family:'Orbitron',sans-serif;font-size:2em;font-weight:900;text-align:center;margin-bottom:6px;background:linear-gradient(135deg,var(--g),#fff,var(--g),var(--a));background-size:400% 400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:ttlSh 4s ease infinite;position:relative;}
+@keyframes ttlSh{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+.sub{text-align:center;color:rgba(255,255,255,0.4);margin-bottom:25px;letter-spacing:3px;font-size:.85em;text-transform:uppercase;}
+
+/* === Section Label === */
+.sec{font-size:1.1em;font-weight:700;margin:20px 0 12px;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.85);}
+.sec svg{width:22px;height:22px;fill:var(--g);animation:secPulse 2s infinite;}
+@keyframes secPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+/* === Buttons Grid === */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:12px;}
+.b{background:linear-gradient(135deg,rgba(102,126,234,0.12),rgba(118,75,162,0.12));border:1px solid rgba(102,126,234,0.2);border-radius:18px;padding:22px 14px;color:#fff;font-family:'Tajawal',sans-serif;font-size:.95em;font-weight:700;cursor:pointer;transition:all .35s cubic-bezier(.175,.885,.32,1.275);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:8px;backdrop-filter:blur(10px);}
+.b::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05),transparent);opacity:0;transition:opacity .3s;}
+.b:hover::before{opacity:1;}
+.b:hover{transform:translateY(-6px) scale(1.03);border-color:var(--g);box-shadow:0 15px 40px rgba(102,126,234,0.3),0 0 30px rgba(255,215,0,0.1);}
+.b:active{transform:translateY(-2px) scale(.98);}
+.b.sel{background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,140,0,0.15));border-color:var(--g);box-shadow:0 0 30px rgba(255,215,0,0.2);}
+.b .ic{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(102,126,234,0.2),rgba(240,147,251,0.15));border-radius:12px;padding:8px;transition:all .3s;}
+.b:hover .ic{transform:scale(1.1) rotate(-5deg);background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,140,0,0.15));}
+.b .ic svg{width:26px;height:26px;fill:#fff;}
+.b .tx{font-size:.95em;text-align:center;}
+.b .st{font-size:.7em;opacity:.5;font-weight:400;letter-spacing:1px;}
+
+/* === Tooltip === */
+.tp{position:absolute;bottom:-38px;left:50%;transform:translateX(-50%) scale(0);background:rgba(0,0,0,0.95);color:var(--g);padding:5px 12px;border-radius:8px;font-size:.7em;white-space:nowrap;transition:transform .3s;border:1px solid rgba(255,215,0,0.3);z-index:100;pointer-events:none;}
+.b:hover .tp{transform:translateX(-50%) scale(1);}
+
+/* === Number Buttons === */
+.ngrid{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;justify-content:center;}
+.nb{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));border:2px solid rgba(255,255,255,0.15);color:#fff;font-size:1.3em;font-weight:900;font-family:'Orbitron',sans-serif;cursor:pointer;transition:all .35s cubic-bezier(.175,.885,.32,1.275);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.nb::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent);opacity:0;transition:opacity .3s;}
+.nb:hover::after{opacity:1;}
+.nb:hover{transform:scale(1.15) rotate(8deg);box-shadow:0 0 25px rgba(102,126,234,0.4);border-color:var(--g);}
+.nb.sel{background:linear-gradient(135deg,var(--g),#ff8c00);border-color:var(--g);transform:scale(1.1);box-shadow:0 0 35px rgba(255,215,0,0.3);}
+
+/* === Action Button === */
+.ab{padding:14px 40px;background:linear-gradient(135deg,var(--p),var(--s));border:none;border-radius:50px;color:#fff;font-size:1.05em;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:all .35s cubic-bezier(.175,.885,.32,1.275);margin-top:22px;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;}
+.ab::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left .5s;}
+.ab:hover::before{left:100%;}
+.ab:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 12px 35px rgba(102,126,234,0.4);}
+.ab:active{transform:translateY(-1px) scale(.98);}
+.ab:disabled{opacity:.4;pointer-events:none;}
+.ab svg{width:18px;height:18px;fill:#fff;}
+
+/* === Back Button === */
+.bb{position:absolute;top:18px;right:18px;padding:8px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:25px;color:#fff;font-family:'Tajawal',sans-serif;font-size:.8em;cursor:pointer;transition:all .3s;z-index:50;display:flex;align-items:center;gap:6px;}
+.bb svg{width:14px;height:14px;fill:#fff;}
+.bb:hover{background:rgba(255,255,255,0.1);transform:scale(1.05);}
+
+/* === Progress === */
+.pw{width:100%;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;margin-bottom:18px;overflow:hidden;}
+.pb{height:100%;background:linear-gradient(90deg,var(--p),var(--a),var(--g));border-radius:3px;transition:width .6s cubic-bezier(.175,.885,.32,1.275);position:relative;}
+.pb::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);animation:pbSh 2s infinite;}
+@keyframes pbSh{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.qn{font-family:'Orbitron',sans-serif;font-size:.85em;color:var(--g);margin-bottom:12px;letter-spacing:2px;text-align:center;}
+
+/* === Question === */
+.qt{font-size:1.2em;font-weight:700;margin-bottom:18px;line-height:1.8;padding:18px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);text-align:center;}
+.qt small{opacity:.4;font-size:.7em;display:block;margin-top:6px;letter-spacing:1px;}
+.sen{font-family:'Poppins',sans-serif;font-size:1.3em;padding:20px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.06);margin:12px 0;direction:ltr;text-align:center;line-height:1.8;letter-spacing:.5px;}
+
+/* === Input === */
+.ai{width:100%;max-width:480px;padding:14px 20px;background:rgba(255,255,255,0.05);border:2px solid rgba(102,126,234,0.2);border-radius:14px;color:#fff;font-size:1.1em;font-family:'Poppins',sans-serif;text-align:center;transition:all .3s;outline:none;direction:ltr;}
+.ai:focus{border-color:var(--g);box-shadow:0 0 25px rgba(255,215,0,0.15);background:rgba(255,255,255,0.08);}
+.ai::placeholder{color:rgba(255,255,255,0.2);}
+
+/* === Word Chips === */
+.wc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0;min-height:55px;padding:12px;background:rgba(255,255,255,0.02);border-radius:14px;border:1px dashed rgba(255,255,255,0.08);}
+.ch{padding:9px 16px;background:linear-gradient(135deg,rgba(102,126,234,0.2),rgba(118,75,162,0.2));border:1px solid rgba(102,126,234,0.3);border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:1em;font-weight:600;transition:all .3s;user-select:none;direction:ltr;}
+.ch:hover{transform:scale(1.08) rotate(-2deg);box-shadow:0 4px 15px rgba(102,126,234,0.25);border-color:var(--g);}
+.ch.pl{background:linear-gradient(135deg,rgba(0,230,118,0.15),rgba(0,200,83,0.15));border-color:var(--ok);}
+.dz{min-height:55px;padding:10px;background:rgba(255,215,0,0.03);border:2px dashed rgba(255,215,0,0.2);border-radius:14px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:center;margin:12px 0;transition:all .3s;direction:ltr;}
+.dz:empty::before{content:'اضغط على الكلمات لترتيبها';color:rgba(255,255,255,0.25);font-size:.85em;}
+
+/* === Options === */
+.opts{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;justify-content:center;}
+.op{padding:12px 20px;background:linear-gradient(135deg,rgba(102,126,234,0.12),rgba(118,75,162,0.12));border:2px solid rgba(102,126,234,0.2);border-radius:12px;color:#fff;font-family:'Poppins',sans-serif;font-size:.95em;font-weight:600;cursor:pointer;transition:all .3s cubic-bezier(.175,.885,.32,1.275);direction:ltr;}
+.op:hover{transform:scale(1.06);border-color:var(--g);box-shadow:0 0 18px rgba(255,215,0,0.15);}
+.op.sel{background:linear-gradient(135deg,var(--g),#ff8c00);border-color:var(--g);color:#000;transform:scale(1.06);}
+
+/* === TF === */
+.tf{display:flex;gap:20px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+.tfb{padding:16px 40px;border-radius:14px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .3s cubic-bezier(.175,.885,.32,1.275);border:2px solid;font-family:'Tajawal',sans-serif;display:flex;align-items:center;gap:8px;}
+.tfb svg{width:20px;height:20px;}
+.tfb.t{background:rgba(0,230,118,0.1);border-color:rgba(0,230,118,0.3);color:var(--ok);}
+.tfb.t svg{fill:var(--ok);}
+.tfb.f{background:rgba(255,82,82,0.1);border-color:rgba(255,82,82,0.3);color:var(--er);}
+.tfb.f svg{fill:var(--er);}
+.tfb:hover{transform:scale(1.08) translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+.tfb.sel{transform:scale(1.08);box-shadow:0 0 25px currentColor;}
+
+/* === Hint === */
+.hb{padding:8px 20px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:25px;color:var(--g);font-size:.8em;cursor:pointer;transition:all .3s;margin-top:10px;font-family:'Tajawal',sans-serif;display:inline-flex;align-items:center;gap:6px;}
+.hb svg{width:14px;height:14px;fill:var(--g);}
+.hb:hover{background:rgba(255,215,0,0.12);transform:scale(1.05);box-shadow:0 0 15px rgba(255,215,0,0.15);}
+.hx{margin-top:10px;padding:12px 16px;background:rgba(255,215,0,0.05);border-radius:12px;border:1px solid rgba(255,215,0,0.15);font-size:.85em;line-height:1.7;display:none;animation:fadeIn .4s;}
+.hx.show{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* === Results === */
+.res{text-align:center;width:100%;}
+.sc{width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--ok) var(--p,0%),rgba(255,255,255,0.06) 0%);display:flex;align-items:center;justify-content:center;margin:22px auto;position:relative;animation:scIn 1.5s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes scIn{from{transform:scale(0) rotate(-180deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.si{width:145px;height:145px;border-radius:50%;background:rgba(7,7,20,0.95);display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.sn{font-family:'Orbitron',sans-serif;font-size:2.3em;font-weight:900;color:var(--g);}
+.sl{font-size:.8em;color:rgba(255,255,255,0.5);}
+.sts{font-size:2em;margin:12px 0;display:flex;justify-content:center;gap:4px;}
+.sts span{display:inline-block;animation:stP 1s infinite alternate;}
+.sts span:nth-child(2){animation-delay:.1s;}
+.sts span:nth-child(3){animation-delay:.2s;}
+.sts span:nth-child(4){animation-delay:.3s;}
+.sts span:nth-child(5){animation-delay:.4s;}
+@keyframes stP{from{transform:scale(1);}to{transform:scale(1.15);}}
+.rm{font-size:1.2em;font-weight:700;margin:10px 0;padding:10px 22px;border-radius:14px;display:inline-block;}
+.rm.ex{background:rgba(0,230,118,0.1);color:var(--ok);border:1px solid rgba(0,230,118,0.2);}
+.rm.gd{background:rgba(255,215,0,0.1);color:var(--g);border:1px solid rgba(255,215,0,0.2);}
+.rm.pr{background:rgba(255,82,82,0.1);color:var(--er);border:1px solid rgba(255,82,82,0.2);}
+
+/* === Review === */
+.rv{width:100%;max-height:260px;overflow-y:auto;margin-top:15px;padding:6px;}
+.ai2{padding:12px 15px;margin:7px 0;border-radius:12px;display:flex;align-items:center;gap:10px;animation:slIn .4s cubic-bezier(.175,.885,.32,1.275) both;}
+@keyframes slIn{from{opacity:0;transform:translateX(15px);}to{opacity:1;transform:translateX(0);}}
+.ai2.ok{background:rgba(0,230,118,0.07);border:1px solid rgba(0,230,118,0.15);}
+.ai2.no{background:rgba(255,82,82,0.07);border:1px solid rgba(255,82,82,0.15);}
+.ai2 .ic2{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ai2.ok .ic2{background:rgba(0,230,118,0.15);}
+.ai2.no .ic2{background:rgba(255,82,82,0.15);}
+.ai2 .ic2 svg{width:16px;height:16px;}
+.ai2.ok .ic2 svg{fill:var(--ok);}
+.ai2.no .ic2 svg{fill:var(--er);}
+.ai2 .dt{flex:1;font-size:.85em;direction:ltr;text-align:left;}
+.ai2 .ca{color:var(--ok);font-weight:700;}
+.ai2 .ua{color:var(--er);text-decoration:line-through;}
+
+/* === Notification === */
+.nf{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-100px);padding:12px 25px;border-radius:12px;font-weight:700;z-index:1000;transition:transform .5s cubic-bezier(.175,.885,.32,1.275);backdrop-filter:blur(15px);display:flex;align-items:center;gap:8px;font-size:.9em;}
+.nf svg{width:18px;height:18px;}
+.nf.show{transform:translateX(-50%) translateY(0);}
+.nf.ok{background:rgba(0,230,118,0.15);border:1px solid rgba(0,230,118,0.3);color:var(--ok);}
+.nf.ok svg{fill:var(--ok);}
+.nf.er{background:rgba(255,82,82,0.15);border:1px solid rgba(255,82,82,0.3);color:var(--er);}
+.nf.er svg{fill:var(--er);}
+
+/* === Confetti === */
+.cf{position:fixed;top:-10px;z-index:1000;animation:cfF 3s linear forwards;pointer-events:none;}
+@keyframes cfF{0%{transform:translateY(-10px) rotate(0);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+
+/* === Ripple === */
+.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);transform:scale(0);animation:rpE .6s linear;pointer-events:none;}
+@keyframes rpE{to{transform:scale(4);opacity:0;}}
+
+/* === Screen === */
+.scr{display:none;animation:cardIn .6s cubic-bezier(.175,.885,.32,1.275);}
+.scr.act{display:block;}
+
+/* === Steps indicator === */
+.steps{display:flex;justify-content:center;gap:8px;margin-bottom:20px;}
+.step{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all .3s;}
+.step.act{background:var(--g);box-shadow:0 0 10px rgba(255,215,0,0.3);transform:scale(1.3);}
+.step.done{background:var(--ok);}
+
+/* === Responsive === */
+@media(max-width:768px){
+.ttl{font-size:1.4em;}
+.card{padding:20px;border-radius:20px;}
+.grid{grid-template-columns:1fr 1fr;gap:10px;}
+.b{padding:16px 10px;font-size:.85em;}
+.b .ic{width:36px;height:36px;padding:6px;}
+.b .ic svg{width:22px;height:22px;}
+.qt{font-size:1em;padding:14px;}
+.sen{font-size:1.1em;padding:14px;}
+}
+@media(max-width:400px){
+.grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg">
+<div class="grid-lines"></div>
+</div>
+
+<div class="nf" id="nf">
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span id="nfT"></span>
+</div>
+
+<div class="app">
+
+<!-- Screen 1: State -->
+<div class="scr act" id="s1">
+<div class="card">
+<h1 class="ttl">Grammar Master Pro</h1>
+<p class="sub">Simple Present Tense</p>
+
+<div class="steps"><div class="step act"></div><div class="step"></div><div class="step"></div><div class="step"></div></div>
+
+<div class="sec">
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span>اختر نوع الحالة</span>
+</div>
+
+<div class="grid">
+<button class="b" onclick="pick('state','pos',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+<span class="tx">حالة الإثبات</span>
+<span class="st">Positive</span>
+<span class="tp">Subject + Verb(s) + Object</span>
+</button>
+
+<button class="b" onclick="pick('state','neg',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>
+<span class="tx">حالة النفي</span>
+<span class="st">Negative</span>
+<span class="tp">Subject + don't/doesn't + Verb</span>
+</button>
+
+<button class="b" onclick="pick('state','q',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div>
+<span class="tx">حالة السؤال</span>
+<span class="st">Question</span>
+<span class="tp">Do/Does + Subject + Verb + ?</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Screen 2: Difficulty -->
+<div class="scr" id="s2">
+<div class="card">
+<button class="bb" onclick="go('s1')"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg> رجوع</button>
+<h1 class="ttl">مستوى الصعوبة</h1>
+<p class="sub">Choose Difficulty Level</p>
+
+<div class="steps"><div class="step done"></div><div class="step act"></div><div class="step"></div><div class="step"></div></div>
+
+<div class="sec">
+<svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+<span>اختر مستوى الصعوبة</span>
+</div>
+
+<div class="grid">
+<button class="b" onclick="pick('diff','easy',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+<span class="tx">بسيط</span>
+<span class="st">Easy</span>
+<span class="tp">جمل قصيرة وسهلة</span>
+</button>
+
+<button class="b" onclick="pick('diff','med',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg></div>
+<span class="tx">متوسط</span>
+<span class="st">Medium</span>
+<span class="tp">جمل متوسطة الطول</span>
+</button>
+
+<button class="b" onclick="pick('diff','hard',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11h2v2h-2zm0 4h2v4h-2z"/></svg></div>
+<span class="tx">صعب</span>
+<span class="st">Hard</span>
+<span class="tp">جمل معقدة ومتقدمة</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Screen 3: Test Type -->
+<div class="scr" id="s3">
+<div class="card">
+<button class="bb" onclick="go('s2')"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg> رجوع</button>
+<h1 class="ttl">نوع الاختبار</h1>
+<p class="sub">Choose Test Type</p>
+
+<div class="steps"><div class="step done"></div><div class="step done"></div><div class="step act"></div><div class="step"></div></div>
+
+<div class="sec">
+<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+<span>اختر نوع الاختبار</span>
+</div>
+
+<div class="grid">
+<button class="b" onclick="pick('type','puzzle',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zM8.5 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+<span class="tx">لغز - ترتيب</span>
+<span class="st">Puzzle</span>
+<span class="tp">رتب الكلمات</span>
+</button>
+
+<button class="b" onclick="pick('type','fill',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+<span class="tx">املأ الفراغ</span>
+<span class="st">Fill Blank</span>
+<span class="tp">اكتب الكلمة الناقصة</span>
+</button>
+
+<button class="b" onclick="pick('type','rearrange',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></div>
+<span class="tx">إعادة ترتيب</span>
+<span class="st">Rearrange</span>
+<span class="tp">أعد ترتيب واكتب</span>
+</button>
+
+<button class="b" onclick="pick('type','rewrite',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20 2.81L19.19 2 17 4.19 19.81 7 22 4.81 20 2.81z"/></svg></div>
+<span class="tx">إعادة صياغة</span>
+<span class="st">Rewrite</span>
+<span class="tp">أعد كتابة الجملة</span>
+</button>
+
+<button class="b" onclick="pick('type','tf',this)">
+<div class="ic"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+<span class="tx">صح أو خطأ</span>
+<span class="st">True / False</span>
+<span class="tp">حدد صحة الجملة</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Screen 4: Number -->
+<div class="scr" id="s4">
+<div class="card" style="max-width:550px;text-align:center;">
+<button class="bb" onclick="go('s3')"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg> رجوع</button>
+<h1 class="ttl">عدد الأسئلة</h1>
+<p class="sub">How Many Questions?</p>
+
+<div class="steps"><div class="step done"></div><div class="step done"></div><div class="step done"></div><div class="step act"></div></div>
+
+<div class="sec" style="justify-content:center;">
+<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+<span>كم سؤال تريد؟</span>
+</div>
+
+<div class="ngrid">
+<button class="nb" onclick="pickNum(1)">1</button>
+<button class="nb" onclick="pickNum(2)">2</button>
+<button class="nb" onclick="pickNum(3)">3</button>
+<button class="nb" onclick="pickNum(4)">4</button>
+<button class="nb" onclick="pickNum(5)">5</button>
+</div>
+
+<button class="ab" id="stBtn" onclick="startQ()" disabled>
+<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+ابدأ الاختبار
+</button>
+</div>
+</div>
+
+<!-- Screen 5: Quiz -->
+<div class="scr" id="s5">
+<div class="card">
+<button class="bb" onclick="exitQ()"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> خروج</button>
+
+<div class="pw"><div class="pb" id="pBar" style="width:0%"></div></div>
+<div class="qn" id="qNum">Question 1 / 5</div>
+
+<div id="qBox"></div>
+
+<div id="hArea">
+<button class="hb" onclick="showH()">
+<svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+تلميح
+</button>
+<div class="hx" id="hBox"></div>
+</div>
+
+<button class="ab" onclick="subAns()" id="subBtn">
+<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+تأكيد الإجابة
+</button>
+</div>
+</div>
+
+<!-- Screen 6: Results -->
+<div class="scr" id="s6">
+<div class="card">
+<div class="res">
+<h1 class="ttl">النتائج</h1>
+<p class="sub">Your Results</p>
+
+<div class="sc" id="scC">
+<div class="si">
+<div class="sn" id="scN">0%</div>
+<div class="sl">النتيجة</div>
+</div>
+</div>
+
+<div class="sts" id="sts"></div>
+<div class="rm" id="rm"></div>
+
+<div class="rv" id="rv"></div>
+
+<div style="margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+<button class="ab" onclick="restart()">
+<svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+إعادة
+</button>
+<button class="ab" onclick="go('s1');reset();" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24);">
+<svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+الرئيسية
+</button>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+// ===== State =====
+let S={state:'',diff:'',type:'',num:0,cur:0,score:0,qs:[],ans:[],placed:[]};
+
+// ===== Background =====
+(function(){
+const bg=document.getElementById('bg');
+for(let i=0;i<60;i++){
+const p=document.createElement('div');p.className='ptcl';
+p.style.left=Math.random()*100+'%';
+p.style.setProperty('--d',(Math.random()*8+6)+'s');
+p.style.animationDelay=Math.random()*8+'s';
+p.style.width=p.style.height=(Math.random()*2+1)+'px';
+bg.appendChild(p);
+}
+const cols=['rgba(102,126,234,0.15)','rgba(118,75,162,0.12)','rgba(240,147,251,0.1)','rgba(255,215,0,0.06)'];
+for(let i=0;i<3;i++){
+const o=document.createElement('div');o.className='orb';
+o.style.width=(Math.random()*250+150)+'px';o.style.height=o.style.width;
+o.style.background=cols[i];o.style.left=Math.random()*100+'%';o.style.top=Math.random()*100+'%';
+o.style.animationDelay=Math.random()*5+'s';
+bg.appendChild(o);
+}
+})();
+
+// ===== Question Banks =====
+const B={
+// ===== POSITIVE =====
+pos:{
+easy:{
+puzzle:[
+{w:['He','plays','football'],a:'He plays football',h:'He مفرد → الفعل يأخذ s'},
+{w:['She','reads','books'],a:'She reads books',h:'She مفرد → الفعل يأخذ s'},
+{w:['They','play','here'],a:'They play here',h:'They جمع → الفعل مجرد'},
+{w:['We','study','English'],a:'We study English',h:'We جمع → الفعل مجرد'},
+{w:['It','rains','a','lot'],a:'It rains a lot',h:'It مفرد → الفعل يأخذ s'},
+{w:['My','dad','drinks','milk'],a:'My dad drinks milk',h:'My dad = He → يأخذ s'},
+{w:['The','cat','sleeps','here'],a:'The cat sleeps here',h:'The cat = It → يأخذ s'},
+{w:['You','speak','English'],a:'You speak English',h:'You → الفعل مجرد'},
+{w:['Ali','likes','pizza'],a:'Ali likes pizza',h:'Ali = He → يأخذ s'},
+{w:['The','boys','run','fast'],a:'The boys run fast',h:'The boys جمع → مجرد'}
+],
+fill:[
+{s:'He ___ (play) football.',a:'plays',h:'He → play + s'},
+{s:'She ___ (read) books.',a:'reads',h:'She → read + s'},
+{s:'They ___ (play) here.',a:'play',h:'They → الفعل مجرد'},
+{s:'We ___ (study) English.',a:'study',h:'We → الفعل مجرد'},
+{s:'It ___ (rain) a lot.',a:'rains',h:'It → rain + s'},
+{s:'My dad ___ (drink) milk.',a:'drinks',h:'My dad = He → drink + s'},
+{s:'The cat ___ (sleep) here.',a:'sleeps',h:'The cat = It → sleep + s'},
+{s:'You ___ (speak) English.',a:'speak',h:'You → الفعل مجرد'},
+{s:'Ali ___ (like) pizza.',a:'likes',h:'Ali = He → like + s'},
+{s:'The boys ___ (run) fast.',a:'run',h:'The boys جمع → مجرد'}
+],
+rearrange:[
+{sc:'plays / He / football',a:'He plays football',h:'He + plays + مفعول'},
+{sc:'reads / She / books',a:'She reads books',h:'She + reads + مفعول'},
+{sc:'play / They / here',a:'They play here',h:'They + play + مكان'},
+{sc:'study / We / English',a:'We study English',h:'We + study + مفعول'},
+{sc:'rains / It / a / lot',a:'It rains a lot',h:'It + rains + حال'},
+{sc:'drinks / dad / My / milk',a:'My dad drinks milk',h:'فاعل + drinks + مفعول'},
+{sc:'sleeps / cat / The / here',a:'The cat sleeps here',h:'فاعل + sleeps + مكان'},
+{sc:'speak / You / English',a:'You speak English',h:'You + speak + مفعول'},
+{sc:'likes / Ali / pizza',a:'Ali likes pizza',h:'Ali + likes + مفعول'},
+{sc:'run / boys / The / fast',a:'The boys run fast',h:'فاعل + run + حال'}
+],
+rewrite:[
+{q:'Change to plural: "He plays football."',a:'They play football',h:'He→They, plays→play'},
+{q:'Change to singular: "They play here."',a:'He plays here',h:'They→He, play→plays'},
+{q:'Change to plural: "She reads books."',a:'We read books',h:'She→We, reads→read'},
+{q:'Change to singular: "We study English."',a:'He studies English',h:'We→He, study→studies'},
+{q:'Change to plural: "It rains a lot."',a:'They rain a lot',h:'It→They, rains→rain'},
+{q:'Change to singular: "The boys run fast."',a:'The boy runs fast',h:'boys→boy, run→runs'},
+{q:'Change to plural: "Ali likes pizza."',a:'They like pizza',h:'Ali→They, likes→like'},
+{q:'Change to singular: "You speak English."',a:'He speaks English',h:'You→He, speak→speaks'},
+{q:'Change to plural: "The cat sleeps here."',a:'The cats sleep here',h:'cat→cats, sleeps→sleep'},
+{q:'Change to singular: "My dad drinks milk."',a:'He drinks milk',h:'My dad→He (يبقى drinks)'}
+],
+tf:[
+{s:'He play football.',c:false,co:'He plays football.',h:'He → plays (مع s)'},
+{s:'She reads books.',c:true,co:'✓',h:'She + reads ✓'},
+{s:'They plays here.',c:false,co:'They play here.',h:'They → play (بدون s)'},
+{s:'We study English.',c:true,co:'✓',h:'We + study ✓'},
+{s:'It rain a lot.',c:false,co:'It rains a lot.',h:'It → rains (مع s)'},
+{s:'My dad drinks milk.',c:true,co:'✓',h:'My dad + drinks ✓'},
+{s:'The cat sleep here.',c:false,co:'The cat sleeps here.',h:'The cat → sleeps'},
+{s:'You speak English.',c:true,co:'✓',h:'You + speak ✓'},
+{s:'Ali like pizza.',c:false,co:'Ali likes pizza.',h:'Ali → likes (مع s)'},
+{s:'The boys run fast.',c:true,co:'✓',h:'The boys + run ✓'}
+]
+},
+med:{
+puzzle:[
+{w:['He','goes','to','school','every','day'],a:'He goes to school every day',h:'He → goes (go+es)'},
+{w:['She','watches','TV','at','night'],a:'She watches TV at night',h:'She → watches (watch+es)'},
+{w:['They','dont','like','cold','weather'],a:'They dont like cold weather',h:'They جمع → dont + مجرد'},
+{w:['We','have','lunch','at','noon'],a:'We have lunch at noon',h:'We → have (مجرد)'},
+{w:['It','snows','in','winter'],a:'It snows in winter',h:'It → snows (snow+s)'},
+{w:['My','mother','cooks','dinner','every','evening'],a:'My mother cooks dinner every evening',h:'My mother = She → cooks'},
+{w:['The','children','play','in','the','garden'],a:'The children play in the garden',h:'children جمع → play'},
+{w:['You','always','arrive','early'],a:'You always arrive early',h:'You → arrive (مجرد)'},
+{w:['Ahmed','studies','hard','every','day'],a:'Ahmed studies hard every day',h:'Ahmed = He → studies'},
+{w:['The','students','read','books','daily'],a:'The students read books daily',h:'students جمع → read'}
+],
+fill:[
+{s:'He ___ (go) to school daily.',a:'goes',h:'He → go + es = goes'},
+{s:'She ___ (watch) TV at night.',a:'watches',h:'She → watch + es = watches'},
+{s:'They ___ (not/like) cold weather.',a:'dont like',h:'They → dont + like'},
+{s:'We ___ (have) lunch at noon.',a:'have',h:'We → have (مجرد)'},
+{s:'It ___ (snow) in winter.',a:'snows',h:'It → snow + s = snows'},
+{s:'My mother ___ (cook) dinner.',a:'cooks',h:'My mother = She → cook + s'},
+{s:'The children ___ (play) outside.',a:'play',h:'children جمع → play'},
+{s:'You ___ (always/arrive) early.',a:'always arrive',h:'You → arrive (مجرد)'},
+{s:'Ahmed ___ (study) hard.',a:'studies',h:'Ahmed = He → study → studies'},
+{s:'The students ___ (read) daily.',a:'read',h:'students جمع → read'}
+],
+rearrange:[
+{sc:'goes / He / school / to / day / every',a:'He goes to school every day',h:'He + goes + to school + every day'},
+{sc:'watches / She / TV / at / night',a:'She watches TV at night',h:'She + watches + TV + at night'},
+{sc:'dont / like / They / weather / cold',a:'They dont like cold weather',h:'They + dont + like + cold weather'},
+{sc:'have / We / lunch / at / noon',a:'We have lunch at noon',h:'We + have + lunch + at noon'},
+{sc:'snows / It / in / winter',a:'It snows in winter',h:'It + snows + in winter'},
+{sc:'cooks / mother / My / dinner / evening / every',a:'My mother cooks dinner every evening',h:'فاعل + cooks + مفعول + زمان'},
+{sc:'play / children / The / garden / in / the',a:'The children play in the garden',h:'فاعل جمع + play + مكان'},
+{sc:'always / arrive / You / early',a:'You always arrive early',h:'You + always + arrive + early'},
+{sc:'studies / Ahmed / hard / day / every',a:'Ahmed studies hard every day',h:'Ahmed + studies + hard + every day'},
+{sc:'read / students / The / books / daily',a:'The students read books daily',h:'فاعل جمع + read + مفعول'}
+],
+rewrite:[
+{q:'Change to negative: "He plays football."',a:'He doesnt play football',h:'doesnt + play (مجرد)'},
+{q:'Change to plural: "She watches TV."',a:'They watch TV',h:'They + watch (بدون es)'},
+{q:'Change to question: "They play here."',a:'Do they play here',h:'Do + they + play + ?'},
+{q:'Change to singular: "The children play."',a:'The child plays',h:'child + plays'},
+{q:'Change to negative: "It snows a lot."',a:'It doesnt snow a lot',h:'doesnt + snow (مجرد)'},
+{q:'Change to question: "She reads books."',a:'Does she read books',h:'Does + she + read + ?'},
+{q:'Change to plural: "My dad drinks milk."',a:'They drink milk',h:'They + drink (مجرد)'},
+{q:'Change to negative: "We study English."',a:'We dont study English',h:'dont + study (مجرد)'},
+{q:'Change to question: "Ahmed studies hard."',a:'Does Ahmed study hard',h:'Does + Ahmed + study + ?'},
+{q:'Change to plural: "The cat sleeps here."',a:'The cats sleep here',h:'cats + sleep (مجرد)'}
+],
+tf:[
+{s:'He go to school daily.',c:false,co:'He goes to school daily.',h:'He → goes (go+es)'},
+{s:'She watches TV at night.',c:true,co:'✓',h:'She + watches ✓'},
+{s:'They doesn\'t like cold weather.',c:false,co:'They don\'t like cold weather.',h:'They → don\'t (ليس doesn\'t)'},
+{s:'We have lunch at noon.',c:true,co:'✓',h:'We + have ✓'},
+{s:'It snow in winter.',c:false,co:'It snows in winter.',h:'It → snows'},
+{s:'My mother cooks dinner.',c:true,co:'✓',h:'My mother + cooks ✓'},
+{s:'The children plays outside.',c:false,co:'The children play outside.',h:'children جمع → play'},
+{s:'You always arrive early.',c:true,co:'✓',h:'You + arrive ✓'},
+{s:'Ahmed study hard.',c:false,co:'Ahmed studies hard.',h:'Ahmed → studies'},
+{s:'The students read daily.',c:true,co:'✓',h:'students + read ✓'}
+]
+},
+hard:{
+puzzle:[
+{w:['He','carefully','writes','his','homework'],a:'He carefully writes his homework',h:'He → writes (write+s)'},
+{w:['She','rarely','eats','fast','food'],a:'She rarely eats fast food',h:'She → eats (eat+s)'},
+{w:['They','occasionally','visit','their','grandparents'],a:'They occasionally visit their grandparents',h:'They جمع → visit (مجرد)'},
+{w:['We','usually','finish','work','early'],a:'We usually finish work early',h:'We → finish (مجرد)'},
+{w:['It','constantly','changes','its','color'],a:'It constantly changes its color',h:'It → changes (change+s)'},
+{w:['My','teacher','frequently','gives','us','exercises'],a:'My teacher frequently gives us exercises',h:'teacher = He/She → gives'},
+{w:['The','athletes','regularly','practice','their','skills'],a:'The athletes regularly practice their skills',h:'athletes جمع → practice'},
+{w:['You','sometimes','forget','your','keys'],a:'You sometimes forget your keys',h:'You → forget (مجرد)'},
+{w:['The','company','annually','produces','new','models'],a:'The company annually produces new models',h:'company = It → produces'},
+{w:['The','birds','migrate','south','every','autumn'],a:'The birds migrate south every autumn',h:'birds جمع → migrate'}
+],
+fill:[
+{s:'He ___ (carefully/write) his homework.',a:'carefully writes',h:'He → write + s = writes'},
+{s:'She ___ (rarely/eat) fast food.',a:'rarely eats',h:'She → eat + s = eats'},
+{s:'They ___ (occasionally/visit) grandparents.',a:'occasionally visit',h:'They → visit (مجرد)'},
+{s:'We ___ (usually/finish) work early.',a:'usually finish',h:'We → finish (مجرد)'},
+{s:'It ___ (constantly/change) color.',a:'constantly changes',h:'It → change + s = changes'},
+{s:'My teacher ___ (frequently/give) exercises.',a:'frequently gives',h:'teacher = He/She → give + s'},
+{s:'The athletes ___ (regularly/practice) skills.',a:'regularly practice',h:'athletes جمع → practice'},
+{s:'You ___ (sometimes/forget) your keys.',a:'sometimes forget',h:'You → forget (مجرد)'},
+{s:'The company ___ (annually/produce) models.',a:'annually produces',h:'company = It → produce + s'},
+{s:'The birds ___ (migrate) south every autumn.',a:'migrate',h:'birds جمع → migrate'}
+],
+rearrange:[
+{sc:'writes / He / carefully / homework / his',a:'He carefully writes his homework',h:'He + carefully + writes + his homework'},
+{sc:'rarely / eats / She / food / fast',a:'She rarely eats fast food',h:'She + rarely + eats + fast food'},
+{sc:'occasionally / visit / They / grandparents / their',a:'They occasionally visit their grandparents',h:'They + occasionally + visit + grandparents'},
+{sc:'usually / finish / We / work / early',a:'We usually finish work early',h:'We + usually + finish + work early'},
+{sc:'constantly / changes / It / its / color',a:'It constantly changes its color',h:'It + constantly + changes + its color'},
+{sc:'frequently / gives / teacher / My / exercises / us',a:'My teacher frequently gives us exercises',h:'فاعل + frequently + gives + us + exercises'},
+{sc:'regularly / practice / athletes / The / skills / their',a:'The athletes regularly practice their skills',h:'فاعل جمع + regularly + practice + skills'},
+{sc:'sometimes / forget / You / keys / your',a:'You sometimes forget your keys',h:'You + sometimes + forget + your keys'},
+{sc:'annually / produces / company / The / models / new',a:'The company annually produces new models',h:'فاعل + annually + produces + models'},
+{sc:'migrate / birds / The / south / every / autumn',a:'The birds migrate south every autumn',h:'فاعل جمع + migrate + south + every autumn'}
+],
+rewrite:[
+{q:'Change to negative: "He carefully writes his homework."',a:'He doesnt carefully write his homework',h:'doesnt + write (مجرد)'},
+{q:'Change to question: "She rarely eats fast food."',a:'Does she rarely eat fast food',h:'Does + she + eat (مجرد) + ?'},
+{q:'Change to singular: "They occasionally visit grandparents."',a:'He occasionally visits grandparents',h:'He + visits (visit+s)'},
+{q:'Change to negative: "We usually finish work early."',a:'We dont usually finish work early',h:'dont + finish (مجرد)'},
+{q:'Change to question: "It constantly changes color."',a:'Does it constantly change color',h:'Does + it + change (مجرد) + ?'},
+{q:'Change to plural: "My teacher frequently gives exercises."',a:'My teachers frequently give exercises',h:'teachers + give (مجرد)'},
+{q:'Change to negative: "The athletes regularly practice."',a:'The athletes dont regularly practice',h:'dont + practice (مجرد)'},
+{q:'Change to question: "You sometimes forget your keys."',a:'Do you sometimes forget your keys',h:'Do + you + forget + ?'},
+{q:'Change to singular: "The birds migrate south."',a:'The bird migrates south',h:'bird + migrates (migrate+s)'},
+{q:'Change to negative: "The company produces new models."',a:'The company doesnt produce new models',h:'doesnt + produce (مجرد)'}
+],
+tf:[
+{s:'He carefully write his homework.',c:false,co:'He carefully writes his homework.',h:'He → writes (write+s)'},
+{s:'She rarely eats fast food.',c:true,co:'✓',h:'She + eats ✓'},
+{s:'They occasionally visits grandparents.',c:false,co:'They occasionally visit grandparents.',h:'They → visit (بدون s)'},
+{s:'We usually finish work early.',c:true,co:'✓',h:'We + finish ✓'},
+{s:'It constantly change color.',c:false,co:'It constantly changes color.',h:'It → changes'},
+{s:'My teacher frequently gives exercises.',c:true,co:'✓',h:'teacher + gives ✓'},
+{s:'The athletes regularly practices skills.',c:false,co:'The athletes regularly practice their skills.',h:'athletes جمع → practice'},
+{s:'You sometimes forget your keys.',c:true,co:'✓',h:'You + forget ✓'},
+{s:'The company annually produce models.',c:false,co:'The company annually produces new models.',h:'company = It → produces'},
+{s:'The birds migrate south every autumn.',c:true,co:'✓',h:'birds + migrate ✓'}
+]
+}
+},
+
+// ===== NEGATIVE =====
+neg:{
+easy:{
+puzzle:[
+{w:['He',"doesn't",'play','football'],a:"He doesn't play football",h:"He → doesn't + play (مجرد)"},
+{w:['She',"doesn't",'read','books'],a:"She doesn't read books",h:"She → doesn't + read (مجرد)"},
+{w:['They',"don't",'play','here'],a:"They don't play here",h:"They → don't + play"},
+{w:['We',"don't",'study','English'],a:"We don't study English",h:"We → don't + study"},
+{w:['It',"doesn't",'rain','much'],a:"It doesn't rain much",h:"It → doesn't + rain"},
+{w:['My','dad',"doesn't",'drink','milk'],a:"My dad doesn't drink milk",h:"dad = He → doesn't + drink"},
+{w:['The','cat',"doesn't",'sleep','here'],a:"The cat doesn't sleep here",h:"cat = It → doesn't + sleep"},
+{w:['You',"don't",'speak','Arabic'],a:"You don't speak Arabic",h:"You → don't + speak"},
+{w:['Ali',"doesn't",'like','pizza'],a:"Ali doesn't like pizza",h:"Ali = He → doesn't + like"},
+{w:['The','boys',"don't",'run','fast'],a:"The boys don't run fast",h:"boys جمع → don't + run"}
+],
+fill:[
+{s:"He ___ (not/play) football.",a:"doesn't play",h:"He → doesn't + play"},
+{s:"She ___ (not/read) books.",a:"doesn't read",h:"She → doesn't + read"},
+{s:"They ___ (not/play) here.",a:"don't play",h:"They → don't + play"},
+{s:"We ___ (not/study) English.",a:"don't study",h:"We → don't + study"},
+{s:"It ___ (not/rain) much.",a:"doesn't rain",h:"It → doesn't + rain"},
+{s:"My dad ___ (not/drink) milk.",a:"doesn't drink",h:"dad = He → doesn't + drink"},
+{s:"The cat ___ (not/sleep) here.",a:"doesn't sleep",h:"cat = It → doesn't + sleep"},
+{s:"You ___ (not/speak) Arabic.",a:"don't speak",h:"You → don't + speak"},
+{s:"Ali ___ (not/like) pizza.",a:"doesn't like",h:"Ali = He → doesn't + like"},
+{s:"The boys ___ (not/run) fast.",a:"don't run",h:"boys جمع → don't + run"}
+],
+rearrange:[
+{sc:"doesn't / play / He / football",a:"He doesn't play football",h:"He + doesn't + play"},
+{sc:"doesn't / read / She / books",a:"She doesn't read books",h:"She + doesn't + read"},
+{sc:"don't / play / They / here",a:"They don't play here",h:"They + don't + play"},
+{sc:"don't / study / We / English",a:"We don't study English",h:"We + don't + study"},
+{sc:"doesn't / rain / It / much",a:"It doesn't rain much",h:"It + doesn't + rain"},
+{sc:"doesn't / drink / dad / My / milk",a:"My dad doesn't drink milk",h:"فاعل + doesn't + drink"},
+{sc:"doesn't / sleep / cat / The / here",a:"The cat doesn't sleep here",h:"فاعل + doesn't + sleep"},
+{sc:"don't / speak / You / Arabic",a:"You don't speak Arabic",h:"You + don't + speak"},
+{sc:"doesn't / like / Ali / pizza",a:"Ali doesn't like pizza",h:"Ali + doesn't + like"},
+{sc:"don't / run / boys / The / fast",a:"The boys don't run fast",h:"فاعل جمع + don't + run"}
+],
+rewrite:[
+{q:'Change to positive: "He doesn\'t play football."',a:'He plays football',h:'plays (play+s)'},
+{q:'Change to plural: "She doesn\'t read books."',a:"They don't read books",h:"They + don't + read"},
+{q:'Change to singular: "They don\'t play here."',a:"He doesn't play here",h:"He + doesn't + play"},
+{q:'Change to positive: "We don\'t study English."',a:'We study English',h:'study (مجرد)'},
+{q:'Change to question: "It doesn\'t rain much."',a:"Does it rain much",h:"Does + it + rain + ?"},
+{q:'Change to positive: "My dad doesn\'t drink milk."',a:'My dad drinks milk',h:'drinks (drink+s)'},
+{q:'Change to plural: "The cat doesn\'t sleep here."',a:"The cats don't sleep here",h:"cats + don't + sleep"},
+{q:'Change to singular: "You don\'t speak Arabic."',a:"He doesn't speak Arabic",h:"He + doesn't + speak"},
+{q:'Change to positive: "Ali doesn\'t like pizza."',a:'Ali likes pizza',h:'likes (like+s)'},
+{q:'Change to plural: "The boy doesn\'t run fast."',a:"The boys don't run fast",h:"boys + don't + run"}
+],
+tf:[
+{s:"He doesn't plays football.",c:false,co:"He doesn't play football.",h:"doesn't + play (مجرد بدون s)"},
+{s:"She doesn't read books.",c:true,co:"✓",h:"She + doesn't + read ✓"},
+{s:"They doesn't play here.",c:false,co:"They don't play here.",h:"They → don't (ليس doesn't)"},
+{s:"We don't study English.",c:true,co:"✓",h:"We + don't ✓"},
+{s:"It doesn't rain much.",c:true,co:"✓",h:"It + doesn't + rain ✓"},
+{s:"My dad don't drink milk.",c:false,co:"My dad doesn't drink milk.",h:"dad = He → doesn't"},
+{s:"The cat doesn't sleeps here.",c:false,co:"The cat doesn't sleep here.",h:"doesn't + sleep (مجرد)"},
+{s:"You don't speak Arabic.",c:true,co:"✓",h:"You + don't ✓"},
+{s:"Ali doesn't likes pizza.",c:false,co:"Ali doesn't like pizza.",h:"doesn't + like (مجرد)"},
+{s:"The boys don't run fast.",c:true,co:"✓",h:"boys + don't ✓"}
+]
+},
+med:{
+puzzle:[
+{w:['He',"doesn't",'go','to','school'],a:"He doesn't go to school",h:"He → doesn't + go (مجرد)"},
+{w:['She',"doesn't",'watch','TV','at','night'],a:"She doesn't watch TV at night",h:"She → doesn't + watch"},
+{w:['They',"don't",'like','cold','weather'],a:"They don't like cold weather",h:"They → don't + like"},
+{w:['We',"don't",'have','lunch','at','noon'],a:"We don't have lunch at noon",h:"We → don't + have"},
+{w:['It',"doesn't",'snow','in','summer'],a:"It doesn't snow in summer",h:"It → doesn't + snow"},
+{w:['My','mother',"doesn't",'cook','dinner'],a:"My mother doesn't cook dinner",h:"mother = She → doesn't + cook"},
+{w:['The','children',"don't",'play','outside'],a:"The children don't play outside",h:"children جمع → don't + play"},
+{w:['You',"don't",'always','arrive','early'],a:"You don't always arrive early",h:"You → don't + arrive"},
+{w:['Ahmed',"doesn't",'study','hard'],a:"Ahmed doesn't study hard",h:"Ahmed = He → doesn't + study"},
+{w:['The','students',"don't",'read','daily'],a:"The students don't read daily",h:"students جمع → don't + read"}
+],
+fill:[
+{s:"He ___ (not/go) to school.",a:"doesn't go",h:"He → doesn't + go"},
+{s:"She ___ (not/watch) TV.",a:"doesn't watch",h:"She → doesn't + watch"},
+{s:"They ___ (not/like) cold weather.",a:"don't like",h:"They → don't + like"},
+{s:"We ___ (not/have) lunch.",a:"don't have",h:"We → don't + have"},
+{s:"It ___ (not/snow) in summer.",a:"doesn't snow",h:"It → doesn't + snow"},
+{s:"My mother ___ (not/cook) dinner.",a:"doesn't cook",h:"mother = She → doesn't + cook"},
+{s:"The children ___ (not/play) outside.",a:"don't play",h:"children جمع → don't + play"},
+{s:"You ___ (not/always/arrive) early.",a:"don't always arrive",h:"You → don't + arrive"},
+{s:"Ahmed ___ (not/study) hard.",a:"doesn't study",h:"Ahmed = He → doesn't + study"},
+{s:"The students ___ (not/read) daily.",a:"don't read",h:"students جمع → don't + read"}
+],
+rearrange:[
+{sc:"doesn't / go / He / school / to",a:"He doesn't go to school",h:"He + doesn't + go + to school"},
+{sc:"doesn't / watch / She / TV / night / at",a:"She doesn't watch TV at night",h:"She + doesn't + watch + TV + at night"},
+{sc:"don't / like / They / weather / cold",a:"They don't like cold weather",h:"They + don't + like + cold weather"},
+{sc:"don't / have / We / lunch / noon / at",a:"We don't have lunch at noon",h:"We + don't + have + lunch + at noon"},
+{sc:"doesn't / snow / It / in / summer",a:"It doesn't snow in summer",h:"It + doesn't + snow + in summer"},
+{sc:"doesn't / cook / mother / My / dinner",a:"My mother doesn't cook dinner",h:"فاعل + doesn't + cook + dinner"},
+{sc:"don't / play / children / The / outside",a:"The children don't play outside",h:"فاعل جمع + don't + play"},
+{sc:"don't / always / arrive / You / early",a:"You don't always arrive early",h:"You + don't + always + arrive"},
+{sc:"doesn't / study / Ahmed / hard",a:"Ahmed doesn't study hard",h:"Ahmed + doesn't + study"},
+{sc:"don't / read / students / The / daily",a:"The students don't read daily",h:"فاعل جمع + don't + read"}
+],
+rewrite:[
+{q:'Change to positive: "He doesn\'t go to school."',a:'He goes to school',h:'goes (go+es)'},
+{q:'Change to plural: "She doesn\'t watch TV."',a:"They don't watch TV",h:"They + don't + watch"},
+{q:'Change to question: "They don\'t like cold weather."',a:"Do they like cold weather",h:"Do + they + like + ?"},
+{q:'Change to singular: "We don\'t have lunch."',a:"He doesn't have lunch",h:"He + doesn't + have"},
+{q:'Change to positive: "It doesn\'t snow in summer."',a:'It snows in summer',h:'snows (snow+s)'},
+{q:'Change to question: "My mother doesn\'t cook dinner."',a:"Does my mother cook dinner",h:"Does + mother + cook + ?"},
+{q:'Change to plural: "The child doesn\'t play outside."',a:"The children don't play outside",h:"children + don't + play"},
+{q:'Change to positive: "You don\'t always arrive early."',a:'You always arrive early',h:'arrive (مجرد)'},
+{q:'Change to question: "Ahmed doesn\'t study hard."',a:"Does Ahmed study hard",h:"Does + Ahmed + study + ?"},
+{q:'Change to plural: "The student doesn\'t read daily."',a:"The students don't read daily",h:"students + don't + read"}
+],
+tf:[
+{s:"He doesn't go to school.",c:true,co:"✓",h:"He + doesn't + go ✓"},
+{s:"She doesn't watches TV.",c:false,co:"She doesn't watch TV.",h:"doesn't + watch (مجرد)"},
+{s:"They doesn't like cold weather.",c:false,co:"They don't like cold weather.",h:"They → don't"},
+{s:"We don't have lunch at noon.",c:true,co:"✓",h:"We + don't + have ✓"},
+{s:"It doesn't snows in summer.",c:false,co:"It doesn't snow in summer.",h:"doesn't + snow (مجرد)"},
+{s:"My mother doesn't cook dinner.",c:true,co:"✓",h:"mother + doesn't + cook ✓"},
+{s:"The children doesn't play outside.",c:false,co:"The children don't play outside.",h:"children جمع → don't"},
+{s:"You don't always arrive early.",c:true,co:"✓",h:"You + don't ✓"},
+{s:"Ahmed doesn't studies hard.",c:false,co:"Ahmed doesn't study hard.",h:"doesn't + study (مجرد)"},
+{s:"The students don't read daily.",c:true,co:"✓",h:"students + don't ✓"}
+]
+},
+hard:{
+puzzle:[
+{w:['He',"doesn't",'carefully','write','homework'],a:"He doesn't carefully write homework",h:"He → doesn't + write (مجرد)"},
+{w:['She',"doesn't",'rarely','eat','fast','food'],a:"She doesn't rarely eat fast food",h:"She → doesn't + eat"},
+{w:['They',"don't",'occasionally','visit','grandparents'],a:"They don't occasionally visit grandparents",h:"They → don't + visit"},
+{w:['We',"don't",'usually','finish','work','early'],a:"We don't usually finish work early",h:"We → don't + finish"},
+{w:['It',"doesn't",'constantly','change','color'],a:"It doesn't constantly change color",h:"It → doesn't + change"},
+{w:['My','teacher',"doesn't",'frequently','give','exercises'],a:"My teacher doesn't frequently give exercises",h:"teacher = He/She → doesn't + give"},
+{w:['The','athletes',"don't",'regularly','practice','skills'],a:"The athletes don't regularly practice skills",h:"athletes جمع → don't + practice"},
+{w:['You',"don't",'sometimes','forget','your','keys'],a:"You don't sometimes forget your keys",h:"You → don't + forget"},
+{w:['The','company',"doesn't",'annually','produce','models'],a:"The company doesn't annually produce models",h:"company = It → doesn't + produce"},
+{w:['The','birds',"don't",'migrate','south','every','autumn'],a:"The birds don't migrate south every autumn",h:"birds جمع → don't + migrate"}
+],
+fill:[
+{s:"He ___ (not/carefully/write) homework.",a:"doesn't carefully write",h:"He → doesn't + write"},
+{s:"She ___ (not/rarely/eat) fast food.",a:"doesn't rarely eat",h:"She → doesn't + eat"},
+{s:"They ___ (not/occasionally/visit) grandparents.",a:"don't occasionally visit",h:"They → don't + visit"},
+{s:"We ___ (not/usually/finish) work early.",a:"don't usually finish",h:"We → don't + finish"},
+{s:"It ___ (not/constantly/change) color.",a:"doesn't constantly change",h:"It → doesn't + change"},
+{s:"My teacher ___ (not/frequently/give) exercises.",a:"doesn't frequently give",h:"teacher → doesn't + give"},
+{s:"The athletes ___ (not/regularly/practice) skills.",a:"don't regularly practice",h:"athletes → don't + practice"},
+{s:"You ___ (not/sometimes/forget) keys.",a:"don't sometimes forget",h:"You → don't + forget"},
+{s:"The company ___ (not/annually/produce) models.",a:"doesn't annually produce",h:"company → doesn't + produce"},
+{s:"The birds ___ (not/migrate) south.",a:"don't migrate",h:"birds → don't + migrate"}
+],
+rearrange:[
+{sc:"doesn't / carefully / write / He / homework",a:"He doesn't carefully write homework",h:"He + doesn't + carefully + write"},
+{sc:"doesn't / rarely / eat / She / food / fast",a:"She doesn't rarely eat fast food",h:"She + doesn't + rarely + eat"},
+{sc:"don't / occasionally / visit / They / grandparents",a:"They don't occasionally visit grandparents",h:"They + don't + visit"},
+{sc:"don't / usually / finish / We / work / early",a:"We don't usually finish work early",h:"We + don't + finish"},
+{sc:"doesn't / constantly / change / It / color",a:"It doesn't constantly change color",h:"It + doesn't + change"},
+{sc:"doesn't / frequently / give / teacher / My / exercises",a:"My teacher doesn't frequently give exercises",h:"فاعل + doesn't + give"},
+{sc:"don't / regularly / practice / athletes / The / skills",a:"The athletes don't regularly practice skills",h:"فاعل جمع + don't + practice"},
+{sc:"don't / sometimes / forget / You / keys",a:"You don't sometimes forget keys",h:"You + don't + forget"},
+{sc:"doesn't / annually / produce / company / The / models",a:"The company doesn't annually produce models",h:"فاعل + doesn't + produce"},
+{sc:"don't / migrate / birds / The / south",a:"The birds don't migrate south",h:"فاعل جمع + don't + migrate"}
+],
+rewrite:[
+{q:'Change to positive: "He doesn\'t carefully write homework."',a:'He carefully writes homework',h:'writes (write+s)'},
+{q:'Change to plural: "She doesn\'t rarely eat fast food."',a:"They don't rarely eat fast food",h:"They + don't + eat"},
+{q:'Change to question: "They don\'t visit grandparents."',a:"Do they visit grandparents",h:"Do + they + visit + ?"},
+{q:'Change to singular: "We don\'t usually finish work."',a:"He doesn't usually finish work",h:"He + doesn't + finish"},
+{q:'Change to positive: "It doesn\'t constantly change color."',a:'It constantly changes color',h:'changes (change+s)'},
+{q:'Change to question: "My teacher doesn\'t give exercises."',a:"Does my teacher give exercises",h:"Does + teacher + give + ?"},
+{q:'Change to plural: "The athlete doesn\'t regularly practice."',a:"The athletes don't regularly practice",h:"athletes + don't + practice"},
+{q:'Change to positive: "You don\'t sometimes forget keys."',a:'You sometimes forget keys',h:'forget (مجرد)'},
+{q:'Change to question: "The company doesn\'t produce models."',a:"Does the company produce models",h:"Does + company + produce + ?"},
+{q:'Change to plural: "The bird doesn\'t migrate south."',a:"The birds don't migrate south",h:"birds + don't + migrate"}
+],
+tf:[
+{s:"He doesn't carefully writes homework.",c:false,co:"He doesn't carefully write homework.",h:"doesn't + write (مجرد)"},
+{s:"She doesn't rarely eat fast food.",c:true,co:"✓",h:"She + doesn't + eat ✓"},
+{s:"They doesn't visit grandparents.",c:false,co:"They don't visit grandparents.",h:"They → don't"},
+{s:"We don't usually finish work early.",c:true,co:"✓",h:"We + don't + finish ✓"},
+{s:"It doesn't constantly changes color.",c:false,co:"It doesn't constantly change color.",h:"doesn't + change (مجرد)"},
+{s:"My teacher doesn't frequently give exercises.",c:true,co:"✓",h:"teacher + doesn't + give ✓"},
+{s:"The athletes doesn't practice regularly.",c:false,co:"The athletes don't practice regularly.",h:"athletes جمع → don't"},
+{s:"You don't sometimes forget keys.",c:true,co:"✓",h:"You + don't + forget ✓"},
+{s:"The company doesn't annually produces models.",c:false,co:"The company doesn't annually produce models.",h:"doesn't + produce (مجرد)"},
+{s:"The birds don't migrate south.",c:true,co:"✓",h:"birds + don't + migrate ✓"}
+]
+}
+},
+
+// ===== QUESTION =====
+q:{
+easy:{
+puzzle:[
+{w:['Does','he','play','football','?'],a:'Does he play football ?',h:'He → Does + he + play'},
+{w:['Does','she','read','books','?'],a:'Does she read books ?',h:'She → Does + she + read'},
+{w:['Do','they','play','here','?'],a:'Do they play here ?',h:'They → Do + they + play'},
+{w:['Do','we','study','English','?'],a:'Do we study English ?',h:'We → Do + we + study'},
+{w:['Does','it','rain','much','?'],a:'Does it rain much ?',h:'It → Does + it + rain'},
+{w:['Does','your','dad','drink','milk','?'],a:'Does your dad drink milk ?',h:'dad = He → Does + drink'},
+{w:['Does','the','cat','sleep','here','?'],a:'Does the cat sleep here ?',h:'cat = It → Does + sleep'},
+{w:['Do','you','speak','Arabic','?'],a:'Do you speak Arabic ?',h:'You → Do + you + speak'},
+{w:['Does','Ali','like','pizza','?'],a:'Does Ali like pizza ?',h:'Ali = He → Does + like'},
+{w:['Do','the','boys','run','fast','?'],a:'Do the boys run fast ?',h:'boys جمع → Do + run'}
+],
+fill:[
+{s:"___ he play football ?",a:'Does',h:'He → Does'},
+{s:"___ she read books ?",a:'Does',h:'She → Does'},
+{s:"___ they play here ?",a:'Do',h:'They → Do'},
+{s:"___ we study English ?",a:'Do',h:'We → Do'},
+{s:"___ it rain much ?",a:'Does',h:'It → Does'},
+{s:"___ your dad drink milk ?",a:'Does',h:'dad = He → Does'},
+{s:"___ the cat sleep here ?",a:'Does',h:'cat = It → Does'},
+{s:"___ you speak Arabic ?",a:'Do',h:'You → Do'},
+{s:"___ Ali like pizza ?",a:'Does',h:'Ali = He → Does'},
+{s:"___ the boys run fast ?",a:'Do',h:'boys جمع → Do'}
+],
+rearrange:[
+{sc:'he / Does / play / football / ?',a:'Does he play football ?',h:'Does + he + play + ?'},
+{sc:'she / Does / read / books / ?',a:'Does she read books ?',h:'Does + she + read + ?'},
+{sc:'they / Do / play / here / ?',a:'Do they play here ?',h:'Do + they + play + ?'},
+{sc:'we / Do / study / English / ?',a:'Do we study English ?',h:'Do + we + study + ?'},
+{sc:'it / Does / rain / much / ?',a:'Does it rain much ?',h:'Does + it + rain + ?'},
+{sc:'dad / Does / your / drink / milk / ?',a:'Does your dad drink milk ?',h:'Does + dad + drink + ?'},
+{sc:'cat / Does / the / sleep / here / ?',a:'Does the cat sleep here ?',h:'Does + cat + sleep + ?'},
+{sc:'you / Do / speak / Arabic / ?',a:'Do you speak Arabic ?',h:'Do + you + speak + ?'},
+{sc:'Ali / Does / like / pizza / ?',a:'Does Ali like pizza ?',h:'Does + Ali + like + ?'},
+{sc:'boys / Do / the / run / fast / ?',a:'Do the boys run fast ?',h:'Do + boys + run + ?'}
+],
+rewrite:[
+{q:'Change to question: "He plays football."',a:'Does he play football',h:'Does + he + play'},
+{q:'Change to question: "She reads books."',a:'Does she read books',h:'Does + she + read'},
+{q:'Change to question: "They play here."',a:'Do they play here',h:'Do + they + play'},
+{q:'Change to question: "We study English."',a:'Do we study English',h:'Do + we + study'},
+{q:'Change to question: "It rains much."',a:'Does it rain much',h:'Does + it + rain'},
+{q:'Change to question: "My dad drinks milk."',a:'Does my dad drink milk',h:'Does + dad + drink'},
+{q:'Change to question: "The cat sleeps here."',a:'Does the cat sleep here',h:'Does + cat + sleep'},
+{q:'Change to question: "You speak Arabic."',a:'Do you speak Arabic',h:'Do + you + speak'},
+{q:'Change to question: "Ali likes pizza."',a:'Does Ali like pizza',h:'Does + Ali + like'},
+{q:'Change to question: "The boys run fast."',a:'Do the boys run fast',h:'Do + boys + run'}
+],
+tf:[
+{s:'Do he play football ?',c:false,co:'Does he play football ?',h:'He → Does (ليس Do)'},
+{s:'Does she read books ?',c:true,co:'✓',h:'She → Does ✓'},
+{s:'Does they play here ?',c:false,co:'Do they play here ?',h:'They → Do (ليس Does)'},
+{s:'Do we study English ?',c:true,co:'✓',h:'We → Do ✓'},
+{s:'Does it rain much ?',c:true,co:'✓',h:'It → Does ✓'},
+{s:'Do your dad drink milk ?',c:false,co:'Does your dad drink milk ?',h:'dad = He → Does'},
+{s:'Does the cat sleeps here ?',c:false,co:'Does the cat sleep here ?',h:'Does + sleep (مجرد)'},
+{s:'Do you speak Arabic ?',c:true,co:'✓',h:'You → Do ✓'},
+{s:'Does Ali likes pizza ?',c:false,co:'Does Ali like pizza ?',h:'Does + like (مجرد)'},
+{s:'Do the boys run fast ?',c:true,co:'✓',h:'boys → Do ✓'}
+]
+},
+med:{
+puzzle:[
+{w:['Does','he','go','to','school','?'],a:'Does he go to school ?',h:'He → Does + he + go'},
+{w:['Does','she','watch','TV','at','night','?'],a:'Does she watch TV at night ?',h:'She → Does + she + watch'},
+{w:['Do','they','like','cold','weather','?'],a:'Do they like cold weather ?',h:'They → Do + they + like'},
+{w:['Do','we','have','lunch','at','noon','?'],a:'Do we have lunch at noon ?',h:'We → Do + we + have'},
+{w:['Does','it','snow','in','summer','?'],a:'Does it snow in summer ?',h:'It → Does + it + snow'},
+{w:['Does','your','mother','cook','dinner','?'],a:'Does your mother cook dinner ?',h:'mother = She → Does + cook'},
+{w:['Do','the','children','play','outside','?'],a:'Do the children play outside ?',h:'children جمع → Do + play'},
+{w:['Do','you','always','arrive','early','?'],a:'Do you always arrive early ?',h:'You → Do + you + arrive'},
+{w:['Does','Ahmed','study','hard','?'],a:'Does Ahmed study hard ?',h:'Ahmed = He → Does + study'},
+{w:['Do','the','students','read','daily','?'],a:'Do the students read daily ?',h:'students جمع → Do + read'}
+],
+fill:[
+{s:"___ he go to school ?",a:'Does',h:'He → Does'},
+{s:"___ she watch TV at night ?",a:'Does',h:'She → Does'},
+{s:"___ they like cold weather ?",a:'Do',h:'They → Do'},
+{s:"___ we have lunch at noon ?",a:'Do',h:'We → Do'},
+{s:"___ it snow in summer ?",a:'Does',h:'It → Does'},
+{s:"___ your mother cook dinner ?",a:'Does',h:'mother = She → Does'},
+{s:"___ the children play outside ?",a:'Do',h:'children جمع → Do'},
+{s:"___ you always arrive early ?",a:'Do',h:'You → Do'},
+{s:"___ Ahmed study hard ?",a:'Does',h:'Ahmed = He → Does'},
+{s:"___ the students read daily ?",a:'Do',h:'students جمع → Do'}
+],
+rearrange:[
+{sc:'he / Does / go / school / to / ?',a:'Does he go to school ?',h:'Does + he + go + to school + ?'},
+{sc:'she / Does / watch / TV / night / at / ?',a:'Does she watch TV at night ?',h:'Does + she + watch + TV + at night + ?'},
+{sc:'they / Do / like / weather / cold / ?',a:'Do they like cold weather ?',h:'Do + they + like + cold weather + ?'},
+{sc:'we / Do / have / lunch / noon / at / ?',a:'Do we have lunch at noon ?',h:'Do + we + have + lunch + at noon + ?'},
+{sc:'it / Does / snow / in / summer / ?',a:'Does it snow in summer ?',h:'Does + it + snow + in summer + ?'},
+{sc:'mother / Does / your / cook / dinner / ?',a:'Does your mother cook dinner ?',h:'Does + mother + cook + dinner + ?'},
+{sc:'children / Do / the / play / outside / ?',a:'Do the children play outside ?',h:'Do + children + play + outside + ?'},
+{sc:'you / Do / always / arrive / early / ?',a:'Do you always arrive early ?',h:'Do + you + always + arrive + ?'},
+{sc:'Ahmed / Does / study / hard / ?',a:'Does Ahmed study hard ?',h:'Does + Ahmed + study + hard + ?'},
+{sc:'students / Do / the / read / daily / ?',a:'Do the students read daily ?',h:'Do + students + read + daily + ?'}
+],
+rewrite:[
+{q:'Change to negative question: "He goes to school."',a:"Doesn't he go to school",h:"Doesn't + he + go"},
+{q:'Change to question: "She watches TV at night."',a:'Does she watch TV at night',h:'Does + she + watch'},
+{q:'Change to negative: "Do they like cold weather?"',a:"They don't like cold weather",h:"They + don't + like"},
+{q:'Change to question: "We have lunch at noon."',a:'Do we have lunch at noon',h:'Do + we + have'},
+{q:'Change to negative question: "It snows in summer."',a:"Doesn't it snow in summer",h:"Doesn't + it + snow"},
+{q:'Change to question: "My mother cooks dinner."',a:'Does my mother cook dinner',h:'Does + mother + cook'},
+{q:'Change to negative: "Do the children play outside?"',a:"The children don't play outside",h:"children + don't + play"},
+{q:'Change to question: "You always arrive early."',a:'Do you always arrive early',h:'Do + you + arrive'},
+{q:'Change to negative question: "Ahmed studies hard."',a:"Doesn't Ahmed study hard",h:"Doesn't + Ahmed + study"},
+{q:'Change to question: "The students read daily."',a:'Do the students read daily',h:'Do + students + read'}
+],
+tf:[
+{s:'Do he go to school ?',c:false,co:'Does he go to school ?',h:'He → Does'},
+{s:'Does she watch TV at night ?',c:true,co:'✓',h:'She + Does + watch ✓'},
+{s:'Does they like cold weather ?',c:false,co:'Do they like cold weather ?',h:'They → Do'},
+{s:'Do we have lunch at noon ?',c:true,co:'✓',h:'We + Do + have ✓'},
+{s:'Does it snow in summer ?',c:true,co:'✓',h:'It + Does + snow ✓'},
+{s:'Do your mother cook dinner ?',c:false,co:'Does your mother cook dinner ?',h:'mother = She → Does'},
+{s:'Does the children play outside ?',c:false,co:'Do the children play outside ?',h:'children جمع → Do'},
+{s:'Do you always arrive early ?',c:true,co:'✓',h:'You + Do + arrive ✓'},
+{s:'Does Ahmed study hard ?',c:true,co:'✓',h:'Ahmed + Does + study ✓'},
+{s:'Do the students read daily ?',c:true,co:'✓',h:'students + Do + read ✓'}
+]
+},
+hard:{
+puzzle:[
+{w:['Does','he','carefully','write','homework','?'],a:'Does he carefully write homework ?',h:'He → Does + write (مجرد)'},
+{w:['Does','she','rarely','eat','fast','food','?'],a:'Does she rarely eat fast food ?',h:'She → Does + eat (مجرد)'},
+{w:['Do','they','occasionally','visit','grandparents','?'],a:'Do they occasionally visit grandparents ?',h:'They → Do + visit'},
+{w:['Do','we','usually','finish','work','early','?'],a:'Do we usually finish work early ?',h:'We → Do + finish'},
+{w:['Does','it','constantly','change','color','?'],a:'Does it constantly change color ?',h:'It → Does + change'},
+{w:['Does','your','teacher','frequently','give','exercises','?'],a:'Does your teacher frequently give exercises ?',h:'teacher → Does + give'},
+{w:['Do','the','athletes','regularly','practice','skills','?'],a:'Do the athletes regularly practice skills ?',h:'athletes جمع → Do + practice'},
+{w:['Do','you','sometimes','forget','your','keys','?'],a:'Do you sometimes forget your keys ?',h:'You → Do + forget'},
+{w:['Does','the','company','annually','produce','models','?'],a:'Does the company annually produce models ?',h:'company = It → Does + produce'},
+{w:['Do','the','birds','migrate','south','every','autumn','?'],a:'Do the birds migrate south every autumn ?',h:'birds جمع → Do + migrate'}
+],
+fill:[
+{s:"___ he carefully write homework ?",a:'Does',h:'He → Does'},
+{s:"___ she rarely eat fast food ?",a:'Does',h:'She → Does'},
+{s:"___ they occasionally visit grandparents ?",a:'Do',h:'They → Do'},
+{s:"___ we usually finish work early ?",a:'Do',h:'We → Do'},
+{s:"___ it constantly change color ?",a:'Does',h:'It → Does'},
+{s:"___ your teacher frequently give exercises ?",a:'Does',h:'teacher → Does'},
+{s:"___ the athletes regularly practice skills ?",a:'Do',h:'athletes جمع → Do'},
+{s:"___ you sometimes forget your keys ?",a:'Do',h:'You → Do'},
+{s:"___ the company annually produce models ?",a:'Does',h:'company = It → Does'},
+{s:"___ the birds migrate south ?",a:'Do',h:'birds جمع → Do'}
+],
+rearrange:[
+{sc:'he / Does / carefully / write / homework / ?',a:'Does he carefully write homework ?',h:'Does + he + carefully + write + ?'},
+{sc:'she / Does / rarely / eat / food / fast / ?',a:'Does she rarely eat fast food ?',h:'Does + she + rarely + eat + ?'},
+{sc:'they / Do / occasionally / visit / grandparents / ?',a:'Do they occasionally visit grandparents ?',h:'Do + they + visit + ?'},
+{sc:'we / Do / usually / finish / work / early / ?',a:'Do we usually finish work early ?',h:'Do + we + finish + ?'},
+{sc:'it / Does / constantly / change / color / ?',a:'Does it constantly change color ?',h:'Does + it + change + ?'},
+{sc:'teacher / Does / your / frequently / give / exercises / ?',a:'Does your teacher frequently give exercises ?',h:'Does + teacher + give + ?'},
+{sc:'athletes / Do / the / regularly / practice / skills / ?',a:'Do the athletes regularly practice skills ?',h:'Do + athletes + practice + ?'},
+{sc:'you / Do / sometimes / forget / keys / your / ?',a:'Do you sometimes forget your keys ?',h:'Do + you + forget + ?'},
+{sc:'company / Does / the / annually / produce / models / ?',a:'Does the company annually produce models ?',h:'Does + company + produce + ?'},
+{sc:'birds / Do / the / migrate / south / autumn / every / ?',a:'Do the birds migrate south every autumn ?',h:'Do + birds + migrate + ?'}
+],
+rewrite:[
+{q:'Change to question: "He carefully writes homework."',a:'Does he carefully write homework',h:'Does + he + write (مجرد)'},
+{q:'Change to question: "She rarely eats fast food."',a:'Does she rarely eat fast food',h:'Does + she + eat (مجرد)'},
+{q:'Change to negative: "Do they visit grandparents?"',a:"They don't visit grandparents",h:"They + don't + visit"},
+{q:'Change to question: "We usually finish work early."',a:'Do we usually finish work early',h:'Do + we + finish'},
+{q:'Change to question: "It constantly changes color."',a:'Does it constantly change color',h:'Does + it + change (مجرد)'},
+{q:'Change to negative: "Does your teacher give exercises?"',a:"Your teacher doesn't give exercises",h:"teacher + doesn't + give"},
+{q:'Change to question: "The athletes regularly practice."',a:'Do the athletes regularly practice',h:'Do + athletes + practice'},
+{q:'Change to negative: "Do you forget keys?"',a:"You don't forget keys",h:"You + don't + forget"},
+{q:'Change to question: "The company produces models."',a:'Does the company produce models',h:'Does + company + produce (مجرد)'},
+{q:'Change to question: "The birds migrate south."',a:'Do the birds migrate south',h:'Do + birds + migrate'}
+],
+tf:[
+{s:'Does he carefully write homework ?',c:true,co:'✓',h:'He + Does + write ✓'},
+{s:'Does she rarely eats fast food ?',c:false,co:'Does she rarely eat fast food ?',h:'Does + eat (مجرد)'},
+{s:'Do they occasionally visit grandparents ?',c:true,co:'✓',h:'They + Do + visit ✓'},
+{s:'Do we usually finish work early ?',c:true,co:'✓',h:'We + Do + finish ✓'},
+{s:'Does it constantly change color ?',c:true,co:'✓',h:'It + Does + change ✓'},
+{s:'Does your teacher frequently give exercises ?',c:true,co:'✓',h:'teacher + Does + give ✓'},
+{s:'Do the athletes regularly practices skills ?',c:false,co:'Do the athletes regularly practice skills ?',h:'athletes + Do + practice (مجرد)'},
+{s:'Do you sometimes forget your keys ?',c:true,co:'✓',h:'You + Do + forget ✓'},
+{s:'Does the company annually produces models ?',c:false,co:'Does the company annually produce models ?',h:'company + Does + produce (مجرد)'},
+{s:'Do the birds migrate south every autumn ?',c:true,co:'✓',h:'birds + Do + migrate ✓'}
+]
+}
+}
+};
+
+// ===== Navigation =====
+function go(id){
+document.querySelectorAll('.scr').forEach(s=>s.classList.remove('act'));
+document.getElementById(id).classList.add('act');
+}
+
+// ===== Selections =====
+function pick(key,val,el){
+S[key]=val;
+el.parentElement.querySelectorAll('.b').forEach(b=>b.classList.remove('sel'));
+el.classList.add('sel');
+const names={state:{pos:'✅ الإثبات',neg:'❌ النفي',q:'❓ السؤال'},diff:{easy:'بسيط',med:'متوسط',hard:'صعب'},type:{puzzle:'🧩 لغز',fill:'✏️ فراغ',rearrange:'🔄 ترتيب',rewrite:'📝 إعادة صياغة',tf:'✅ صح/خطأ'}};
+notify(names[key][val]+' ✓','ok');
+setTimeout(()=>{
+if(key==='state')go('s2');
+else if(key==='diff')go('s3');
+else if(key==='type')go('s4');
+},500);
+}
+
+function pickNum(n){
+S.num=n;
+document.querySelectorAll('.nb').forEach(b=>b.classList.remove('sel'));
+event.target.classList.add('sel');
+document.getElementById('stBtn').disabled=false;
+}
+
+// ===== Quiz =====
+function startQ(){
+if(!S.num)return;
+S.cur=0;S.score=0;S.ans=[];S.placed=[];
+const bank=B[S.state][S.diff][S.type];
+S.qs=shuffle([...bank]).slice(0,S.num);
+go('s5');
+loadQ();
+}
+
+function loadQ(){
+document.getElementById('hBox').classList.remove('show');
+const q=S.qs[S.cur];
+const prog=(S.cur/S.num)*100;
+document.getElementById('pBar').style.width=prog+'%';
+document.getElementById('qNum').textContent=`Question ${S.cur+1} / ${S.num}`;
+document.getElementById('qBox').innerHTML='';
+S.placed=[];
+
+switch(S.type){
+case 'puzzle':loadPuzzle(q);break;
+case 'fill':loadFill(q);break;
+case 'rearrange':loadRearrange(q);break;
+case 'rewrite':loadRewrite(q);break;
+case 'tf':loadTF(q);break;
+}
+}
+
+function loadPuzzle(q){
+const sh=shuffle([...q.w]);
+document.getElementById('qBox').innerHTML=`
+<div class="qt">رتب الكلمات لتكوين جملة صحيحة<small>Arrange the words</small></div>
+<div class="wc" id="src">${sh.map(w=>`<div class="ch" onclick="mvCh(this)">${w}</div>`).join('')}</div>
+<div class="dz" id="dst" onclick="rmLast()"></div>
+<input type="hidden" id="pAns">`;
+updP();
+}
+
+function mvCh(c){
+const src=document.getElementById('src'),dst=document.getElementById('dst');
+if(c.parentElement===src){c.classList.add('pl');dst.appendChild(c);S.placed.push(c.textContent);}
+updP();
+}
+function rmLast(){
+const dst=document.getElementById('dst');
+const chs=dst.querySelectorAll('.ch');
+if(chs.length){const l=chs[chs.length-1];l.classList.remove('pl');document.getElementById('src').appendChild(l);S.placed.pop();updP();}
+}
+function updP(){document.getElementById('pAns').value=S.placed.join(' ');}
+
+function loadFill(q){
+document.getElementById('qBox').innerHTML=`
+<div class="qt">املأ الفراغ بالكلمة الصحيحة<small>Fill in the blank</small></div>
+<div class="sen">${q.s}</div>
+<input type="text" class="ai" id="fAns" placeholder="اكتب الإجابة هنا..." autocomplete="off" dir="ltr">`;
+setTimeout(()=>document.getElementById('fAns').focus(),300);
+}
+
+function loadRearrange(q){
+document.getElementById('qBox').innerHTML=`
+<div class="qt">أعد ترتيب الكلمات واكتب الجملة<small>Rearrange and write</small></div>
+<div class="sen" style="color:var(--a);">${q.sc}</div>
+<input type="text" class="ai" id="rAns" placeholder="اكتب الجملة المرتبة..." autocomplete="off" dir="ltr" style="max-width:100%;">`;
+setTimeout(()=>document.getElementById('rAns').focus(),300);
+}
+
+function loadRewrite(q){
+document.getElementById('qBox').innerHTML=`
+<div class="qt">أعد صياغة الجملة حسب المطلوب<small>Rewrite as instructed</small></div>
+<div class="sen" style="color:var(--a);font-size:1.1em;">${q.q}</div>
+<input type="text" class="ai" id="wAns" placeholder="اكتب الجملة الجديدة..." autocomplete="off" dir="ltr" style="max-width:100%;">`;
+setTimeout(()=>document.getElementById('wAns').focus(),300);
+}
+
+function loadTF(q){
+document.getElementById('qBox').innerHTML=`
+<div class="qt">هل الجملة صحيحة أم خاطئة؟<small>True or False?</small></div>
+<div class="sen">${q.s}</div>
+<div class="tf">
+<button class="tfb t" onclick="pickTF(this,true)">
+<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+صح
+</button>
+<button class="tfb f" onclick="pickTF(this,false)">
+<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+خطأ
+</button>
+</div>
+<input type="hidden" id="tAns">`;
+}
+function pickTF(el,v){
+document.querySelectorAll('.tfb').forEach(b=>b.classList.remove('sel'));
+el.classList.add('sel');
+document.getElementById('tAns').value=v;
+}
+
+// ===== Hint =====
+function showH(){
+const q=S.qs[S.cur];
+const h=document.getElementById('hBox');
+h.innerHTML='💡 '+q.h;
+h.classList.add('show');
+notify('💡 تلميح','ok');
+}
+
+// ===== Submit =====
+function subAns(){
+const q=S.qs[S.cur];
+let ua='',ok=false;
+switch(S.type){
+case 'puzzle':
+ua=document.getElementById('pAns').value.trim();
+ok=norm(ua)===norm(q.a);break;
+case 'fill':
+ua=document.getElementById('fAns').value.trim();
+ok=norm(ua)===norm(q.a);break;
+case 'rearrange':
+ua=document.getElementById('rAns').value.trim();
+ok=norm(ua)===norm(q.a);break;
+case 'rewrite':
+ua=document.getElementById('wAns').value.trim();
+ok=norm(ua)===norm(q.a);break;
+case 'tf':
+ua=document.getElementById('tAns').value;
+ok=ua===String(q.c);break;
+}
+if(!ua&&ua!==false&&ua!=='false'){notify('⚠️ أدخل إجابة','er');return;}
+if(ok)S.score++;
+S.ans.push({q:getQD(q),ua:ua||'(لا شيء)',ca:getCD(q),ok:ok});
+if(ok){notify('✅ إجابة صحيحة','ok');miniCf();}
+else notify('❌ إجابة خاطئة','er');
+setTimeout(()=>{
+S.cur++;
+if(S.cur<S.num){S.placed=[];loadQ();}
+else showRes();
+},1400);
+}
+
+function getQD(q){
+if(S.type==='puzzle')return q.w.join(' ');
+if(S.type==='rearrange')return q.sc;
+if(S.type==='rewrite')return q.q;
+return q.s;
+}
+function getCD(q){
+if(S.type==='puzzle')return q.a;
+if(S.type==='fill')return q.a;
+if(S.type==='rearrange')return q.a;
+if(S.type==='rewrite')return q.a;
+if(S.type==='tf')return q.c?'True ✓':'False ✗ ('+q.co+')';
+}
+function norm(s){return s.toLowerCase().replace(/\s+/g,' ').replace(/\s*([.,?!])/g,'$1').replace(/['']/g,"'").trim();}
+
+// ===== Results =====
+function showRes(){
+go('s6');
+const p=Math.round((S.score/S.num)*100);
+document.getElementById('pBar').style.width='100%';
+setTimeout(()=>{
+document.getElementById('scC').style.setProperty('--p',p+'%');
+document.getElementById('scN').textContent=p+'%';
+},300);
+let stars='',msg='',cls='';
+const starSvg='<svg width="28" height="28" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+const emptyStar='<svg width="28" height="28" viewBox="0 0 24 24" fill="rgba(255,255,255,0.15)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+let starCount=0;
+if(p>=90){starCount=5;msg='🏆 ممتاز! أنت نجم!';cls='ex';conf();}
+else if(p>=70){starCount=4;msg='👏 جيد جداً!';cls='ex';}
+else if(p>=50){starCount=3;msg='👍 جيد!';cls='gd';}
+else if(p>=30){starCount=2;msg='📚 تحتاج مراجعة';cls='pr';}
+else{starCount=1;msg='💪 حاول مرة أخرى';cls='pr';}
+let starsHtml='';
+for(let i=0;i<5;i++)starsHtml+=i<starCount?starSvg:emptyStar;
+document.getElementById('sts').innerHTML=starsHtml;
+const rm=document.getElementById('rm');
+rm.textContent=msg;rm.className='rm '+cls;
+const rv=document.getElementById('rv');
+rv.innerHTML='<div class="sec" style="justify-content:center;"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/></svg><span>مراجعة الإجابات</span></div>';
+S.ans.forEach((a,i)=>{
+const it=document.createElement('div');
+it.className='ai2 '+(a.ok?'ok':'no');
+it.style.animationDelay=(i*0.12)+'s';
+const checkSvg='<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+const xSvg='<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+it.innerHTML=`<div class="ic2">${a.ok?checkSvg:xSvg}</div>
+<div class="dt">
+<div style="margin-bottom:4px;"><b>Q${i+1}:</b> ${a.q}</div>
+<div>إجابتك: <span class="${a.ok?'ca':'ua'}">${a.ua}</span></div>
+${!a.ok?`<div>الصحيحة: <span class="ca">${a.ca}</span></div>`:''}
+</div>`;
+rv.appendChild(it);
+});
+}
+
+// ===== Utils =====
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function reset(){
+S={state:'',diff:'',type:'',num:0,cur:0,score:0,qs:[],ans:[],placed:[]};
+document.querySelectorAll('.nb').forEach(b=>b.classList.remove('sel'));
+document.querySelectorAll('.b').forEach(b=>b.classList.remove('sel'));
+document.getElementById('stBtn').disabled=true;
+}
+
+function restart(){
+S.cur=0;S.score=0;S.ans=[];S.placed=[];
+const bank=B[S.state][S.diff][S.type];
+S.qs=shuffle([...bank]).slice(0,S.num);
+go('s5');loadQ();
+}
+
+function exitQ(){if(confirm('خروج من الاختبار؟')){go('s1');reset();}}
+
+function notify(m,t){
+const n=document.getElementById('nf');
+document.getElementById('nfT').textContent=m;
+n.className='nf '+t+' show';
+setTimeout(()=>n.classList.remove('show'),2200);
+}
+
+function conf(){
+const c=['#ffd700','#f093fb','#667eea','#00e676','#ff5252','#00bcd4'];
+for(let i=0;i<50;i++){
+setTimeout(()=>{
+const d=document.createElement('div');d.className='cf';
+d.style.left=Math.random()*100+'vw';
+const sz=(Math.random()*10+5)+'px';d.style.width=sz;d.style.height=sz;
+d.style.background=c[Math.floor(Math.random()*c.length)];
+d.style.borderRadius=Math.random()>.5?'50%':'2px';
+d.style.animationDuration=(Math.random()*2+2)+'s';
+document.body.appendChild(d);
+setTimeout(()=>d.remove(),4000);
+},i*50);
+}
+}
+
+function miniCf(){
+const c=['#00e676','#ffd700','#667eea'];
+for(let i=0;i<10;i++){
+setTimeout(()=>{
+const d=document.createElement('div');d.className='cf';
+d.style.left=(40+Math.random()*20)+'vw';
+const sz=(Math.random()*7+3)+'px';d.style.width=sz;d.style.height=sz;
+d.style.background=c[Math.floor(Math.random()*c.length)];
+d.style.borderRadius='50%';d.style.animationDuration=(Math.random()*1.5+1.5)+'s';
+document.body.appendChild(d);
+setTimeout(()=>d.remove(),3000);
+},i*30);
+}
+}
+
+// ===== Ripple =====
+document.addEventListener('click',e=>{
+const b=e.target.closest('.b,.nb,.ab,.tfb,.hb,.bb,.op,.ch');
+if(!b)return;
+const r=document.createElement('span');r.className='rp';
+const rect=b.getBoundingClientRect();
+const sz=Math.max(rect.width,rect.height);
+r.style.width=r.style.height=sz+'px';
+r.style.left=(e.clientX-rect.left-sz/2)+'px';
+r.style.top=(e.clientY-rect.top-sz/2)+'px';
+b.style.position='relative';b.style.overflow='hidden';
+b.appendChild(r);
+setTimeout(()=>r.remove(),600);
+});
+
+// ===== Enter Key =====
+document.addEventListener('keydown',e=>{
+if(e.key==='Enter'){
+const q=document.getElementById('s5');
+if(q.classList.contains('act'))subAns();
+}
+});
+
+// ===== Prevent context menu =====
+document.addEventListener('contextmenu',e=>e.preventDefault());
+
+// ===== Prevent drag =====
+document.addEventListener('dragstart',e=>e.preventDefault());
+
+// ===== Entrance animation =====
+setTimeout(()=>{
+document.querySelectorAll('#s1 .b').forEach((b,i)=>{
+b.style.opacity='0';b.style.transform='translateY(25px)';
+setTimeout(()=>{
+b.style.transition='all .5s cubic-bezier(.175,.885,.32,1.275)';
+b.style.opacity='1';b.style.transform='translateY(0)';
+},i*100+200);
+});
+},100);
+</script>
+</body>
+</html>
