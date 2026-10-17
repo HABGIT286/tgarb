@@ -1,956 +1,881 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#090b13">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b14">
+<meta name="color-scheme" content="dark light">
 <title>EARTHLINK PRO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:Seal;src:url("assets/Seal.ttf")} 
+@font-face{font-family:Progress;src:url("assets/PROGRESS PERSONAL USE.ttf")}
+@font-face{font-family:AS;src:url("assets/AS.otf")}
+@font-face{font-family:Wel;src:url("assets/wel.ttf")}
 :root{
- --bg:#080a12;--panel:#111522;--panel2:#171c2c;--text:#f4f5ff;
- --muted:#929bb5;--line:rgba(255,255,255,.09);--accent:#9a7bff;
- --accent2:#5de4ff;--green:#58efb1;--red:#ff6888;--gold:#ffd58a;
- --shadow:0 22px 65px rgba(0,0,0,.30);--radius:25px;
+ --bg:#080a12;--bg2:#101422;--panel:rgba(22,27,45,.78);
+ --panel2:rgba(255,255,255,.045);--line:rgba(255,255,255,.09);
+ --text:#f5f5ff;--muted:#969db5;--accent:#9b83ff;
+ --accent2:#52e0c4;--danger:#ff6b86;--warning:#ffca75;
+ --shadow:0 18px 50px rgba(0,0,0,.24);--radius:24px;
+ --nav-height:76px
 }
-body.light{
- --bg:#f2f4fb;--panel:#fff;--panel2:#f8f9ff;--text:#1b2032;
- --muted:#69728c;--line:rgba(27,32,50,.10);--accent:#7556ed;
- --accent2:#009fbc;--green:#008b62;--red:#d93860;--gold:#a66c00;
- --shadow:0 18px 45px rgba(40,45,80,.10);
+:root[data-theme="light"]{
+ --bg:#f2f4fb;--bg2:#e9edf8;--panel:rgba(255,255,255,.84);
+ --panel2:rgba(30,40,75,.035);--line:rgba(40,50,90,.12);
+ --text:#1b2034;--muted:#737c96;--accent:#7155e9;
+ --accent2:#008f83;--danger:#dc4664;--warning:#a86600;
+ --shadow:0 18px 45px rgba(40,48,80,.10)
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;min-height:100%;background:var(--bg)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 body{
- margin:0;background:
- radial-gradient(ellipse at 10% 0%,rgba(119,83,255,.16),transparent 38%),
- radial-gradient(ellipse at 90% 25%,rgba(45,208,236,.10),transparent 35%),var(--bg);
- color:var(--text);font-family:"Alexandria","Cairo",sans-serif;
- min-height:100vh;min-height:100dvh;overflow-x:hidden;
- transition:background .35s,color .25s;user-select:none;-webkit-user-select:none;
+ margin:0;min-height:100vh;background:
+ radial-gradient(ellipse at 10% 5%,rgba(106,79,222,.16),transparent 34%),
+ radial-gradient(ellipse at 90% 42%,rgba(34,190,170,.09),transparent 30%),
+ var(--bg);color:var(--text);font-family:Progress,system-ui,sans-serif;
+ transition:background .3s,color .3s;overflow-x:hidden
 }
-input,button,textarea{font:inherit}
+button,input,textarea,select{font:inherit}
 button{color:inherit;cursor:pointer}
-button:focus,input:focus{outline:none}
-button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
-::selection{background:transparent;color:inherit}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px}
-#app{max-width:1500px;margin:auto;min-height:100dvh;position:relative;padding-bottom:105px}
-.topbar{
- position:sticky;top:0;z-index:15;display:flex;align-items:center;justify-content:space-between;
- gap:12px;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;
- background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(22px);
- border-bottom:1px solid var(--line)
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+ outline:2px solid var(--accent);outline-offset:3px
 }
-.brand{display:flex;align-items:center;gap:11px;min-width:0}
-.brandmark{
- width:44px;height:44px;flex:0 0 44px;border-radius:15px;display:grid;place-items:center;
- color:#fff;background:linear-gradient(135deg,#9a7bff,#5de4ff);
- box-shadow:0 0 24px #8b70ff42;position:relative;overflow:hidden
-}
-.brandmark:after{content:"";position:absolute;width:100%;height:100%;background:linear-gradient(120deg,transparent, #ffffff70,transparent);transform:translateX(-120%);animation:shine 5s infinite}
-.brandname{font-family:"Outfit","Alexandria",sans-serif;font-size:16px;font-weight:800;letter-spacing:1.1px}
-.brandsub{font-size:9px;color:var(--muted);letter-spacing:1.1px;margin-top:3px}
-.topactions{display:flex;gap:8px;align-items:center}
-.iconbtn{
- width:42px;height:42px;border:1px solid var(--line);border-radius:15px;background:var(--panel);
- display:grid;place-items:center;transition:.25s;position:relative
-}
-.iconbtn:active,.navbtn:active,.actionbtn:active{transform:scale(.93)}
-.iconbtn:hover{border-color:var(--accent);box-shadow:0 0 20px #9a7bff25}
-.avatar{
- width:39px;height:39px;border-radius:14px;object-fit:cover;
- background:linear-gradient(135deg,#9a7bff,#5de4ff);border:1px solid #ffffff33;
-}
-.main{padding:19px 16px 22px}
-.view{display:none;animation:rise .35s ease both}
-.view.active{display:block}
-.welcome{
- position:relative;overflow:hidden;padding:24px 22px;border:1px solid #a78bff35;border-radius:29px;
- background:linear-gradient(130deg,#1b1834ed,#101e2bed 70%,#102a36dd);
- box-shadow:var(--shadow);min-height:175px
-}
-body.light .welcome{background:linear-gradient(130deg,#e6e0ff,#e2f8ff)}
-.welcome:before,.welcome:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
-.welcome:before{width:210px;height:210px;border:1px solid #b6a1ff30;right:-85px;top:-100px;box-shadow:0 0 0 20px #b6a1ff09,0 0 0 42px #b6a1ff06}
-.welcome:after{width:120px;height:120px;background:#5de4ff12;filter:blur(3px);left:-25px;bottom:-65px}
-.eyebrow{font-size:10px;letter-spacing:2px;color:var(--accent2);font-family:"Outfit",sans-serif}
-.heroTitle{font-size:clamp(22px,5vw,34px);font-weight:800;line-height:1.5;margin:10px 0 5px;max-width:620px}
-.heroText{font-size:11px;color:var(--muted);line-height:2}
-.heroBadge{display:inline-flex;align-items:center;gap:7px;border:1px solid #58efb14d;background:#58efb114;color:var(--green);padding:8px 12px;border-radius:100px;font-size:10px;margin-top:15px}
-.pulse{width:7px;height:7px;background:currentColor;border-radius:50%;box-shadow:0 0 12px currentColor;animation:pulse 1.7s infinite}
-.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:25px 2px 14px}
-.sectiontitle{font-size:15px;font-weight:700}
-.sectionhint{font-size:10px;color:var(--muted);margin-top:4px}
-.sectionicon{width:39px;height:39px;border-radius:14px;display:grid;place-items:center;background:#9a7bff18;color:var(--accent);border:1px solid #9a7bff30}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.stat{
- min-width:0;border:1px solid var(--line);border-radius:22px;padding:16px 14px;
- background:linear-gradient(150deg,var(--panel),var(--panel2));box-shadow:var(--shadow);
- position:relative;overflow:hidden;transition:transform .25s,border .25s
-}
-.stat:after{content:"";position:absolute;width:75px;height:75px;border-radius:50%;background:var(--glow,#9a7bff);opacity:.07;filter:blur(25px);right:-20px;bottom:-25px}
-.stat:hover{transform:translateY(-3px);border-color:#9a7bff50}
-.statTop{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.statIcon{width:37px;height:37px;border-radius:13px;display:grid;place-items:center;color:var(--tone,var(--accent));background:color-mix(in srgb,var(--tone,var(--accent)) 12%,transparent)}
-.statLabel{font-size:10px;color:var(--muted);margin-top:14px}
-.statValue{font-size:clamp(14px,3.7vw,19px);font-weight:800;margin-top:7px;overflow-wrap:anywhere;line-height:1.6}
-.statMeta{font-size:9px;color:var(--muted);margin-top:5px}
-.panel{border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:18px;box-shadow:var(--shadow);margin-top:14px}
-.profileRow{display:flex;align-items:center;gap:14px}
-.profilePic{width:67px;height:67px;object-fit:cover;border-radius:22px;border:1px solid #9a7bff66;background:var(--panel2)}
-.profileName{font-size:16px;font-weight:800;overflow-wrap:anywhere}
-.profileSub{font-size:10px;color:var(--muted);margin-top:6px;overflow-wrap:anywhere}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--line);border-radius:100px;font-size:10px;background:var(--panel2)}
-.detailgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.detail{
- padding:13px;border:1px solid var(--line);border-radius:17px;background:var(--panel2);min-width:0
-}
-.detailLabel{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:7px}
-.detailValue{font-size:12px;font-weight:700;margin-top:9px;overflow-wrap:anywhere;line-height:1.8}
-.rowactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
-.actionbtn{
- border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:11px 14px;
- display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:11px;transition:.2s
-}
-.actionbtn.primary{background:linear-gradient(110deg,#8b6aff,#4fbdde);border:0;color:#fff;font-weight:700}
-.actionbtn.danger{color:var(--red)}
-.bottomnav{
- position:fixed;z-index:25;left:0;right:0;bottom:0;padding:9px 10px calc(9px + env(safe-area-inset-bottom));
- background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(25px);
- border-top:1px solid var(--line)
-}
-.navinner{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
-.navbtn{
- border:0;background:transparent;color:var(--muted);border-radius:17px;min-width:0;
- display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:7px 2px;
- transition:.25s
-}
-.navbtn svg{width:21px;height:21px;transition:.25s}
-.navbtn span{font-size:9px;white-space:nowrap}
-.navbtn.active{color:var(--accent2);background:color-mix(in srgb,var(--accent) 12%,transparent)}
-.navbtn.active svg{filter:drop-shadow(0 0 6px var(--accent2));transform:translateY(-2px)}
-.overlay{position:fixed;inset:0;z-index:40;background:#02030ac2;opacity:0;visibility:hidden;transition:.25s}
-.overlay.open{opacity:1;visibility:visible}
-.sidebar{
- position:fixed;z-index:41;top:0;bottom:0;right:0;width:min(335px,87vw);padding:25px 17px;
- background:var(--panel);border-left:1px solid var(--line);transform:translateX(105%);
- transition:transform .32s cubic-bezier(.2,.8,.2,1);overflow:auto;
- padding-top:calc(24px + env(safe-area-inset-top))
-}
-.sidebar.open{transform:translateX(0)}
-.sidehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.sidebrand{font-family:"Outfit",sans-serif;font-weight:800;letter-spacing:1px}
-.sidegroup{font-size:10px;color:var(--muted);padding:14px 10px 8px}
-.sideitem{
- display:flex;align-items:center;gap:12px;padding:13px 12px;width:100%;border:1px solid transparent;
- border-radius:15px;background:transparent;text-align:right;font-size:12px;margin:3px 0
-}
-.sideitem svg{color:var(--accent2);width:19px;height:19px}
-.sideitem.active,.sideitem:hover{background:#9a7bff15;border-color:#9a7bff25}
-.fieldlabel{font-size:11px;color:var(--muted);display:block;margin:15px 0 8px}
-.field{
- width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);
- border-radius:15px;padding:14px;font-size:13px;user-select:text;-webkit-user-select:text
-}
-.field::placeholder{color:var(--muted)}
-.loginwrap{min-height:calc(100dvh - 85px);display:grid;place-items:center;padding:22px 4px}
-.loginbox{width:100%;max-width:450px;border:1px solid var(--line);background:var(--panel);border-radius:30px;padding:25px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.loginbox:before{content:"";position:absolute;top:-80px;left:-60px;width:200px;height:200px;border-radius:50%;background:#9a7bff20;filter:blur(30px)}
-.loginbrand{display:flex;justify-content:center;margin:6px 0 18px}
-.loginlogo{width:80px;height:80px;border-radius:27px;display:grid;place-items:center;background:linear-gradient(135deg,#9876ff,#4ccfe9);box-shadow:0 0 40px #9a7bff38;color:white}
-.loginTitle{text-align:center;font-size:23px;font-weight:800;margin:10px 0}
-.loginSub{text-align:center;font-size:11px;color:var(--muted);line-height:2;margin-bottom:24px}
-.loginError{display:none;color:var(--red);font-size:11px;line-height:1.8;background:#ff688814;border:1px solid #ff688833;padding:11px;border-radius:13px;margin-top:12px;overflow-wrap:anywhere}
-.loginError.show{display:block}
-.spinner{width:15px;height:15px;border:2px solid #ffffff55;border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
-.toastarea{position:fixed;z-index:80;top:calc(78px + env(safe-area-inset-top));left:14px;right:14px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
-.toast{width:min(420px,100%);display:flex;align-items:center;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:13px 15px;box-shadow:var(--shadow);animation:toastIn .25s ease;pointer-events:auto;font-size:11px}
-.toastIcon{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;background:#58efb11a;color:var(--green);flex:0 0 auto}
-.toast.error .toastIcon{background:#ff68881a;color:var(--red)}
-.themegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.themeCard{border:1px solid var(--line);border-radius:20px;padding:13px;background:var(--panel);text-align:right}
-.themePreview{height:78px;border-radius:14px;margin-bottom:12px;overflow:hidden;position:relative}
-.themePreview:before{content:"";position:absolute;inset:13px 12px auto;height:9px;border-radius:6px;background:#ffffff77;box-shadow:0 17px 0 #ffffff30,0 34px 0 #ffffff20}
-.themeCard strong{font-size:11px}
-.themeCard small{display:block;font-size:9px;color:var(--muted);margin-top:5px}
-.logitem{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
-.logitem:last-child{border-bottom:0}
-.logdot{width:35px;height:35px;flex:0 0 35px;border-radius:13px;background:#9a7bff19;color:var(--accent);display:grid;place-items:center}
-.logtitle{font-size:11px;font-weight:700}
-.logdesc{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.8}
-.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:2}
-.empty svg{width:34px;height:34px;opacity:.65;margin-bottom:10px}
-.settingrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.settingrow:last-child{border-bottom:0}
-.settingname{font-size:12px;font-weight:600}
-.settingdesc{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.8}
-.switch{appearance:none;width:45px;height:26px;background:var(--line);border:1px solid var(--line);border-radius:100px;position:relative;flex:0 0 auto;cursor:pointer}
-.switch:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:var(--muted);top:3px;right:3px;transition:.2s}
-.switch:checked{background:var(--accent);border-color:var(--accent)}
-.switch:checked:after{right:21px;background:white}
-.clock{font-family:"Outfit",sans-serif;font-size:25px;font-weight:700;letter-spacing:1px}
-.footer{text-align:center;color:var(--muted);font-size:9px;padding:25px 0 5px}
-@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
-@keyframes shine{0%,70%,100%{transform:translateX(-120%)}85%{transform:translateX(120%)}}
+button:disabled{opacity:.55;cursor:not-allowed}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.hidden{display:none!important}
+.app-shell{max-width:600px;min-height:100dvh;margin:auto;position:relative;padding-bottom:calc(var(--nav-height) + 28px + env(safe-area-inset-bottom))}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+.orb{position:absolute;border-radius:50%;filter:blur(65px);opacity:.18;animation:float 12s ease-in-out infinite}
+.orb.one{width:210px;height:210px;background:#7055ff;top:5%;right:-80px}
+.orb.two{width:180px;height:180px;background:#13bfa7;left:-90px;top:52%;animation-delay:-5s}
+@keyframes float{50%{transform:translate(18px,-25px) scale(1.1)}}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(82,224,196,0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes toastIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
-@media(min-width:760px){
- #app{padding-bottom:35px}
- .main{padding:26px 28px}
- .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
- .detailgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
- .themegrid{grid-template-columns:repeat(4,minmax(0,1fr))}
- .bottomnav{position:static;border-top:0;background:transparent;backdrop-filter:none;padding:8px 20px 22px}
- .navinner{max-width:900px;border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:7px;box-shadow:var(--shadow)}
- .navbtn{flex-direction:row;gap:9px;padding:13px}
- .navbtn span{font-size:11px}
- .heroTitle{font-size:34px}
- .welcome{padding:32px}
+@keyframes shimmer{to{background-position:-200% 0}}
+.glass{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(15px + env(safe-area-inset-top)) 18px 14px;position:sticky;top:0;z-index:20;background:linear-gradient(to bottom,var(--bg) 65%,transparent)}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-logo{width:43px;height:43px;border-radius:15px;object-fit:cover;border:1px solid rgba(155,131,255,.5);box-shadow:0 0 22px rgba(155,131,255,.18);background:var(--panel2)}
+.brand-title{font-family:AS,system-ui,sans-serif;font-size:15px;letter-spacing:1.1px;direction:ltr;text-align:right}
+.brand-sub{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:.6px}
+.top-actions{display:flex;gap:8px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:15px;background:var(--panel2);display:grid;place-items:center;position:relative;transition:transform .2s,border-color .2s}
+.icon-btn:active,.nav-btn:active,.primary-btn:active,.soft-btn:active{transform:scale(.95)}
+.icon-btn:hover{border-color:var(--accent)}
+.svg-icon{width:20px;height:20px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.page{display:none;padding:8px 16px 20px;animation:appear .28s ease both}
+.page.active{display:block}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 2px 18px}
+.page-heading h1{font-size:23px;line-height:1.35;margin:0;font-weight:800}
+.eyebrow{font-size:10px;letter-spacing:1.5px;color:var(--accent);direction:ltr;text-align:right;margin-bottom:6px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.tiny{font-size:10px}
+.card{border-radius:var(--radius);padding:17px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero{padding:22px 19px;min-height:185px;background:linear-gradient(135deg,rgba(108,84,223,.22),rgba(27,188,167,.09)),var(--panel);border-radius:28px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid rgba(155,131,255,.2);border-radius:50%;left:-78px;top:-85px;box-shadow:0 0 0 25px rgba(155,131,255,.035),0 0 0 50px rgba(155,131,255,.025)}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+.status-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel2);padding:7px 11px;border-radius:50px;font-size:11px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 0 4px rgba(82,224,196,.1);animation:pulse 2s infinite}
+.hero-user{display:flex;align-items:center;gap:13px;margin-top:25px;position:relative;z-index:1}
+.avatar{width:57px;height:57px;border-radius:19px;object-fit:cover;background:var(--panel2);border:1px solid rgba(155,131,255,.45)}
+.hero-name{font-size:19px;font-weight:800;overflow-wrap:anywhere}
+.hero-sub{color:var(--muted);font-size:12px;margin-top:5px}
+.hero-code{direction:ltr;font-family:AS,system-ui,sans-serif;color:var(--accent2);font-size:12px;margin-top:8px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:23px 2px 12px}
+.section-title h2{font-size:15px;margin:0}
+.section-title span{font-size:11px;color:var(--muted)}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.stat-card{padding:15px;border:1px solid var(--line);border-radius:21px;background:var(--panel2);min-width:0;transition:transform .2s,border-color .2s}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(155,131,255,.35)}
+.stat-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:13px;background:rgba(155,131,255,.13);color:var(--accent);margin-bottom:13px}
+.stat-label{font-size:11px;color:var(--muted)}
+.stat-value{font-size:17px;font-weight:800;margin-top:7px;overflow-wrap:anywhere;direction:auto}
+.stat-value.latin{font-family:AS,system-ui,sans-serif}
+.progress-wrap{margin-top:13px;height:5px;background:var(--panel2);border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:20px;transition:width .8s}
+.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.quick-action{border:1px solid var(--line);background:var(--panel2);border-radius:18px;padding:13px 4px 11px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:.2s}
+.quick-action:hover{border-color:var(--accent);transform:translateY(-2px)}
+.quick-action .svg-icon{color:var(--accent)}
+.quick-action span{font-size:10px}
+.content-card{padding:18px;border-radius:24px;margin-bottom:14px}
+.content-card h3{margin:0 0 7px;font-size:15px}
+.content-card p{color:var(--muted);font-size:12px;line-height:1.9;margin:0}
+.field-list{display:grid;gap:9px}
+.data-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 12px;background:var(--panel2);border:1px solid var(--line);border-radius:16px;min-width:0}
+.data-label{font-size:11px;color:var(--muted);margin-bottom:5px}
+.data-value{font-size:13px;font-weight:700;overflow-wrap:anywhere;word-break:break-word}
+.data-left{min-width:0}
+.copy-btn{flex:0 0 34px;width:34px;height:34px;border-radius:12px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--muted)}
+.copy-btn .svg-icon{width:16px;height:16px}
+.primary-btn,.soft-btn,.danger-btn{border:0;border-radius:16px;min-height:48px;padding:12px 17px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:13px;transition:transform .18s,filter .18s}
+.primary-btn{background:linear-gradient(110deg,#8d72fa,#6956d8);color:#fff;box-shadow:0 8px 24px rgba(112,85,233,.22)}
+.soft-btn{background:var(--panel2);border:1px solid var(--line)}
+.danger-btn{background:rgba(255,107,134,.12);border:1px solid rgba(255,107,134,.3);color:var(--danger)}
+.primary-btn:hover,.soft-btn:hover,.danger-btn:hover{filter:brightness(1.08)}
+.full{width:100%}
+.button-row{display:flex;gap:9px;flex-wrap:wrap}
+.button-row>*{flex:1}
+.form-group{margin-bottom:15px}
+.form-group label{display:block;font-size:12px;color:var(--muted);margin:0 3px 8px}
+.form-control{width:100%;min-height:49px;padding:13px 14px;border:1px solid var(--line);border-radius:16px;background:var(--panel2);color:var(--text);outline:none;transition:border-color .2s;direction:auto}
+.form-control:focus{border-color:var(--accent)}
+textarea.form-control{min-height:120px;resize:vertical;line-height:1.8}
+.input-wrap{position:relative}
+.input-wrap .form-control{padding-left:48px}
+.input-end{position:absolute;left:7px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);width:35px;height:35px;display:grid;place-items:center}
+.login-screen{position:fixed;inset:0;z-index:100;overflow-y:auto;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:25px 18px calc(25px + env(safe-area-inset-bottom))}
+.login-box{width:100%;max-width:430px;border-radius:30px;padding:24px 21px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);animation:appear .4s ease both}
+.login-cover{width:100%;height:150px;border-radius:22px;object-fit:cover;border:1px solid var(--line);background:var(--bg2)}
+.login-logo-wrap{display:flex;justify-content:center;margin-top:-33px;position:relative}
+.login-logo{width:76px;height:76px;object-fit:cover;border-radius:25px;border:4px solid var(--bg);background:var(--panel);box-shadow:0 0 28px rgba(155,131,255,.3)}
+.login-title{text-align:center;font-family:Seal,AS,system-ui,sans-serif;font-size:25px;margin:17px 0 7px;direction:ltr}
+.login-welcome{text-align:center;font-family:Seal,system-ui,sans-serif;font-size:15px;color:var(--accent);margin:0 0 22px;direction:ltr}
+.login-caption{text-align:center;font-size:12px;line-height:1.9;color:var(--muted);margin:0 0 22px}
+.login-footer{text-align:center;font-size:10px;color:var(--muted);margin-top:17px;direction:ltr}
+.login-error{background:rgba(255,107,134,.1);border:1px solid rgba(255,107,134,.28);color:var(--danger);padding:11px;border-radius:13px;font-size:12px;line-height:1.7;margin-bottom:14px}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;display:inline-block;animation:spin .7s linear infinite}
+.bottom-nav{position:fixed;z-index:40;bottom:0;left:0;right:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 83%,transparent);backdrop-filter:blur(24px);border-top:1px solid var(--line)}
+.nav-inner{max-width:600px;margin:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.nav-btn{position:relative;border:0;background:transparent;color:var(--muted);border-radius:16px;min-height:57px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:.2s}
+.nav-btn .svg-icon{width:20px;height:20px}
+.nav-btn span{font-size:9px}
+.nav-btn.active{color:var(--accent);background:rgba(155,131,255,.1)}
+.nav-btn.active:before{content:"";position:absolute;top:0;width:19px;height:2px;border-radius:3px;background:var(--accent)}
+.drawer-backdrop{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.48);opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;z-index:61;top:0;bottom:0;right:0;width:min(86vw,340px);padding:calc(20px + env(safe-area-inset-top)) 18px calc(20px + env(safe-area-inset-bottom));background:var(--bg2);border-left:1px solid var(--line);transform:translateX(105%);transition:transform .28s ease;overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer-profile{padding:17px;border-radius:22px;margin:18px 0}
+.drawer-item{display:flex;align-items:center;gap:13px;width:100%;padding:14px 12px;border:0;border-radius:15px;background:transparent;text-align:right;margin-bottom:4px}
+.drawer-item:hover{background:var(--panel2)}
+.drawer-item .svg-icon{color:var(--accent)}
+.drawer-item span{flex:1;font-size:13px}
+.toast-stack{position:fixed;z-index:150;top:calc(12px + env(safe-area-inset-top));left:14px;right:14px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{max-width:440px;width:100%;padding:13px 15px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow);font-size:12px;animation:appear .2s ease;display:flex;align-items:center;gap:9px}
+.toast.success{border-color:rgba(82,224,196,.4)}.toast.error{border-color:rgba(255,107,134,.4)}
+.toast .svg-icon{flex-shrink:0}
+.skeleton{background:linear-gradient(90deg,var(--panel2),rgba(155,131,255,.1),var(--panel2));background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:9px;color:transparent!important}
+.empty-state{text-align:center;padding:28px 14px;color:var(--muted);font-size:12px;line-height:2}
+.empty-icon{width:55px;height:55px;margin:0 auto 13px;border-radius:19px;background:var(--panel2);display:grid;place-items:center;color:var(--accent)}
+.notice-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.notice-item:last-child{border-bottom:0}
+.notice-icon{width:39px;height:39px;border-radius:14px;display:grid;place-items:center;background:rgba(155,131,255,.12);color:var(--accent);flex-shrink:0}
+.notice-item h4{font-size:13px;margin:2px 0 6px}.notice-item p{font-size:11px;color:var(--muted);line-height:1.8;margin:0}
+.social-card{display:flex;align-items:center;gap:13px;padding:15px;border:1px solid var(--line);border-radius:18px;background:var(--panel2);margin-bottom:10px;transition:.2s}
+.social-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.social-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:rgba(155,131,255,.13);color:var(--accent);font-size:18px}
+.social-copy{flex:1;min-width:0}.social-copy strong{font-size:13px}.social-copy p{font-size:11px;color:var(--muted);margin:4px 0 0;overflow-wrap:anywhere}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.toggle-row:last-child{border-bottom:0}
+.switch{position:relative;width:45px;height:26px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.switch-track{position:absolute;inset:0;border-radius:30px;background:#656b7e;transition:.2s;cursor:pointer}
+.switch-track:before{content:"";position:absolute;width:20px;height:20px;right:3px;top:3px;border-radius:50%;background:white;transition:.2s}
+.switch input:checked+.switch-track{background:var(--accent)}
+.switch input:checked+.switch-track:before{transform:translateX(-19px)}
+.divider{height:1px;background:var(--line);margin:16px 0}
+.footer{text-align:center;color:var(--muted);font-size:10px;padding:12px 0 4px;direction:ltr}
+#appContent{display:none}
+body.logged-in #appContent{display:block}
+body.logged-in #loginScreen{display:none}
+body.logged-out #appContent{display:none}
+body.logged-out #loginScreen{display:flex}
+@media(min-width:700px){
+ .app-shell{border-left:1px solid var(--line);border-right:1px solid var(--line)}
+ .bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(600px,100%);border-left:1px solid var(--line);border-right:1px solid var(--line);border-radius:20px 20px 0 0}
 }
-@media(max-width:380px){
- .main{padding:14px 11px}
- .topbar{padding-left:12px;padding-right:12px}
- .brandname{font-size:14px}
- .grid{gap:9px}
- .stat{padding:13px 11px}
- .detailgrid{gap:8px}
- .detail{padding:10px}
+@media(max-width:360px){
+ .topbar{padding-inline:12px}.page{padding-inline:12px}.quick-grid{gap:5px}.quick-action span{font-size:9px}
+ .hero-name{font-size:16px}.stats-grid{gap:8px}.stat-card{padding:12px}
 }
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
-}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body>
-<div id="app">
+<body class="logged-out">
+<div class="ambient" aria-hidden="true"><div class="orb one"></div><div class="orb two"></div></div>
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- LOGIN -->
+<section class="login-screen" id="loginScreen">
+ <div class="login-box">
+  <img class="login-cover" src="assets/A.jpg" alt="Earthlink background" onerror="this.style.display='none'">
+  <div class="login-logo-wrap"><img class="login-logo" src="assets/AA.jpg" alt="Earthlink logo" onerror="this.src='assets/Q.png';this.onerror=null"></div>
+  <h1 class="login-title">LOGIN TO EARTHLINK</h1>
+  <p class="login-welcome">WELCOME TO EARTHLINK</p>
+  <p class="login-caption">مركز إدارة اشتراكك — وصول آمن إلى بيانات حسابك وخدماتك.</p>
+  <div id="loginError" class="login-error hidden" role="alert"></div>
+  <form id="loginForm" autocomplete="on">
+   <div class="form-group">
+    <label for="username">اسم المستخدم</label>
+    <input class="form-control" id="username" name="username" placeholder="USERNAME" autocomplete="username" required autocapitalize="none" spellcheck="false" dir="auto">
+   </div>
+   <div class="form-group">
+    <label for="password">كلمة المرور</label>
+    <div class="input-wrap">
+     <input class="form-control" id="password" name="password" type="password" placeholder="PASSWORD" autocomplete="current-password" required>
+     <button class="input-end" id="togglePassword" type="button" aria-label="إظهار كلمة المرور" title="إظهار أو إخفاء كلمة المرور"><svg class="svg-icon"><use href="#i-eye"/></svg></button>
+    </div>
+   </div>
+   <button class="primary-btn full" id="loginButton" type="submit"><svg class="svg-icon"><use href="#i-shield"/></svg><span>تسجيل الدخول الآمن</span></button>
+  </form>
+  <div class="login-footer">EARTHLINK PRO · SUBSCRIBER COMMAND CENTER</div>
+ </div>
+</section>
+
+<!-- ICON SPRITE -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+ <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></symbol>
+ <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+ <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+ <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></symbol>
+ <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+ <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+ <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.7a8 8 0 0 1-1.8 1l-.3 1.9h-3l-.3-1.9a8 8 0 0 1-1.8-1l-1.7.7-1.5-2.6L6.7 15a8 8 0 0 1 0-2l-1.4-1.1 1.5-2.6 1.7.7a8 8 0 0 1 1.8-1l.3-1.9h3l.3 1.9a8 8 0 0 1 1.8 1l1.7-.7 1.5 2.6L19.3 13a8 8 0 0 1 .1 2z" transform="translate(0 -2)"/></symbol>
+ <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13z"/></symbol>
+ <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+ <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></symbol>
+ <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 9h18M16 15h2"/><path d="M6 5V3h12v2"/></symbol>
+ <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+ <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+ <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+ <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.4-3"/></symbol>
+ <symbol id="i-log-out" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-9h.01"/></symbol>
+ <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 9a11 11 0 0 1 14 0M8 12a6.5 6.5 0 0 1 8 0m-5 4a2 2 0 0 1 2 0M12 20h.01"/></symbol>
+ <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7zM22 2 11 13"/></symbol>
+ <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3A5 5 0 0 0 13.4 3l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3A5 5 0 0 0 10.6 21l1.7-1.7"/></symbol>
+ <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13 2-3 8H5l6 12 3-8h5L13 2z"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+ <symbol id="i-alert" viewBox="0 0 24 24"><path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0z"/><path d="M12 9v4m0 4h.01"/></symbol>
+ <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><rect x="3" y="13" width="5" height="8" rx="2"/><rect x="16" y="13" width="5" height="8" rx="2"/></symbol>
+ <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></symbol>
+ <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></symbol>
+ <symbol id="i-close" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></symbol>
+</svg>
+
+<!-- APP -->
+<div id="appContent">
+ <div class="app-shell">
   <header class="topbar">
-    <div class="brand">
-      <button class="iconbtn" id="menuBtn" aria-label="فتح القائمة" title="القائمة">
-        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-      <div class="brandmark">
-        <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5.5 6.5c4 2 9 2 13 0M5.5 17.5c4-2 9-2 13 0"/></svg>
-      </div>
-      <div>
-        <div class="brandname">EARTHLINK PRO</div>
-        <div class="brandsub" id="brandSub">SUBSCRIBER COMMAND CENTER</div>
-      </div>
-    </div>
-    <div class="topactions">
-      <button class="iconbtn" id="languageBtn" title="Language" aria-label="تغيير اللغة">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-      </button>
-      <button class="iconbtn" id="themeToggle" title="تبديل الوضع" aria-label="تبديل الوضع">
-        <svg id="themeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/></svg>
-      </button>
-      <button class="iconbtn" id="headerAvatarBtn" aria-label="الحساب" title="الحساب">
-        <img id="headerAvatar" class="avatar" src="AA.jpg" alt="Account" onerror="this.style.display='none'">
-      </button>
-    </div>
+   <div class="brand">
+    <img class="brand-logo" src="assets/AA.jpg" alt="" onerror="this.src='assets/Q.png';this.onerror=null">
+    <div><div class="brand-title">EARTHLINK PRO</div><div class="brand-sub">SUBSCRIBER COMMAND CENTER</div></div>
+   </div>
+   <div class="top-actions">
+    <button class="icon-btn" id="refreshButton" title="تحديث بيانات الاشتراك" aria-label="تحديث"><svg class="svg-icon"><use href="#i-refresh"/></svg></button>
+    <button class="icon-btn" id="themeQuickButton" title="تغيير الوضع" aria-label="تغيير الوضع"><svg class="svg-icon"><use href="#i-moon"/></svg></button>
+    <button class="icon-btn" id="openDrawer" title="القائمة الجانبية" aria-label="القائمة"><svg class="svg-icon"><use href="#i-menu"/></svg></button>
+   </div>
   </header>
 
-  <main class="main">
-    <section class="view active" id="view-login">
-      <div class="loginwrap">
-        <div class="loginbox">
-          <div class="loginbrand"><div class="loginlogo">
-            <svg viewBox="0 0 24 24" width="45" height="45" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5.5 6.5c4 2 9 2 13 0M5.5 17.5c4-2 9-2 13 0"/></svg>
-          </div></div>
-          <div class="eyebrow" style="text-align:center">SECURE SUBSCRIBER ACCESS</div>
-          <h1 class="loginTitle" data-i18n="loginTitle">LOGIN TO EARTHLINK</h1>
-          <div class="loginSub" data-i18n="loginSub">أهلاً بك في لوحة التحكم الخاصة باشتراكك</div>
-          <form id="loginForm">
-            <label class="fieldlabel" for="username" data-i18n="username">اسم المستخدم</label>
-            <input class="field" id="username" name="username" autocomplete="username" placeholder="USERNAME" required>
-            <label class="fieldlabel" for="password" data-i18n="password">كلمة المرور</label>
-            <input class="field" id="password" name="password" type="password" autocomplete="current-password" placeholder="PASSWORD" required>
-            <div style="display:flex;align-items:center;gap:8px;margin:15px 0;color:var(--muted);font-size:10px">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--green)" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-              <span data-i18n="secure">اتصال آمن بخدمة إيرثلنك</span>
-            </div>
-            <button class="actionbtn primary" id="loginSubmit" type="submit" style="width:100%;padding:15px;margin-top:6px">
-              <span data-i18n="login">تسجيل الدخول</span>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
-            <div class="loginError" id="loginError"></div>
-          </form>
-          <div class="footer">EARTHLINK PRO · PRIVATE SUBSCRIBER SPACE</div>
-        </div>
-      </div>
-    </section>
+  <!-- HOME -->
+  <main>
+   <section class="page active" id="page-home" data-page="home">
+    <div class="page-heading"><div><div class="eyebrow">YOUR ACCOUNT</div><h1>الرئيسية</h1></div><span class="status-pill"><span class="dot"></span><span id="connectionStatus">متصل</span></span></div>
+    <article class="hero glass">
+     <div class="hero-top"><span class="status-pill"><svg class="svg-icon" style="width:15px;height:15px"><use href="#i-shield"/></svg> حساب إيرثلنك</span><span class="tiny muted" id="lastUpdated">بانتظار البيانات</span></div>
+     <div class="hero-user">
+      <img id="accountAvatar" class="avatar" src="assets/AA.jpg" alt="صورة الحساب" onerror="this.src='assets/AA.jpg';this.onerror=null">
+      <div style="min-width:0"><div class="hero-name" id="accountName">مرحباً بك</div><div class="hero-sub" id="accountType">بيانات اشتراكك تظهر هنا</div><div class="hero-code" id="accountUsername">—</div></div>
+     </div>
+    </article>
 
-    <section class="view" id="view-home">
-      <div class="welcome">
-        <div class="eyebrow">WELCOME BACK · EARTHLINK PRO</div>
-        <div class="heroTitle" id="welcomeName">مرحباً بك في لوحة اشتراكك</div>
-        <div class="heroText" id="welcomeText">كل تفاصيل حسابك واتصالك في مكان واحد.</div>
-        <div class="heroBadge"><span class="pulse"></span><span id="connectionText">متصل بلوحة الحساب</span></div>
-      </div>
+    <div class="section-title"><h2>ملخص الاشتراك</h2><span>LIVE ACCOUNT DATA</span></div>
+    <div class="stats-grid">
+     <article class="stat-card"><div class="stat-icon"><svg class="svg-icon"><use href="#i-wallet"/></svg></div><div class="stat-label">سعر الاشتراك</div><div class="stat-value" id="statPrice">—</div></article>
+     <article class="stat-card"><div class="stat-icon"><svg class="svg-icon"><use href="#i-calendar"/></svg></div><div class="stat-label">الأيام المتبقية</div><div class="stat-value" id="statDays">—</div><div class="progress-wrap"><div class="progress-bar" id="daysProgress"></div></div></article>
+     <article class="stat-card"><div class="stat-icon"><svg class="svg-icon"><use href="#i-wifi"/></svg></div><div class="stat-label">حالة الخدمة</div><div class="stat-value" id="statStatus">—</div></article>
+     <article class="stat-card"><div class="stat-icon"><svg class="svg-icon"><use href="#i-bolt"/></svg></div><div class="stat-label">نوع الباقة</div><div class="stat-value" id="statPackage">—</div></article>
+    </div>
 
-      <div class="sectionhead">
-        <div><div class="sectiontitle" data-i18n="overview">نظرة عامة</div><div class="sectionhint" data-i18n="overviewSub">ملخص اشتراكك الحالي</div></div>
-        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></div>
-      </div>
-      <div class="grid" id="summaryGrid"></div>
+    <div class="section-title"><h2>الوصول السريع</h2><span>QUICK ACCESS</span></div>
+    <div class="quick-grid">
+     <button class="quick-action" data-go="details" title="عرض كل بيانات الاشتراك"><svg class="svg-icon"><use href="#i-grid"/></svg><span>تفاصيل الحساب</span></button>
+     <button class="quick-action" data-go="notifications" title="عرض التنبيهات"><svg class="svg-icon"><use href="#i-bell"/></svg><span>التنبيهات</span></button>
+     <button class="quick-action" data-go="contact" title="إرسال رسالة دعم"><svg class="svg-icon"><use href="#i-message"/></svg><span>الدعم الفني</span></button>
+     <button class="quick-action" data-go="settings" title="إعدادات التطبيق"><svg class="svg-icon"><use href="#i-settings"/></svg><span>الإعدادات</span></button>
+    </div>
 
-      <div class="sectionhead">
-        <div><div class="sectiontitle" data-i18n="accountCard">بطاقة الحساب</div><div class="sectionhint" data-i18n="accountCardSub">معلومات المشترك الأساسية</div></div>
-        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
-      </div>
-      <div class="panel">
-        <div class="profileRow">
-          <img class="profilePic" id="accountImage" src="AA.jpg" alt="Account image">
-          <div style="min-width:0;flex:1">
-            <div class="profileName" id="profileName">—</div>
-            <div class="profileSub"><span data-i18n="userId">اسم المستخدم</span>: <b id="profileId">—</b></div>
-            <div style="margin-top:9px"><span class="pill" id="statusPill"><span class="pulse"></span><span>—</span></span></div>
-          </div>
-        </div>
-        <div class="rowactions">
-          <button class="actionbtn primary" data-goto="data"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h16"/></svg><span data-i18n="allDetails">عرض كل البيانات</span></button>
-          <button class="actionbtn" id="refreshBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg><span data-i18n="refresh">تحديث البيانات</span></button>
-        </div>
-      </div>
-    </section>
+    <div class="section-title"><h2>حالة الاتصال</h2><span>SECURE CONNECTION</span></div>
+    <article class="content-card glass">
+     <div style="display:flex;align-items:center;gap:12px">
+      <div class="stat-icon" style="margin:0;flex-shrink:0"><svg class="svg-icon"><use href="#i-shield"/></svg></div>
+      <div style="flex:1"><h3 id="connectionTitle">الاتصال جاهز</h3><p id="connectionDescription">سيتم عرض حالة جلسة إيرثلنك عند جلب البيانات.</p></div>
+     </div>
+     <div class="divider"></div>
+     <div class="button-row"><button class="soft-btn" data-go="details"><svg class="svg-icon"><use href="#i-grid"/></svg> كل البيانات</button><button class="primary-btn" id="homeRefresh"><svg class="svg-icon"><use href="#i-refresh"/></svg> تحديث الآن</button></div>
+    </article>
+   </section>
 
-    <section class="view" id="view-data">
-      <div class="sectionhead" style="margin-top:4px">
-        <div><div class="sectiontitle" data-i18n="allDetails">كل بيانات الاشتراك</div><div class="sectionhint" data-i18n="dataSub">تُحمّل الحقول من استجابة إيرثلنك</div></div>
-        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h16"/></svg></div>
-      </div>
-      <div class="panel" id="dataProfile"></div>
-      <div class="detailgrid" id="detailGrid" style="margin-top:13px"></div>
-      <div class="panel">
-        <div class="sectiontitle" data-i18n="connectionInfo">معلومات الاتصال</div>
-        <div class="settingdesc" style="margin-top:8px" data-i18n="connectionInfoSub">تظهر حالة الاتصال عند نجاح تحديث البيانات.</div>
-        <div class="rowactions"><button class="actionbtn primary" id="dataRefresh"><span data-i18n="refresh">تحديث البيانات</span></button></div>
-      </div>
-    </section>
+   <!-- DETAILS -->
+   <section class="page" id="page-details" data-page="details">
+    <div class="page-heading"><div><div class="eyebrow">ACCOUNT INFORMATION</div><h1>تفاصيل الاشتراك</h1></div><button class="icon-btn" id="detailsRefresh" title="تحديث التفاصيل"><svg class="svg-icon"><use href="#i-refresh"/></svg></button></div>
+    <article class="content-card glass">
+     <h3>معلومات الحساب</h3><p>الحقول أدناه تُعرض من استجابة واجهة إيرثلنك. الحقول غير المتوفرة ستظهر بشرطة.</p>
+    </article>
+    <div id="detailsList" class="field-list"><div class="empty-state">يتم تحميل البيانات…</div></div>
+    <button class="soft-btn full" id="copyAllDetails" style="margin-top:14px"><svg class="svg-icon"><use href="#i-copy"/></svg> نسخ جميع التفاصيل</button>
+   </section>
 
-    <section class="view" id="view-themes">
-      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="themes">الثيمات والمظهر</div><div class="sectionhint" data-i18n="themesSub">اختر الواجهة التي تناسبك</div></div><div class="sectionicon">✦</div></div>
-      <div class="themegrid">
-        <button class="themeCard" data-theme="dark"><div class="themePreview" style="background:linear-gradient(135deg,#090b13,#272048)"></div><strong data-i18n="darkTheme">ليل بنفسجي</strong><small data-i18n="darkDesc">داكن وهادئ</small></button>
-        <button class="themeCard" data-theme="light"><div class="themePreview" style="background:linear-gradient(135deg,#edf0ff,#d5f7ff)"></div><strong data-i18n="lightTheme">نهاري فاتح</strong><small data-i18n="lightDesc">مشرق وواضح</small></button>
-        <button class="themeCard" data-theme="ocean"><div class="themePreview" style="background:linear-gradient(135deg,#061d2a,#007f95)"></div><strong data-i18n="oceanTheme">محيط مضيء</strong><small data-i18n="oceanDesc">درجات بحرية</small></button>
-        <button class="themeCard" data-theme="royal"><div class="themePreview" style="background:linear-gradient(135deg,#190e2d,#6c2ab5)"></div><strong data-i18n="royalTheme">ملكي</strong><small data-i18n="royalDesc">بنفسجي فاخر</small></button>
-      </div>
-      <div class="panel">
-        <div class="sectiontitle" data-i18n="personalize">تخصيص الواجهة</div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="darkMode">الوضع الليلي</div><div class="settingdesc" data-i18n="darkModeSub">تبديل الوضع الداكن والفاتح</div></div><input class="switch" id="darkSwitch" type="checkbox" checked></div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="language">لغة التطبيق</div><div class="settingdesc" data-i18n="languageSub">العربية أو English</div></div><button class="actionbtn" id="languageSetting">العربية / EN</button></div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="motion">التأثيرات الحركية</div><div class="settingdesc" data-i18n="motionSub">إضاءة وانتقالات ناعمة</div></div><input class="switch" id="motionSwitch" type="checkbox" checked></div>
-      </div>
-    </section>
+   <!-- NOTIFICATIONS -->
+   <section class="page" id="page-notifications" data-page="notifications">
+    <div class="page-heading"><div><div class="eyebrow">ACCOUNT ACTIVITY</div><h1>التنبيهات</h1></div><button class="icon-btn" id="clearNotifications" title="مسح التنبيهات المحلية"><svg class="svg-icon"><use href="#i-close"/></svg></button></div>
+    <article class="content-card glass"><h3>مركز التنبيهات</h3><p>تظهر هنا رسائل الاتصال وحالة الاشتراك التي يرصدها التطبيق. هذه التنبيهات محلية وليست إشعارات دفع من إيرثلنك.</p></article>
+    <div class="content-card glass" id="notificationsList"></div>
+   </section>
 
-    <section class="view" id="view-counters">
-      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="counters">العدادات</div><div class="sectionhint" data-i18n="countersSub">الوقت وتفاصيل صلاحية الاشتراك</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg></div></div>
-      <div class="panel">
-        <div class="sectionhint" data-i18n="localTime">الوقت المحلي</div>
-        <div class="clock" id="liveClock">--:--:--</div>
-        <div class="settingdesc" id="liveDate">—</div>
-      </div>
-      <div class="grid" id="counterGrid" style="margin-top:13px"></div>
-      <div class="panel">
-        <div class="sectiontitle" data-i18n="expiry">انتهاء الصلاحية</div>
-        <div class="detailValue" id="expiryValue" style="font-size:16px;margin-top:12px">—</div>
-        <div class="settingdesc" id="expiryHint"></div>
-      </div>
-    </section>
+   <!-- CONTACT -->
+   <section class="page" id="page-contact" data-page="contact">
+    <div class="page-heading"><div><div class="eyebrow">WE ARE HERE TO HELP</div><h1>الدعم والتواصل</h1></div><svg class="svg-icon" style="color:var(--accent);width:27px;height:27px"><use href="#i-headphones"/></svg></div>
+    <article class="content-card glass"><h3>أرسل رسالة</h3><p>اكتب استفسارك وسيتم إرساله إلى قناة الدعم المُعدّة على الخادم. لا تضع كلمة المرور أو التوكن في الرسالة.</p></article>
+    <form id="contactForm" class="content-card glass">
+     <div class="form-group"><label for="contactName">اسم المستخدم (اختياري)</label><input class="form-control" id="contactName" maxlength="80" placeholder="اسم المستخدم أو الاسم المعروض"></div>
+     <div class="form-group"><label for="contactMessage">نص الرسالة</label><textarea class="form-control" id="contactMessage" maxlength="1800" required placeholder="اكتب رسالتك هنا…"></textarea><div class="tiny muted" style="text-align:left;margin-top:5px"><span id="messageCount">0</span>/1800</div></div>
+     <button class="primary-btn full" id="sendMessageButton" type="submit"><svg class="svg-icon"><use href="#i-send"/></svg> إرسال الرسالة</button>
+    </form>
+    <div class="section-title"><h2>قنوات التواصل</h2></div>
+    <a class="social-card" href="https://www.tiktok.com/@00.ddd" target="_blank" rel="noopener noreferrer"><div class="social-icon">♪</div><div class="social-copy"><strong>TikTok</strong><p>@00.ddd</p></div><svg class="svg-icon"><use href="#i-link"/></svg></a>
+    <a class="social-card" href="https://discord.com/users/1531577881548034100" target="_blank" rel="noopener noreferrer"><div class="social-icon">◈</div><div class="social-copy"><strong>Discord</strong><p>فتح ملف التواصل</p></div><svg class="svg-icon"><use href="#i-link"/></svg></a>
+    <a class="social-card" href="https://t.me/" target="_blank" rel="noopener noreferrer"><div class="social-icon">➤</div><div class="social-copy"><strong>Telegram</strong><p>فتح Telegram — أضف رابطك الصحيح عند توفره</p></div><svg class="svg-icon"><use href="#i-link"/></svg></a>
+   </section>
 
-    <section class="view" id="view-contact">
-      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="contact">التواصل والدعم</div><div class="sectionhint" data-i18n="contactSub">خيارات مساعدة واتصال</div></div><div class="sectionicon">✉</div></div>
-      <div class="panel">
-        <div class="profileRow"><div class="sectionicon" style="width:50px;height:50px"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 10h8M8 13h5"/></svg></div><div><div class="profileName" data-i18n="supportTitle">مركز مساعدة المشترك</div><div class="profileSub" data-i18n="supportDesc">يمكنك استخدام معلومات حسابك للتواصل مع وكيلك.</div></div></div>
-        <div class="detailgrid" style="margin-top:18px">
-          <div class="detail"><div class="detailLabel" data-i18n="agent">اسم الوكيل</div><div class="detailValue" id="contactAgent">—</div></div>
-          <div class="detail"><div class="detailLabel" data-i18n="phone">رقم الهاتف</div><div class="detailValue" id="contactPhone">—</div></div>
-          <div class="detail"><div class="detailLabel" data-i18n="email">البريد الإلكتروني</div><div class="detailValue" id="contactEmail">—</div></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="sectiontitle" data-i18n="sendReport">إرسال تقرير الحساب</div>
-        <div class="settingdesc" style="margin-top:8px" data-i18n="reportSub">يرسل ملخصاً غير متضمن لكلمة المرور إلى قناة Discord المضبوطة على الخادم.</div>
-        <div class="rowactions"><button class="actionbtn primary" id="discordReport"><span data-i18n="sendDiscord">إرسال إلى Discord</span></button></div>
-      </div>
-      <div class="panel">
-        <div class="sectiontitle" data-i18n="about">حول التطبيق</div>
-        <div class="settingdesc" style="line-height:2.2;margin-top:9px" data-i18n="aboutDesc">EARTHLINK PRO واجهة لإدارة بيانات الاشتراك. حالة الاتصال تعتمد على خادم إيرثلنك واستجابة الخدمة الفعلية.</div>
-        <div class="pill" style="margin-top:12px">VERSION 3.0 · SECURE SESSION</div>
-      </div>
-    </section>
+   <!-- PROFILE -->
+   <section class="page" id="page-profile" data-page="profile">
+    <div class="page-heading"><div><div class="eyebrow">YOUR PROFILE</div><h1>حسابي</h1></div></div>
+    <article class="content-card glass">
+     <div style="display:flex;align-items:center;gap:14px"><img id="profileAvatar" class="avatar" src="assets/AA.jpg" alt="الصورة"><div style="min-width:0"><h3 id="profileName">مستخدم إيرثلنك</h3><p id="profileUsername">—</p></div></div>
+     <div class="divider"></div><div class="field-list" id="profileSummary"></div>
+    </article>
+    <article class="content-card glass"><h3>جلسة الحساب</h3><p>عند تسجيل الخروج، تُمسح جلسة التطبيق من المتصفح. لا يخزن التطبيق كلمة مرورك في التخزين المحلي.</p><button class="danger-btn full" id="logoutButton" style="margin-top:16px"><svg class="svg-icon"><use href="#i-log-out"/></svg> تسجيل الخروج</button></article>
+   </section>
 
-    <section class="view" id="view-notifications">
-      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="notifications">سجل التنبيهات</div><div class="sectionhint" data-i18n="notificationsSub">رسائل تحديث الحساب والأحداث</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></div></div>
-      <div class="panel">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="sectiontitle" data-i18n="recentActivity">آخر الأحداث</div><button class="actionbtn" id="clearLogs" data-i18n="clear">مسح السجل</button></div>
-        <div id="logList"></div>
-      </div>
-    </section>
-
-    <section class="view" id="view-settings">
-      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="settings">الإعدادات</div><div class="sectionhint" data-i18n="settingsSub">الحساب والواجهة والاتصال</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.8.2l-.2.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.5-1.1 1.7 1.7 0 0 0-1.5.8l-.1.2-3-1.7.1-.2a1.7 1.7 0 0 0-.2-1.8l-.1-.2v-3.4l.2-.1a1.7 1.7 0 0 0 1.1-1.5 1.7 1.7 0 0 0-.8-1.5l-.2-.1 1.7-3 .2.1a1.7 1.7 0 0 0 1.8-.2l.2-.1h3.4l.1.2a1.7 1.7 0 0 0 1.5 1.1 1.7 1.7 0 0 0 1.5-.8l.1-.2 3 1.7-.1.2a1.7 1.7 0 0 0 .2 1.8l.1.2V14z"/></svg></div></div>
-      <div class="panel">
-        <div class="settingrow"><div><div class="settingname" data-i18n="language">لغة التطبيق</div><div class="settingdesc" data-i18n="languageSub">العربية أو English</div></div><button class="actionbtn" id="languageSetting2">العربية / EN</button></div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="appearance">المظهر</div><div class="settingdesc" data-i18n="appearanceSub">تغيير ألوان الواجهة</div></div><button class="actionbtn" data-goto="themes" data-i18n="themes">الثيمات</button></div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="refresh">تحديث البيانات</div><div class="settingdesc" data-i18n="refreshSub">طلب أحدث معلومات الحساب</div></div><button class="actionbtn" id="settingsRefresh">↻</button></div>
-        <div class="settingrow"><div><div class="settingname" data-i18n="logout">تسجيل الخروج</div><div class="settingdesc" data-i18n="logoutSub">إنهاء جلسة هذا التطبيق</div></div><button class="actionbtn danger" id="logoutBtn" data-i18n="logout">تسجيل الخروج</button></div>
-      </div>
-      <div class="footer">YOUR ACCOUNT · YOUR CONTROL</div>
-    </section>
+   <!-- SETTINGS -->
+   <section class="page" id="page-settings" data-page="settings">
+    <div class="page-heading"><div><div class="eyebrow">PERSONALIZE YOUR APP</div><h1>الإعدادات</h1></div><svg class="svg-icon" style="color:var(--accent);width:25px;height:25px"><use href="#i-settings"/></svg></div>
+    <article class="content-card glass">
+     <h3>المظهر</h3><p>غيّر المظهر حسب راحتك. يتم حفظ الاختيار على جهازك فقط.</p>
+     <div class="toggle-row"><div><strong style="font-size:13px">الوضع الليلي</strong><div class="small muted" style="margin-top:4px">تبديل بين المظهر الداكن والفاتح</div></div><label class="switch"><input type="checkbox" id="themeToggle" checked><span class="switch-track"></span></label></div>
+     <div class="toggle-row"><div><strong style="font-size:13px">تأثيرات الحركة</strong><div class="small muted" style="margin-top:4px">حركات انتقالية خفيفة</div></div><label class="switch"><input type="checkbox" id="motionToggle" checked><span class="switch-track"></span></label></div>
+    </article>
+    <article class="content-card glass">
+     <h3>الاتصال والبيانات</h3><p>مصدر البيانات هو الخادم المرتبط بإيرثلنك. لا تدخل رابط API أو توكناً في هذه الصفحة؛ إعدادات الخادم تُضبط في بيئة النشر.</p>
+     <div class="data-row" style="margin-top:13px"><div class="data-left"><div class="data-label">حالة واجهة التطبيق</div><div class="data-value" id="apiHealth">لم يتم الفحص</div></div><button class="copy-btn" id="checkHealth" title="فحص الخادم"><svg class="svg-icon"><use href="#i-refresh"/></svg></button></div>
+     <button class="soft-btn full" id="settingsRefresh" style="margin-top:12px"><svg class="svg-icon"><use href="#i-refresh"/></svg> تحديث بيانات الاشتراك</button>
+    </article>
+    <article class="content-card glass">
+     <h3>حول التطبيق</h3><p>واجهة إدارة الاشتراك — EARTHLINK PRO.</p>
+     <div class="divider"></div><div class="data-row"><div class="data-left"><div class="data-label">الإصدار</div><div class="data-value">2.0.0</div></div><span class="status-pill">PRO</span></div>
+     <div class="data-row" style="margin-top:9px"><div class="data-left"><div class="data-label">مصدر الحساب</div><div class="data-value">Earthlink API</div></div><svg class="svg-icon" style="color:var(--accent)"><use href="#i-shield"/></svg></div>
+    </article>
+   </section>
   </main>
+  <div class="footer">EARTHLINK PRO · BUILT FOR YOUR ACCOUNT</div>
+ </div>
 
-  <div class="bottomnav" id="bottomNav" style="display:none">
-    <nav class="navinner">
-      <button class="navbtn active" data-goto="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="home">الرئيسية</span></button>
-      <button class="navbtn" data-goto="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span data-i18n="data">البيانات</span></button>
-      <button class="navbtn" data-goto="themes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3c0-5.1-4-9.2-9-9.2Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="15" cy="8" r="1"/></svg><span data-i18n="themes">الثيمات</span></button>
-      <button class="navbtn" data-goto="counters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span data-i18n="counters">العدادات</span></button>
-      <button class="navbtn" data-goto="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/></svg><span data-i18n="contact">تواصل</span></button>
-    </nav>
+ <!-- BOTTOM NAV -->
+ <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+  <div class="nav-inner">
+   <button class="nav-btn active" data-page-target="home" title="الرئيسية"><svg class="svg-icon"><use href="#i-home"/></svg><span>الرئيسية</span></button>
+   <button class="nav-btn" data-page-target="details" title="تفاصيل الحساب"><svg class="svg-icon"><use href="#i-grid"/></svg><span>التفاصيل</span></button>
+   <button class="nav-btn" data-page-target="notifications" title="التنبيهات"><svg class="svg-icon"><use href="#i-bell"/></svg><span>التنبيهات</span></button>
+   <button class="nav-btn" data-page-target="contact" title="الدعم"><svg class="svg-icon"><use href="#i-message"/></svg><span>الدعم</span></button>
+   <button class="nav-btn" data-page-target="profile" title="حسابي"><svg class="svg-icon"><use href="#i-user"/></svg><span>حسابي</span></button>
   </div>
+ </nav>
 </div>
 
-<div class="overlay" id="overlay"></div>
-<aside class="sidebar" id="sidebar">
-  <div class="sidehead"><div><div class="sidebrand">EARTHLINK PRO</div><div class="brandsub">PERSONAL SPACE</div></div><button class="iconbtn" id="closeMenu" aria-label="إغلاق">✕</button></div>
-  <div class="panel" style="margin:0 0 16px">
-    <div class="profileRow"><img class="profilePic" id="sideAvatar" src="AA.jpg" alt=""><div style="min-width:0"><div class="profileName" id="sideName">حساب المشترك</div><div class="profileSub" id="sideId">—</div></div></div>
-  </div>
-  <div class="sidegroup" data-i18n="account">الحساب</div>
-  <button class="sideitem" data-goto="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/></svg><span data-i18n="home">الرئيسية</span></button>
-  <button class="sideitem" data-goto="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span data-i18n="data">البيانات</span></button>
-  <button class="sideitem" data-goto="notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span data-i18n="notifications">التنبيهات والسجل</span></button>
-  <button class="sideitem" data-goto="themes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg><span data-i18n="themes">الثيمات</span></button>
-  <button class="sideitem" data-goto="counters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/></svg><span data-i18n="counters">العدادات</span></button>
-  <button class="sideitem" data-goto="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/></svg><span data-i18n="contact">تواصل</span></button>
-  <button class="sideitem" data-goto="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19 13.5a7 7 0 0 0 0-3l2-1.5-2-3.5-2.5 1a7 7 0 0 0-2.5-1.5L13.5 2h-4L9 5a7 7 0 0 0-2.5 1.5l-2.5-1-2 3.5L4 10.5a7 7 0 0 0 0 3l-2 1.5 2 3.5 2.5-1A7 7 0 0 0 9 19l.5 3h4l.5-3a7 7 0 0 0 2.5-1.5l2.5 1 2-3.5z"/></svg><span data-i18n="settings">الإعدادات</span></button>
-  <button class="sideitem" data-goto="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg><span data-i18n="about">حول التطبيق</span></button>
-  <button class="sideitem" id="sideLogout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 17l5-5-5-5M15 12H3M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span data-i18n="logout">تسجيل الخروج</span></button>
+<!-- DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-label="القائمة الجانبية">
+ <div style="display:flex;align-items:center;justify-content:space-between"><div class="brand"><img class="brand-logo" src="assets/AA.jpg" alt=""><div><div class="brand-title">EARTHLINK PRO</div><div class="brand-sub">NAVIGATION MENU</div></div></div><button class="icon-btn" id="closeDrawer" aria-label="إغلاق"><svg class="svg-icon"><use href="#i-close"/></svg></button></div>
+ <div class="drawer-profile glass"><div style="display:flex;align-items:center;gap:12px"><img class="avatar" id="drawerAvatar" src="assets/AA.jpg" alt=""><div style="min-width:0"><strong id="drawerName" style="font-size:13px">حسابي</strong><div class="small muted" id="drawerUsername" style="margin-top:5px">—</div></div></div></div>
+ <button class="drawer-item" data-go="home"><svg class="svg-icon"><use href="#i-home"/></svg><span>الرئيسية</span></button>
+ <button class="drawer-item" data-go="details"><svg class="svg-icon"><use href="#i-grid"/></svg><span>كل تفاصيل الاشتراك</span></button>
+ <button class="drawer-item" data-go="notifications"><svg class="svg-icon"><use href="#i-bell"/></svg><span>مركز التنبيهات</span></button>
+ <button class="drawer-item" data-go="contact"><svg class="svg-icon"><use href="#i-headphones"/></svg><span>الدعم والتواصل</span></button>
+ <button class="drawer-item" data-go="settings"><svg class="svg-icon"><use href="#i-settings"/></svg><span>الإعدادات والمظهر</span></button>
+ <div class="divider"></div>
+ <button class="drawer-item" id="drawerRefresh"><svg class="svg-icon"><use href="#i-refresh"/></svg><span>تحديث بيانات الحساب</span></button>
+ <button class="drawer-item" id="drawerLogout"><svg class="svg-icon" style="color:var(--danger)"><use href="#i-log-out"/></svg><span>تسجيل الخروج</span></button>
+ <div class="footer">SECURE ACCOUNT ACCESS</div>
 </aside>
-<div class="toastarea" id="toastArea" aria-live="polite"></div>
 
 <script>
 "use strict";
 
-/*
-  مهم: ضع رابط Cloudflare Worker الحقيقي هنا بعد نشر worker.js.
-  مثال الشكل فقط: https://اسم-المشروع.اسم-حسابك.workers.dev
-  لا تضع كلمة المرور أو Access Token في هذا الملف.
-*/
-const API_BASE = "https://YOUR-WORKER-NAME.workers.dev";
-
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-
+/* =========================================================
+   EARTHLINK PRO — FRONTEND
+   API contract:
+   POST /api/login      { username, password }
+   GET  /api/account
+   POST /api/contact    { username, message }
+   POST /api/logout
+   GET  /api/health
+========================================================= */
+const $ = (selector, root=document) => root.querySelector(selector);
+const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
 const state = {
-  account: null,
-  language: localStorage.getItem("el_language") || "ar",
-  theme: localStorage.getItem("el_theme") || "dark",
-  logs: [],
-  page: "login",
-  busy: false
+ account:null,
+ notices:[],
+ currentPage:"home",
+ loading:false,
+ lastUpdated:null
 };
+const FIELD_MAP = [
+ ["fullName","الاسم الكامل"],
+ ["userID","اسم المستخدم"],
+ ["accountName","نوع الاشتراك"],
+ ["accountPrice","سعر الاشتراك"],
+ ["accountStatus","حالة الاشتراك"],
+ ["activeDaysLeft","الأيام المتبقية"],
+ ["accountExpirationDate","تاريخ انتهاء الصلاحية"],
+ ["agentName","اسم الوكيل"],
+ ["userIP","عنوان IP"],
+ ["mobileNumber","رقم الهاتف"],
+ ["address","العنوان"],
+ ["email","البريد الإلكتروني"],
+ ["city","المدينة"],
+ ["accountImagePath","صورة الحساب"],
+ ["serviceStatusColor","لون حالة الخدمة"]
+];
+const KNOWN_LABELS = Object.fromEntries(FIELD_MAP);
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const translations = {
- ar: {
-  loginTitle:"LOGIN TO EARTHLINK",loginSub:"أهلاً بك في لوحة التحكم الخاصة باشتراكك",
-  username:"اسم المستخدم",password:"كلمة المرور",secure:"اتصال آمن بخدمة إيرثلنك",login:"تسجيل الدخول",
-  home:"الرئيسية",data:"البيانات",themes:"الثيمات",counters:"العدادات",contact:"تواصل",
-  overview:"نظرة عامة",overviewSub:"ملخص اشتراكك الحالي",accountCard:"بطاقة الحساب",
-  accountCardSub:"معلومات المشترك الأساسية",userId:"اسم المستخدم",allDetails:"كل بيانات الاشتراك",
-  refresh:"تحديث البيانات",dataSub:"تُحمّل الحقول من استجابة إيرثلنك",connectionInfo:"معلومات الاتصال",
-  connectionInfoSub:"تظهر حالة الاتصال عند نجاح تحديث البيانات",themesSub:"اختر الواجهة التي تناسبك",
-  darkTheme:"ليل بنفسجي",darkDesc:"داكن وهادئ",lightTheme:"نهاري فاتح",lightDesc:"مشرق وواضح",
-  oceanTheme:"محيط مضيء",oceanDesc:"درجات بحرية",royalTheme:"ملكي",royalDesc:"بنفسجي فاخر",
-  personalize:"تخصيص الواجهة",darkMode:"الوضع الليلي",darkModeSub:"تبديل الوضع الداكن والفاتح",
-  language:"لغة التطبيق",languageSub:"العربية أو English",motion:"التأثيرات الحركية",
-  motionSub:"إضاءة وانتقالات ناعمة",countersSub:"الوقت وتفاصيل صلاحية الاشتراك",
-  localTime:"الوقت المحلي",expiry:"انتهاء الصلاحية",contactSub:"خيارات مساعدة واتصال",
-  supportTitle:"مركز مساعدة المشترك",supportDesc:"يمكنك استخدام معلومات حسابك للتواصل مع وكيلك.",
-  agent:"اسم الوكيل",phone:"رقم الهاتف",email:"البريد الإلكتروني",sendReport:"إرسال تقرير الحساب",
-  reportSub:"يرسل ملخصاً غير متضمن لكلمة المرور إلى قناة Discord المضبوطة على الخادم.",
-  sendDiscord:"إرسال إلى Discord",about:"حول التطبيق",
-  aboutDesc:"EARTHLINK PRO واجهة لإدارة بيانات الاشتراك. حالة الاتصال تعتمد على خادم إيرثلنك واستجابة الخدمة الفعلية.",
-  notifications:"التنبيهات والسجل",notificationsSub:"رسائل تحديث الحساب والأحداث",
-  recentActivity:"آخر الأحداث",clear:"مسح السجل",settings:"الإعدادات",settingsSub:"الحساب والواجهة والاتصال",
-  logout:"تسجيل الخروج",logoutSub:"إنهاء جلسة هذا التطبيق",account:"الحساب",appearance:"المظهر",
-  appearanceSub:"تغيير ألوان الواجهة",refreshSub:"طلب أحدث معلومات الحساب",
-  noValue:"غير متوفر",daysLeft:"الأيام المتبقية",price:"سعر الاشتراك",package:"نوع الاشتراك",
-  status:"حالة الاشتراك",expiryDate:"تاريخ انتهاء الصلاحية",ip:"عنوان IP",
-  loading:"جارٍ الاتصال بإيرثلنك…",loginSuccess:"تم تسجيل الدخول بنجاح",
-  updated:"تم تحديث بيانات الحساب",failed:"تعذر إكمال الطلب",offline:"تعذر تحديث البيانات",
-  noSession:"انتهت الجلسة. سجّل الدخول مرة ثانية.",loggedOut:"تم تسجيل الخروج",
-  reportSent:"تم إرسال التقرير إلى Discord",reportFailed:"فشل إرسال التقرير",
-  logLogin:"تسجيل الدخول",logUpdate:"تحديث البيانات",logLogout:"تسجيل الخروج",
-  logTheme:"تغيير المظهر",logLanguage:"تغيير اللغة",logError:"خطأ في الاتصال",
-  aboutTitle:"حول التطبيق",counters:"العدادات",accountName:"اسم المشترك"
- },
- en: {
-  loginTitle:"LOGIN TO EARTHLINK",loginSub:"Welcome to your subscriber dashboard",
-  username:"Username",password:"Password",secure:"Secure connection to Earthlink",login:"Sign in",
-  home:"Home",data:"Data",themes:"Themes",counters:"Counters",contact:"Contact",
-  overview:"Overview",overviewSub:"Your current subscription summary",accountCard:"Account card",
-  accountCardSub:"Subscriber profile",userId:"Username",allDetails:"All subscription data",
-  refresh:"Refresh data",dataSub:"Fields are loaded from the Earthlink response",
-  connectionInfo:"Connection information",connectionInfoSub:"Connection status appears after a successful refresh",
-  themesSub:"Choose the appearance you prefer",darkTheme:"Violet Night",darkDesc:"Dark and calm",
-  lightTheme:"Daylight",lightDesc:"Bright and clear",oceanTheme:"Ocean Glow",oceanDesc:"Ocean shades",
-  royalTheme:"Royal",royalDesc:"Premium violet",personalize:"Personalize",darkMode:"Dark mode",
-  darkModeSub:"Switch between light and dark",language:"App language",languageSub:"Arabic or English",
-  motion:"Motion effects",motionSub:"Soft glow and transitions",countersSub:"Clock and subscription validity",
-  localTime:"Local time",expiry:"Expiration",contactSub:"Support and contact options",
-  supportTitle:"Subscriber support",supportDesc:"Use your account information to contact your agent.",
-  agent:"Agent name",phone:"Phone number",email:"Email",sendReport:"Send account report",
-  reportSub:"Sends a summary without your password to the server-configured Discord channel.",
-  sendDiscord:"Send to Discord",about:"About",
-  aboutDesc:"EARTHLINK PRO is an interface for subscription information. Connection status depends on the actual Earthlink service response.",
-  notifications:"Notifications & log",notificationsSub:"Account updates and recent events",
-  recentActivity:"Recent activity",clear:"Clear log",settings:"Settings",settingsSub:"Account, appearance and connection",
-  logout:"Sign out",logoutSub:"End this app session",account:"Account",appearance:"Appearance",
-  appearanceSub:"Change interface colors",refreshSub:"Request the latest account information",
-  noValue:"Not available",daysLeft:"Days left",price:"Subscription price",package:"Package",
-  status:"Subscription status",expiryDate:"Expiration date",ip:"IP address",
-  loading:"Connecting to Earthlink…",loginSuccess:"Signed in successfully",
-  updated:"Account data updated",failed:"Request failed",offline:"Could not refresh data",
-  noSession:"Session expired. Please sign in again.",loggedOut:"Signed out",
-  reportSent:"Report sent to Discord",reportFailed:"Could not send report",
-  logLogin:"Sign in",logUpdate:"Data refresh",logLogout:"Sign out",
-  logTheme:"Appearance changed",logLanguage:"Language changed",logError:"Connection error",
-  aboutTitle:"About app",accountName:"Subscriber name"
+function icon(name){
+ return `<svg class="svg-icon" aria-hidden="true"><use href="#i-${escapeAttr(name)}"></use></svg>`;
+}
+function escapeHTML(value){
+ return String(value ?? "").replace(/[&<>"']/g, ch => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[ch]);
+}
+function escapeAttr(value){return escapeHTML(value);}
+function normalizeField(field){
+ if(field === null || field === undefined) return "—";
+ if(typeof field === "object" && !Array.isArray(field)){
+  if(Object.prototype.hasOwnProperty.call(field,"value")) return normalizeField(field.value);
+  return "—";
  }
-};
-
-function tr(key) {
-  return translations[state.language]?.[key] || translations.ar[key] || key;
+ const text = String(field).trim();
+ return text || "—";
 }
-
-function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
+function getField(key){
+ const a=state.account;
+ if(!a || typeof a!=="object") return "—";
+ let value=a[key];
+ if(value===undefined && a.data && typeof a.data==="object") value=a.data[key];
+ return normalizeField(value);
 }
-
-function toast(message, error = false) {
-  const el = document.createElement("div");
-  el.className = "toast" + (error ? " error" : "");
-  el.innerHTML = `<div class="toastIcon">${error ? "!" : "✓"}</div><div>${escapeHtml(message)}</div>`;
-  $("#toastArea").appendChild(el);
-  setTimeout(() => el.remove(), 3800);
+function accountImage(){
+ const a=state.account;
+ const field=a && a.accountImagePath;
+ let url=field && typeof field==="object" ? field.value : field;
+ if(typeof url!=="string") return "";
+ try{
+  const parsed=new URL(url);
+  if(parsed.protocol!=="https:" || parsed.hostname!=="user.earthlink.iq") return "";
+  if(!parsed.pathname.startsWith("/accountImages/")) return "";
+  return parsed.href;
+ }catch{return "";}
 }
-
-function addLog(title, description = "", error = false) {
-  state.logs.unshift({
-    title, description,
-    time: new Date().toLocaleString(state.language === "ar" ? "ar-IQ" : "en-US"),
-    error
-  });
-  state.logs = state.logs.slice(0, 60);
-  try { localStorage.setItem("el_logs", JSON.stringify(state.logs)); } catch {}
-  renderLogs();
+function setImage(el,url){
+ if(!el)return;
+ el.onerror=()=>{el.onerror=null;el.src="assets/AA.jpg";};
+ el.src=url||"assets/AA.jpg";
 }
-
-function renderLogs() {
-  const target = $("#logList");
-  if (!target) return;
-  if (!state.logs.length) {
-    target.innerHTML = `<div class="empty">◌<br>${escapeHtml(state.language === "ar" ? "لا توجد أحداث مسجلة بعد" : "No activity recorded yet")}</div>`;
-    return;
+function showToast(message,type="success"){
+ const toast=document.createElement("div");
+ toast.className="toast "+type;
+ const ico=type==="error"?"alert":type==="success"?"check":"info";
+ toast.innerHTML=icon(ico)+`<span>${escapeHTML(message)}</span>`;
+ $("#toastStack").appendChild(toast);
+ window.setTimeout(()=>toast.remove(),3600);
+}
+function addNotice(title,message,type="info"){
+ state.notices.unshift({title,message,type,time:new Date()});
+ state.notices=state.notices.slice(0,30);
+ renderNotifications();
+}
+function formatTime(date){
+ try{return new Intl.DateTimeFormat("ar-IQ",{hour:"2-digit",minute:"2-digit",hour12:true}).format(date);}
+ catch{return date.toLocaleTimeString();}
+}
+function setConnection(connected,title,description){
+ $("#connectionStatus").textContent=connected?"متصل":"غير متصل";
+ $("#connectionTitle").textContent=title;
+ $("#connectionDescription").textContent=description;
+ const pill=$("#connectionStatus").parentElement;
+ const dot=$(".dot",pill);
+ if(dot)dot.style.background=connected?"var(--accent2)":"var(--danger)";
+}
+function showPage(name){
+ const allowed=["home","details","notifications","contact","profile","settings"];
+ if(!allowed.includes(name))name="home";
+ state.currentPage=name;
+ $$(".page").forEach(page=>page.classList.toggle("active",page.dataset.page===name));
+ $$(".nav-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.pageTarget===name));
+ closeDrawer();
+ if(name==="notifications")renderNotifications();
+ if(name==="details")renderDetails();
+ if(name==="profile")renderProfile();
+ if(!REDUCED_MOTION)window.scrollTo({top:0,behavior:"smooth"});else window.scrollTo(0,0);
+}
+function openDrawer(){
+ $("#drawerBackdrop").classList.add("open");
+ $("#drawer").classList.add("open");
+ document.body.style.overflow="hidden";
+}
+function closeDrawer(){
+ $("#drawerBackdrop").classList.remove("open");
+ $("#drawer").classList.remove("open");
+ document.body.style.overflow="";
+}
+async function api(path,options={}){
+ const config={
+  method:options.method||"GET",
+  credentials:"include",
+  cache:"no-store",
+  headers:{"Accept":"application/json",...(options.headers||{})}
+ };
+ if(options.body!==undefined){
+  config.headers["Content-Type"]="application/json";
+  config.body=JSON.stringify(options.body);
+ }
+ let response;
+ try{
+  response=await fetch(path,config);
+ }catch(error){
+  throw new Error("تعذر الاتصال بالخادم. تحقق من الإنترنت ورابط النشر.");
+ }
+ const text=await response.text();
+ let data={};
+ if(text){
+  try{data=JSON.parse(text);}
+  catch{data={message:text.slice(0,300)};}
+ }
+ if(!response.ok){
+  const message=data.message||data.error||`فشل الطلب (HTTP ${response.status})`;
+  const err=new Error(String(message));
+  err.status=response.status;
+  err.data=data;
+  throw err;
+ }
+ if(data && data.ok===false)throw new Error(data.message||data.error||"تعذر تنفيذ الطلب");
+ return data;
+}
+function extractAccount(data){
+ if(!data || typeof data!=="object")return null;
+ let obj=data.account ?? data.userData ?? data.data ?? data.result ?? data;
+ for(let i=0;i<4;i++){
+  if(!obj || typeof obj!=="object" || Array.isArray(obj))return null;
+  if(obj.account && typeof obj.account==="object"){obj=obj.account;continue;}
+  if(obj.userData && typeof obj.userData==="object"){obj=obj.userData;continue;}
+  if(obj.data && typeof obj.data==="object" && !obj.fullName){obj=obj.data;continue;}
+  break;
+ }
+ return obj && typeof obj==="object" ? obj : null;
+}
+function isLoggedInUI(){
+ document.body.classList.remove("logged-out");
+ document.body.classList.add("logged-in");
+}
+function isLoggedOutUI(){
+ document.body.classList.remove("logged-in");
+ document.body.classList.add("logged-out");
+ state.account=null;
+ renderAccount();
+}
+function daysNumber(){
+ const raw=getField("activeDaysLeft");
+ const match=String(raw).match(/-?\d+(?:[.,]\d+)?/);
+ return match?Number(match[0].replace(",",".")):null;
+}
+function renderAccount(){
+ const account=state.account;
+ const fullName=getField("fullName");
+ const username=getField("userID");
+ const packageName=getField("accountName");
+ const price=getField("accountPrice");
+ const status=getField("accountStatus");
+ const days=getField("activeDaysLeft");
+ const image=accountImage();
+ $("#accountName").textContent=account?fullName:"مرحباً بك";
+ $("#accountType").textContent=account?packageName:"بيانات اشتراكك تظهر هنا";
+ $("#accountUsername").textContent=account && username!=="—"?username:"—";
+ $("#statPrice").textContent=price;
+ $("#statDays").textContent=days==="—"?"—":`${days} يوم`;
+ $("#statStatus").textContent=status;
+ $("#statPackage").textContent=packageName;
+ const n=daysNumber();
+ $("#daysProgress").style.width=n===null?"0%":`${Math.max(0,Math.min(100,n/30*100))}%`;
+ $("#lastUpdated").textContent=state.lastUpdated?`آخر تحديث ${formatTime(state.lastUpdated)}`:"بانتظار البيانات";
+ setImage($("#accountAvatar"),image);
+ setImage($("#profileAvatar"),image);
+ setImage($("#drawerAvatar"),image);
+ $("#profileName").textContent=account?fullName:"مستخدم إيرثلنك";
+ $("#profileUsername").textContent=account?username:"—";
+ $("#drawerName").textContent=account?fullName:"حسابي";
+ $("#drawerUsername").textContent=account?username:"—";
+ renderDetails();
+ renderProfile();
+ if(account){
+  const lower=status.toLowerCase();
+  const active=!/(منتهي|غير فعال|متوقف|expired|inactive|disabled)/i.test(lower);
+  setConnection(true,"الاتصال ناجح","تم استرجاع بيانات الحساب من واجهة إيرثلنك.");
+  if(!active){
+   $("#statStatus").style.color="var(--danger)";
+  }else{
+   $("#statStatus").style.color="var(--accent2)";
   }
-  target.innerHTML = state.logs.map(log => `
-    <div class="logitem">
-      <div class="logdot" style="${log.error ? "color:var(--red);background:#ff688814" : ""}">${log.error ? "!" : "✦"}</div>
-      <div style="min-width:0;flex:1">
-        <div class="logtitle">${escapeHtml(log.title)}</div>
-        <div class="logdesc">${escapeHtml(log.description)}</div>
-        <div class="logdesc">${escapeHtml(log.time)}</div>
-      </div>
-    </div>`).join("");
+ }else{
+  setConnection(false,"بانتظار تسجيل الدخول","سجّل الدخول حتى يجلب التطبيق بيانات اشتراكك.");
+  $("#statStatus").style.color="";
+ }
 }
-
-function valueOf(key) {
-  const account = state.account || {};
-  const field = account[key];
-  if (field && typeof field === "object" && "value" in field) return field.value;
-  return field ?? null;
+function renderDetails(){
+ const root=$("#detailsList");
+ if(!root)return;
+ if(!state.account){
+  root.innerHTML=`<div class="empty-state"><div class="empty-icon">${icon("info")}</div>سجّل الدخول أولاً لعرض بيانات اشتراكك.</div>`;
+  return;
+ }
+ const rows=FIELD_MAP.filter(([key])=>key!=="accountImagePath"&&key!=="serviceStatusColor").map(([key,label])=>{
+  const value=getField(key);
+  return `<div class="data-row"><div class="data-left"><div class="data-label">${escapeHTML(label)}</div><div class="data-value" dir="auto">${escapeHTML(value)}</div></div><button class="copy-btn" type="button" data-copy-value="${escapeAttr(value)}" title="نسخ ${escapeAttr(label)}" aria-label="نسخ ${escapeAttr(label)}">${icon("copy")}</button></div>`;
+ });
+ root.innerHTML=rows.join("")||`<div class="empty-state">لا توجد حقول متاحة.</div>`;
 }
-
-function fieldLabel(key, field) {
-  if (field && typeof field === "object" && field.displayName) return field.displayName;
-  const map = {
-    accountImagePath:"صورة الحساب",serviceStatusColor:"لون حالة الخدمة",
-    accountPrice:tr("price"),accountStatus:tr("status"),accountName:tr("package"),
-    fullName:tr("accountName"),userID:tr("userId"),agentName:tr("agent"),
-    accountExpirationDate:tr("expiryDate"),activeDaysLeft:tr("daysLeft"),
-    userIP:tr("ip"),mobileNumber:tr("phone"),address:"العنوان",
-    email:tr("email"),city:"المدينة"
-  };
-  return map[key] || key;
+function renderProfile(){
+ const root=$("#profileSummary");
+ if(!root)return;
+ if(!state.account){root.innerHTML=`<div class="empty-state">سجّل الدخول لعرض ملخص الحساب.</div>`;return;}
+ const keys=[["fullName","الاسم"],["userID","اسم المستخدم"],["accountName","الباقة"],["accountStatus","حالة الاشتراك"]];
+ root.innerHTML=keys.map(([key,label])=>`<div class="data-row"><div class="data-left"><div class="data-label">${escapeHTML(label)}</div><div class="data-value" dir="auto">${escapeHTML(getField(key))}</div></div></div>`).join("");
 }
-
-function normalizeAccount(raw) {
-  let account = raw;
-  for (let i = 0; i < 3; i++) {
-    if (account && typeof account === "object" &&
-        (account.result || account.data || account.userData)) {
-      account = account.result || account.data || account.userData;
-    } else break;
-  }
-  return account && typeof account === "object" ? account : {};
+function renderNotifications(){
+ const root=$("#notificationsList");
+ if(!root)return;
+ if(!state.notices.length){
+  root.innerHTML=`<div class="empty-state"><div class="empty-icon">${icon("bell")}</div>لا توجد تنبيهات جديدة.<br>ستظهر هنا رسائل تحديث الاتصال وحالة الحساب.</div>`;
+  return;
+ }
+ root.innerHTML=state.notices.map(n=>{
+  const ico=n.type==="error"?"alert":n.type==="success"?"check":"info";
+  return `<div class="notice-item"><div class="notice-icon">${icon(ico)}</div><div><h4>${escapeHTML(n.title)}</h4><p>${escapeHTML(n.message)}</p><p style="margin-top:6px">${escapeHTML(formatTime(n.time))}</p></div></div>`;
+ }).join("");
 }
-
-function renderAccount() {
-  if (!state.account) return;
-  const a = state.account;
-  const name = valueOf("fullName") || valueOf("userID") || "Earthlink Subscriber";
-  const id = valueOf("userID") || "—";
-  const status = valueOf("accountStatus") || "—";
-  const img = valueOf("accountImagePath");
-  const image = typeof img === "string" && /^https:\/\/user\.earthlink\.iq\//i.test(img) ? img : "AA.jpg";
-
-  $("#welcomeName").textContent = (state.language === "ar" ? "مرحباً، " : "Welcome, ") + name;
-  $("#welcomeText").textContent = state.language === "ar"
-    ? "تابع تفاصيل اشتراكك وحالته من لوحة التحكم."
-    : "Your subscription details and status at a glance.";
-  $("#profileName").textContent = name;
-  $("#profileId").textContent = id;
-  $("#sideName").textContent = name;
-  $("#sideId").textContent = id;
-  $("#accountImage").src = image;
-  $("#headerAvatar").src = image;
-  $("#sideAvatar").src = image;
-
-  const color = String(valueOf("serviceStatusColor") || "").toLowerCase();
-  const statusColor = color.includes("green") ? "var(--green)" :
-                      color.includes("red") ? "var(--red)" :
-                      color.includes("orange") ? "var(--gold)" : "var(--accent2)";
-  $("#statusPill").style.color = statusColor;
-  $("#statusPill").style.borderColor = statusColor;
-  $("#statusPill").innerHTML = `<span class="pulse"></span><span>${escapeHtml(status)}</span>`;
-
-  const summary = [
-    ["accountPrice","price","$", "var(--gold)"],
-    ["accountName","package","◈","var(--accent)"],
-    ["activeDaysLeft","daysLeft","◷","var(--green)"],
-    ["accountStatus","status","◉",statusColor]
-  ];
-  $("#summaryGrid").innerHTML = summary.map(([key,label,icon,tone]) => `
-    <div class="stat" style="--tone:${tone};--glow:${tone}">
-      <div class="statTop"><div class="statIcon">${icon}</div><span class="eyebrow">EL PRO</span></div>
-      <div class="statLabel">${escapeHtml(tr(label))}</div>
-      <div class="statValue">${escapeHtml(valueOf(key) ?? tr("noValue"))}</div>
-      <div class="statMeta">${escapeHtml(fieldLabel(key,a[key]))}</div>
-    </div>`).join("");
-
-  const hiddenFields = new Set(["accountImagePath"]);
-  const entries = Object.entries(a).filter(([key, field]) => {
-    if (hiddenFields.has(key)) return false;
-    if (field && typeof field === "object" && field.visible === false) return false;
-    return true;
-  });
-
-  $("#detailGrid").innerHTML = entries.map(([key,field]) => {
-    const value = field && typeof field === "object" && "value" in field ? field.value : field;
-    const displayValue = value === null || value === undefined || value === "" ? tr("noValue") : value;
-    return `<div class="detail">
-      <div class="detailLabel"><span style="color:var(--accent2)">✦</span>${escapeHtml(fieldLabel(key,field))}</div>
-      <div class="detailValue">${escapeHtml(displayValue)}</div>
-    </div>`;
-  }).join("") || `<div class="empty">${escapeHtml(tr("noValue"))}</div>`;
-
-  $("#dataProfile").innerHTML = `
-    <div class="profileRow">
-      <img class="profilePic" src="${escapeHtml(image)}" alt="" onerror="this.src='AA.jpg'">
-      <div style="min-width:0"><div class="profileName">${escapeHtml(name)}</div>
-      <div class="profileSub">${escapeHtml(tr("userId"))}: ${escapeHtml(id)}</div>
-      <div class="profileSub">${escapeHtml(status)}</div></div>
-    </div>`;
-
-  $("#counterGrid").innerHTML = [
-    ["activeDaysLeft","daysLeft","◷"],
-    ["accountExpirationDate","expiryDate","◴"],
-    ["accountPrice","price","◈"],
-    ["accountStatus","status","◉"]
-  ].map(([key,label,icon]) => `<div class="stat">
-    <div class="statTop"><div class="statIcon">${icon}</div></div>
-    <div class="statLabel">${escapeHtml(tr(label))}</div>
-    <div class="statValue">${escapeHtml(valueOf(key) ?? tr("noValue"))}</div>
-  </div>`).join("");
-
-  $("#expiryValue").textContent = valueOf("accountExpirationDate") || tr("noValue");
-  const days = Number.parseInt(valueOf("activeDaysLeft"), 10);
-  $("#expiryHint").textContent = Number.isFinite(days)
-    ? (state.language === "ar" ? `الأيام المتبقية حسب بيانات إيرثلنك: ${days}` : `Days remaining according to Earthlink: ${days}`)
-    : (state.language === "ar" ? "لا توجد قيمة أيام قابلة للقراءة في الاستجابة." : "No readable days-left value in the response.");
-
-  $("#contactAgent").textContent = valueOf("agentName") || tr("noValue");
-  $("#contactPhone").textContent = valueOf("mobileNumber") || tr("noValue");
-  $("#contactEmail").textContent = valueOf("email") || tr("noValue");
-}
-
-async function api(path, options = {}) {
-  if (!API_BASE || API_BASE.includes("YOUR-WORKER-NAME")) {
-    throw new Error(state.language === "ar"
-      ? "لم تضبط رابط Worker بعد. عدّل API_BASE داخل index.html."
-      : "Worker URL is not configured. Set API_BASE in index.html.");
-  }
-
-  const response = await fetch(API_BASE.replace(/\/+$/,"") + path, {
-    method: options.method || "GET",
-    credentials: "include",
-    cache: "no-store",
-    headers: {
-      ...(options.body ? {"Content-Type":"application/json"} : {}),
-      ...(options.headers || {})
-    },
-    body: options.body ? JSON.stringify(options.body) : undefined
-  });
-
-  const text = await response.text();
-  let data;
-  try { data = JSON.parse(text); }
-  catch { throw new Error(`HTTP ${response.status}: ${text.slice(0,220)}`); }
-
-  if (!response.ok || data.ok === false) {
-    throw new Error(data.error || `HTTP ${response.status}`);
-  }
-  return data;
-}
-
-async function login(username, password) {
-  const data = await api("/api/login", {
-    method:"POST", body:{username,password}
-  });
-  state.account = normalizeAccount(data.account);
-  showApp();
+async function loadAccount({quiet=false}={}){
+ if(state.loading)return;
+ state.loading=true;
+ const buttons=[$("#refreshButton"),$("#homeRefresh"),$("#detailsRefresh"),$("#settingsRefresh"),$("#drawerRefresh")].filter(Boolean);
+ buttons.forEach(b=>b.disabled=true);
+ try{
+  const data=await api("/api/account");
+  const account=extractAccount(data);
+  if(!account)throw new Error("الخادم استجاب، لكن بيانات الحساب غير موجودة بالشكل المتوقع.");
+  state.account=account;
+  state.lastUpdated=new Date();
+  isLoggedInUI();
   renderAccount();
-  addLog(tr("logLogin"), tr("loginSuccess"));
-  toast(tr("loginSuccess"));
-  return data;
-}
-
-async function refreshAccount() {
-  if (state.busy) return;
-  state.busy = true;
-  ["#refreshBtn","#dataRefresh","#settingsRefresh"].forEach(sel => {
-    const el = $(sel); if (el) el.disabled = true;
-  });
-  try {
-    const data = await api("/api/account");
-    state.account = normalizeAccount(data.account);
-    renderAccount();
-    addLog(tr("logUpdate"), tr("updated"));
-    toast(tr("updated"));
-  } catch (error) {
-    addLog(tr("logError"), error.message, true);
-    toast(error.message || tr("offline"), true);
-    if (/جلسة|session|sign in|سجّل الدخول/i.test(error.message)) showLogin();
-  } finally {
-    state.busy = false;
-    ["#refreshBtn","#dataRefresh","#settingsRefresh"].forEach(sel => {
-      const el = $(sel); if (el) el.disabled = false;
-    });
+  if(!quiet){
+   showToast("تم تحديث بيانات الاشتراك بنجاح");
+   addNotice("تم تحديث الحساب","تم جلب بيانات الاشتراك بنجاح.","success");
   }
-}
-
-function showLogin() {
-  state.page = "login";
-  $$(".view").forEach(v => v.classList.toggle("active", v.id === "view-login"));
-  $("#bottomNav").style.display = "none";
-  $("#headerAvatarBtn").style.display = "none";
-}
-
-function showApp() {
-  $("#bottomNav").style.display = "";
-  $("#headerAvatarBtn").style.display = "";
-  navigate("home");
-}
-
-function navigate(page) {
-  if (page === "about") page = "contact";
-  if (page === "login") return showLogin();
-  if (!$("#view-" + page)) page = "home";
-  state.page = page;
-  $$(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + page));
-  $$(".navbtn").forEach(b => b.classList.toggle("active", b.dataset.goto === page));
-  $$(".sideitem").forEach(b => b.classList.toggle("active", b.dataset.goto === page));
-  closeSidebar();
-  window.scrollTo({top:0,behavior:"smooth"});
-  if (page === "notifications") renderLogs();
-}
-
-function openSidebar() {
-  $("#overlay").classList.add("open");
-  $("#sidebar").classList.add("open");
-}
-function closeSidebar() {
-  $("#overlay").classList.remove("open");
-  $("#sidebar").classList.remove("open");
-}
-
-function setTheme(theme) {
-  state.theme = theme;
-  localStorage.setItem("el_theme", theme);
-  document.body.classList.toggle("light", theme === "light");
-  if (theme === "ocean") {
-    document.documentElement.style.setProperty("--accent","#35c9e8");
-    document.documentElement.style.setProperty("--accent2","#63f4d6");
-  } else if (theme === "royal") {
-    document.documentElement.style.setProperty("--accent","#c18aff");
-    document.documentElement.style.setProperty("--accent2","#f0a5ff");
-  } else {
-    document.documentElement.style.setProperty("--accent", theme === "light" ? "#7556ed" : "#9a7bff");
-    document.documentElement.style.setProperty("--accent2", theme === "light" ? "#009fbc" : "#5de4ff");
+  return true;
+ }catch(error){
+  if(error.status===401||error.status===403){
+   isLoggedOutUI();
+   if(!quiet)showToast("انتهت الجلسة؛ سجّل الدخول مجدداً","error");
+  }else{
+   setConnection(false,"تعذر تحديث البيانات",error.message);
+   if(!quiet){
+    showToast(error.message,"error");
+    addNotice("تعذر تحديث البيانات",error.message,"error");
+   }
   }
-  $("#darkSwitch").checked = theme !== "light";
-  $("#themeIcon").innerHTML = theme === "light"
-    ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>'
-    : '<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>';
-  addLog(tr("logTheme"), theme);
+  return false;
+ }finally{
+  state.loading=false;
+  buttons.forEach(b=>b.disabled=false);
+ }
 }
-
-function setLanguage(language) {
-  state.language = language;
-  localStorage.setItem("el_language", language);
-  document.documentElement.lang = language;
-  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-  $$(".sideitem").forEach(el => el.style.textAlign = language === "ar" ? "right" : "left");
-  $$("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    if (translations[language][key]) el.textContent = translations[language][key];
-  });
-  $("#username").placeholder = language === "ar" ? "اسم المستخدم" : "USERNAME";
-  $("#password").placeholder = language === "ar" ? "كلمة المرور" : "PASSWORD";
-  if (state.account) renderAccount();
-  renderLogs();
-  addLog(tr("logLanguage"), language);
+async function login(username,password){
+ const button=$("#loginButton");
+ const old=button.innerHTML;
+ button.disabled=true;
+ button.innerHTML=`<span class="spinner"></span><span>جارٍ التحقق من الحساب…</span>`;
+ $("#loginError").classList.add("hidden");
+ try{
+  const result=await api("/api/login",{method:"POST",body:{username,password}});
+  const account=extractAccount(result);
+  if(!account)throw new Error("تم تسجيل الدخول لكن بيانات الحساب غير موجودة في الاستجابة.");
+  state.account=account;
+  state.lastUpdated=new Date();
+  isLoggedInUI();
+  renderAccount();
+  $("#password").value="";
+  addNotice("مرحباً بك","تم تسجيل الدخول وجلب بيانات اشتراكك.","success");
+  showToast("تم تسجيل الدخول بنجاح");
+  showPage("home");
+ }catch(error){
+  const box=$("#loginError");
+  box.textContent=error.message||"تعذر تسجيل الدخول. تحقق من بياناتك.";
+  box.classList.remove("hidden");
+  showToast(error.message||"تعذر تسجيل الدخول","error");
+ }finally{
+  button.disabled=false;
+  button.innerHTML=old;
+ }
 }
-
-async function logout() {
-  try { await api("/api/logout", {method:"POST"}); } catch {}
-  state.account = null;
-  showLogin();
-  addLog(tr("logLogout"), tr("loggedOut"));
-  toast(tr("loggedOut"));
+async function logout(){
+ const button=$("#logoutButton");
+ if(button)button.disabled=true;
+ try{
+  await api("/api/logout",{method:"POST",body:{}});
+ }catch(error){
+  // Hide account locally even if the server is unreachable.
+ }
+ isLoggedOutUI();
+ closeDrawer();
+ $("#username").value="";
+ $("#password").value="";
+ showToast("تم تسجيل الخروج من التطبيق");
+ addNotice("تم تسجيل الخروج","تم إنهاء الجلسة المحلية للتطبيق.","info");
+ if(button)button.disabled=false;
 }
-
-async function sendDiscordReport() {
-  if (!state.account) return toast(tr("noSession"), true);
-  const report = [
-    "EARTHLINK PRO — Account report",
-    `Name: ${valueOf("fullName") || "N/A"}`,
-    `Username: ${valueOf("userID") || "N/A"}`,
-    `Package: ${valueOf("accountName") || "N/A"}`,
-    `Status: ${valueOf("accountStatus") || "N/A"}`,
-    `Price: ${valueOf("accountPrice") || "N/A"}`,
-    `Days left: ${valueOf("activeDaysLeft") || "N/A"}`,
-    `Expiration: ${valueOf("accountExpirationDate") || "N/A"}`,
-    `Agent: ${valueOf("agentName") || "N/A"}`
-  ].join("\n");
-  try {
-    await api("/api/reports/discord", {method:"POST",body:{message:report}});
-    addLog(tr("sendDiscord"), tr("reportSent"));
-    toast(tr("reportSent"));
-  } catch (error) {
-    addLog(tr("logError"), error.message, true);
-    toast(error.message || tr("reportFailed"), true);
+async function sendContact(event){
+ event.preventDefault();
+ const message=$("#contactMessage").value.trim();
+ const username=$("#contactName").value.trim()||getField("userID");
+ if(!message){showToast("اكتب الرسالة أولاً","error");return;}
+ const button=$("#sendMessageButton");
+ const old=button.innerHTML;
+ button.disabled=true;
+ button.innerHTML=`<span class="spinner"></span><span>جارٍ الإرسال…</span>`;
+ try{
+  await api("/api/contact",{method:"POST",body:{username,message}});
+  $("#contactMessage").value="";
+  $("#messageCount").textContent="0";
+  showToast("تم إرسال الرسالة إلى قناة الدعم");
+  addNotice("تم إرسال الرسالة","تم إرسال رسالتك إلى قناة الدعم المُعدة على الخادم.","success");
+ }catch(error){showToast(error.message||"تعذر إرسال الرسالة","error");}
+ finally{button.disabled=false;button.innerHTML=old;}
+}
+async function checkHealth(){
+ const label=$("#apiHealth");
+ label.textContent="جارٍ الفحص…";
+ try{
+  const result=await api("/api/health");
+  label.textContent=result.ok?"الخادم يعمل":"استجابة غير متوقعة";
+  showToast(result.ok?"الخادم متاح":"استجابة الخادم غير متوقعة",result.ok?"success":"error");
+ }catch(error){
+  label.textContent="تعذر الوصول";
+  showToast(error.message,"error");
+ }
+}
+async function copyText(value){
+ if(value===undefined||value===null||value==="—"){showToast("لا توجد قيمة لنسخها","error");return;}
+ try{
+  if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(String(value));
+  else{
+   const area=document.createElement("textarea");
+   area.value=String(value);area.style.position="fixed";area.style.opacity="0";
+   document.body.appendChild(area);area.select();
+   const ok=document.execCommand("copy");area.remove();
+   if(!ok)throw new Error("copy failed");
   }
+  showToast("تم النسخ");
+ }catch{showToast("تعذر النسخ من المتصفح","error");}
 }
-
-$("#loginForm").addEventListener("submit", async event => {
+function allDetailsText(){
+ if(!state.account)return "";
+ return FIELD_MAP.filter(([key])=>key!=="accountImagePath"&&key!=="serviceStatusColor")
+  .map(([key,label])=>`${label}: ${getField(key)}`).join("\n");
+}
+function applyTheme(theme){
+ document.documentElement.dataset.theme=theme;
+ const dark=theme!=="light";
+ const toggle=$("#themeToggle");
+ if(toggle)toggle.checked=dark;
+ const iconName=dark?"moon":"sun";
+ $("#themeQuickButton").innerHTML=icon(iconName);
+ try{localStorage.setItem("elpro_theme",theme);}catch{}
+}
+function loadTheme(){
+ let theme="dark";
+ try{theme=localStorage.getItem("elpro_theme")||"dark";}catch{}
+ applyTheme(theme);
+}
+function setMotion(enabled){
+ document.documentElement.classList.toggle("no-motion",!enabled);
+ try{localStorage.setItem("elpro_motion",enabled?"1":"0");}catch{}
+ if(!enabled){
+  const style=$("#motionStyle")||document.createElement("style");
+  style.id="motionStyle";style.textContent=".no-motion *, .no-motion *:before, .no-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}";
+  document.head.appendChild(style);
+ }else{$("#motionStyle")?.remove();}
+}
+function bindEvents(){
+ $("#loginForm").addEventListener("submit",event=>{
   event.preventDefault();
-  if (state.busy) return;
-  const username = $("#username").value.trim();
-  const password = $("#password").value;
-  const errorBox = $("#loginError");
-  const button = $("#loginSubmit");
-  errorBox.classList.remove("show");
-  if (!username || !password) {
-    errorBox.textContent = tr("username") + " / " + tr("password");
-    errorBox.classList.add("show");
-    return;
-  }
-
-  state.busy = true;
-  button.disabled = true;
-  button.innerHTML = '<span class="spinner"></span><span>' + escapeHtml(tr("loading")) + '</span>';
-  try {
-    await login(username,password);
-    $("#password").value = "";
-  } catch (error) {
-    errorBox.textContent = error.message || tr("failed");
-    errorBox.classList.add("show");
-    addLog(tr("logError"), error.message, true);
-  } finally {
-    state.busy = false;
-    button.disabled = false;
-    button.innerHTML = '<span data-i18n="login">' + escapeHtml(tr("login")) + '</span><span>↗</span>';
-  }
-});
-
-$("#menuBtn").addEventListener("click", openSidebar);
-$("#closeMenu").addEventListener("click", closeSidebar);
-$("#overlay").addEventListener("click", closeSidebar);
-$("#themeToggle").addEventListener("click", () => setTheme(state.theme === "light" ? "dark" : "light"));
-$("#languageBtn").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
-$("#languageSetting").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
-$("#languageSetting2").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
-$("#darkSwitch").addEventListener("change", e => setTheme(e.target.checked ? "dark" : "light"));
-$("#motionSwitch").addEventListener("change", e => {
-  document.body.style.setProperty("--motion", e.target.checked ? "1" : "0");
-  document.querySelectorAll("*").forEach(el => el.style.animationDuration = e.target.checked ? "" : "0.001ms");
-});
-$("#headerAvatarBtn").addEventListener("click", () => navigate("settings"));
-$("#refreshBtn").addEventListener("click", refreshAccount);
-$("#dataRefresh").addEventListener("click", refreshAccount);
-$("#settingsRefresh").addEventListener("click", refreshAccount);
-$("#discordReport").addEventListener("click", sendDiscordReport);
-$("#logoutBtn").addEventListener("click", logout);
-$("#sideLogout").addEventListener("click", logout);
-$("#clearLogs").addEventListener("click", () => {
-  state.logs = [];
-  try { localStorage.removeItem("el_logs"); } catch {}
-  renderLogs();
-  toast(state.language === "ar" ? "تم مسح السجل المحلي" : "Local log cleared");
-});
-
-$$("[data-goto]").forEach(button => {
-  button.addEventListener("click", () => navigate(button.dataset.goto));
-});
-$$("[data-theme]").forEach(button => {
-  button.addEventListener("click", () => setTheme(button.dataset.theme));
-});
-
-function tickClock() {
-  const now = new Date();
-  $("#liveClock").textContent = now.toLocaleTimeString(state.language === "ar" ? "ar-IQ" : "en-US");
-  $("#liveDate").textContent = now.toLocaleDateString(state.language === "ar" ? "ar-IQ" : "en-US", {
-    weekday:"long",year:"numeric",month:"long",day:"numeric"
-  });
+  const username=$("#username").value.trim();
+  const password=$("#password").value;
+  if(!username||!password){showToast("أدخل اسم المستخدم وكلمة المرور","error");return;}
+  login(username,password);
+ });
+ $("#togglePassword").addEventListener("click",()=>{
+  const field=$("#password");
+  field.type=field.type==="password"?"text":"password";
+  $("#togglePassword").innerHTML=icon(field.type==="password"?"eye":"lock");
+ });
+ $("#themeQuickButton").addEventListener("click",()=>{
+  applyTheme(document.documentElement.dataset.theme==="light"?"dark":"light");
+ });
+ $("#themeToggle").addEventListener("change",event=>applyTheme(event.target.checked?"dark":"light"));
+ $("#motionToggle").addEventListener("change",event=>setMotion(event.target.checked));
+ $("#openDrawer").addEventListener("click",openDrawer);
+ $("#closeDrawer").addEventListener("click",closeDrawer);
+ $("#drawerBackdrop").addEventListener("click",closeDrawer);
+ document.addEventListener("keydown",event=>{if(event.key==="Escape")closeDrawer();});
+ $$("[data-page-target]").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.pageTarget)));
+ $$("[data-go]").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.go)));
+ $("#refreshButton").addEventListener("click",()=>loadAccount());
+ $("#homeRefresh").addEventListener("click",()=>loadAccount());
+ $("#detailsRefresh").addEventListener("click",()=>loadAccount());
+ $("#settingsRefresh").addEventListener("click",()=>loadAccount());
+ $("#drawerRefresh").addEventListener("click",()=>{closeDrawer();loadAccount();});
+ $("#logoutButton").addEventListener("click",logout);
+ $("#drawerLogout").addEventListener("click",logout);
+ $("#contactForm").addEventListener("submit",sendContact);
+ $("#contactMessage").addEventListener("input",event=>$("#messageCount").textContent=String(event.target.value.length));
+ $("#checkHealth").addEventListener("click",checkHealth);
+ $("#copyAllDetails").addEventListener("click",()=>copyText(allDetailsText()));
+ $("#clearNotifications").addEventListener("click",()=>{
+  state.notices=[];renderNotifications();showToast("تم مسح التنبيهات المحلية");
+ });
+ document.addEventListener("click",event=>{
+  const button=event.target.closest("[data-copy-value]");
+  if(button)copyText(button.dataset.copyValue);
+ });
 }
-setInterval(tickClock, 1000);
-tickClock();
-
-try {
-  const savedLogs = JSON.parse(localStorage.getItem("el_logs") || "[]");
-  if (Array.isArray(savedLogs)) state.logs = savedLogs.slice(0,60);
-} catch {}
-
-setTheme(state.theme);
-setLanguage(state.language);
-renderLogs();
-showLogin();
-
-// لا نخزن اسم المستخدم أو كلمة المرور أو رمز الوصول في localStorage.
-// الجلسة تُدار بواسطة كوكي HttpOnly من الخادم.
+async function init(){
+ loadTheme();
+ let motion=true;
+ try{motion=localStorage.getItem("elpro_motion")!=="0";}catch{}
+ $("#motionToggle").checked=motion;
+ setMotion(motion);
+ bindEvents();
+ renderNotifications();
+ // Attempt session restoration using the server-managed cookie.
+ await loadAccount({quiet:true});
+}
+document.addEventListener("DOMContentLoaded",init);
 </script>
 </body>
 </html>
