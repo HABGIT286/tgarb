@@ -1,3233 +1,956 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#080b15">
-<meta name="description" content="EARTHLINK PRO — Subscriber Command Center">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#090b13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <title>EARTHLINK PRO</title>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* =========================================================
-   EARTHLINK PRO — DESIGN SYSTEM
-   ========================================================= */
-
-:root {
-  color-scheme: dark;
-  --bg: #080b15;
-  --bg2: #0c1221;
-  --panel: rgba(20, 27, 45, .78);
-  --panel2: rgba(255,255,255,.035);
-  --text: #f4f7ff;
-  --muted: #8e9bb5;
-  --accent: #8b5cf6;
-  --accent2: #22d3ee;
-  --success: #39e6a3;
-  --danger: #ff5878;
-  --warning: #ffc66d;
-  --border: rgba(255,255,255,.09);
-  --radius: 22px;
-  --shadow: 0 18px 55px rgba(0,0,0,.28);
-  --blur: 22px;
-  --font: "Tajawal", "Noto Sans Arabic", system-ui, sans-serif;
-}
-
-body[data-theme="ocean"] {
-  --accent: #22d3ee;
-  --accent2: #3b82f6;
-}
-body[data-theme="emerald"] {
-  --accent: #10b981;
-  --accent2: #a3e635;
-}
-body[data-theme="rose"] {
-  --accent: #fb7185;
-  --accent2: #c084fc;
-}
-body[data-theme="gold"] {
-  --accent: #fbbf24;
-  --accent2: #fb923c;
-}
-body[data-theme="ruby"] {
-  --accent: #f43f5e;
-  --accent2: #a78bfa;
-}
-body[data-theme="ice"] {
-  --accent: #60a5fa;
-  --accent2: #67e8f9;
-}
-body[data-theme="violet"] {
-  --accent: #8b5cf6;
-  --accent2: #22d3ee;
-}
-body[data-theme="light"] {
-  color-scheme: light;
-  --bg: #eef2fa;
-  --bg2: #e5ebf6;
-  --panel: rgba(255,255,255,.88);
-  --panel2: rgba(0,0,0,.035);
-  --text: #182036;
-  --muted: #68748c;
-  --border: rgba(25,35,65,.12);
-  --shadow: 0 18px 55px rgba(25,35,65,.10);
-}
-
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html {
-  min-height: 100%;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 10% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 36%),
-    radial-gradient(ellipse at 100% 35%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent 35%),
-    var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  transition: background .3s, color .3s;
-  overflow-x: hidden;
-}
-
-button, input, textarea, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  color: inherit;
-}
-
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--accent2);
-  outline-offset: 3px;
-}
-
-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.small {
-  font-size: 12px;
-}
-
-.eyebrow {
-  color: var(--accent2);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-h1, h2, h3, p {
-  margin-top: 0;
-}
-
-h1 {
-  font-size: clamp(24px, 5vw, 35px);
-  line-height: 1.3;
-}
-
-h2 {
-  font-size: 21px;
-}
-
-h3 {
-  font-size: 15px;
-}
-
-button, .card, .nav-item, .field, .metric {
-  transition:
-    background .22s,
-    border-color .22s,
-    transform .22s,
-    box-shadow .22s;
-}
-
-/* Background */
-
-.background-layer {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  background-size: cover;
-  background-position: center;
-  opacity: .12;
-}
-
-.background-layer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--bg);
-  opacity: .75;
-}
-
-.ambient {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.orb {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  filter: blur(85px);
-  opacity: .15;
-  animation: floatOrb 12s ease-in-out infinite alternate;
-}
-
-.orb.one {
-  background: var(--accent);
-  top: 8%;
-  right: -120px;
-}
-
-.orb.two {
-  background: var(--accent2);
-  bottom: 8%;
-  left: -130px;
-  animation-delay: -5s;
-}
-
-@keyframes floatOrb {
-  from { transform: translate(0, 0) scale(.9); }
-  to { transform: translate(30px, -35px) scale(1.2); }
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 30%, transparent); }
-  50% { box-shadow: 0 0 0 7px transparent; }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Shared layout */
-
-.app-shell {
-  width: min(100%, 1180px);
-  margin: auto;
-  padding: 18px 16px calc(100px + env(safe-area-inset-bottom));
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.brand-logo {
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 17px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-.brand-name {
-  font-weight: 900;
-  letter-spacing: 1.3px;
-  font-size: 15px;
-}
-
-.brand-sub {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 4px;
-  letter-spacing: .8px;
-}
-
-.top-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 15px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  display: grid;
-  place-items: center;
-  font-size: 17px;
-}
-
-.icon-btn:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-}
-
-.card {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  border-radius: var(--radius);
-  padding: 19px;
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
-  box-shadow: var(--shadow);
-  min-width: 0;
-}
-
-.card:hover {
-  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
-}
-
-.section {
-  display: none;
-  animation: appear .35s ease both;
-}
-
-.section.active {
-  display: block;
-}
-
-.section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 19px;
-}
-
-.section-heading h1,
-.section-heading h2 {
-  margin-bottom: 5px;
-}
-
-.grid {
-  display: grid;
-  gap: 15px;
-}
-
-.grid.two {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid.three {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.stack {
-  display: grid;
-  gap: 15px;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.wrap {
-  flex-wrap: wrap;
-}
-
-/* Status */
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 11px;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  font-size: 11px;
-  background: var(--panel2);
-  white-space: nowrap;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--muted);
-  border-radius: 50%;
-}
-
-.status-pill.online .status-dot {
-  background: var(--success);
-  animation: pulse 2s infinite;
-}
-
-.status-pill.offline .status-dot {
-  background: var(--danger);
-}
-
-/* Buttons */
-
-.btn {
-  min-height: 44px;
-  padding: 11px 16px;
-  border-radius: 15px;
-  border: 1px solid var(--border);
-  background: var(--panel2);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-}
-
-.btn.primary {
-  border: 0;
-  color: white;
-  background: linear-gradient(120deg, var(--accent), color-mix(in srgb, var(--accent2) 80%, var(--accent)));
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-.btn.danger {
-  color: var(--danger);
-  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
-}
-
-.btn.full {
-  width: 100%;
-}
-
-.btn.small-btn {
-  min-height: 35px;
-  padding: 7px 11px;
-  border-radius: 11px;
-  font-size: 11px;
-}
-
-/* Login */
-
-.login-wrap {
-  width: min(100%, 450px);
-  min-height: 100vh;
-  margin: auto;
-  padding: 30px 19px calc(30px + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 18px;
-}
-
-.login-hero {
-  text-align: center;
-  padding: 14px 10px 4px;
-}
-
-.login-logo {
-  width: 102px;
-  height: 102px;
-  border-radius: 32px;
-  object-fit: cover;
-  border: 1px solid var(--border);
-  box-shadow:
-    0 0 0 8px var(--panel2),
-    0 0 50px color-mix(in srgb, var(--accent) 25%, transparent);
-  margin-bottom: 22px;
-}
-
-.login-hero h1 {
-  font-size: 27px;
-  letter-spacing: 1.5px;
-  margin-bottom: 8px;
-}
-
-.login-hero p {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.welcome-box {
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-  border-radius: 17px;
-  background: linear-gradient(120deg,
-    color-mix(in srgb, var(--accent) 12%, transparent),
-    color-mix(in srgb, var(--accent2) 8%, transparent));
-  padding: 14px;
-  text-align: center;
-  font-weight: 800;
-  letter-spacing: .6px;
-}
-
-.field {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.field label {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 800;
-}
-
-.input-wrap {
-  position: relative;
-}
-
-.input {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 14px;
-  color: var(--text);
-  background: var(--panel2);
-  outline: none;
-}
-
-.input::placeholder {
-  color: var(--muted);
-  opacity: .8;
-}
-
-.input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
-.input.with-toggle {
-  padding-left: 60px;
-  direction: ltr;
-  text-align: left;
-}
-
-.password-toggle {
-  position: absolute;
-  left: 7px;
-  top: 6px;
-  min-width: 44px;
-  height: 36px;
-  border: 0;
-  border-radius: 10px;
-  background: var(--panel);
-}
-
-.checkbox-line {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--muted);
-  font-size: 12px;
-  margin: 6px 0 17px;
-}
-
-.checkbox-line input {
-  accent-color: var(--accent);
-  width: 17px;
-  height: 17px;
-}
-
-.error-box,
-.info-box {
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  padding: 12px;
-  font-size: 12px;
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-}
-
-.error-box {
-  color: var(--danger);
-  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
-  background: color-mix(in srgb, var(--danger) 7%, transparent);
-}
-
-.info-box {
-  color: var(--muted);
-  background: var(--panel2);
-}
-
-.login-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 10px;
-}
-
-/* Home hero */
-
-.hero-card {
-  position: relative;
-  overflow: hidden;
-  padding: 25px;
-  margin-bottom: 15px;
-  background:
-    linear-gradient(125deg,
-      color-mix(in srgb, var(--accent) 19%, var(--panel)),
-      color-mix(in srgb, var(--accent2) 10%, var(--panel)));
-}
-
-.hero-card::after {
-  content: "";
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-  border-radius: 50%;
-  left: -100px;
-  top: -100px;
-  box-shadow:
-    0 0 0 30px color-mix(in srgb, var(--accent) 4%, transparent),
-    0 0 0 60px color-mix(in srgb, var(--accent) 3%, transparent);
-  pointer-events: none;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-title {
-  font-size: 27px;
-  margin: 13px 0 5px;
-  overflow-wrap: anywhere;
-}
-
-.hero-subtitle {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
-}
-
-.metric {
-  padding: 17px;
-  min-height: 122px;
-}
-
-.metric-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 13px;
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
-  font-size: 17px;
-  margin-bottom: 13px;
-}
-
-.metric-label {
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.metric-value {
-  font-size: 19px;
-  font-weight: 900;
-  margin-top: 7px;
-  overflow-wrap: anywhere;
-}
-
-.metric-value.compact {
-  font-size: 15px;
-}
-
-.days-layout {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.progress-ring {
-  width: 126px;
-  height: 126px;
-  flex: 0 0 auto;
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-
-.progress-ring svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.progress-ring circle {
-  fill: none;
-  stroke-width: 8;
-}
-
-.progress-ring .track {
-  stroke: var(--border);
-}
-
-.progress-ring .progress {
-  stroke: var(--accent2);
-  stroke-linecap: round;
-  stroke-dasharray: 314;
-  stroke-dashoffset: 314;
-  transition: stroke-dashoffset .8s;
-}
-
-.ring-label {
-  text-align: center;
-  position: relative;
-}
-
-.ring-number {
-  font-size: 30px;
-  font-weight: 900;
-}
-
-.ring-caption {
-  font-size: 10px;
-  color: var(--muted);
-}
-
-/* Account data */
-
-.data-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
-  align-items: center;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.data-row:last-child {
-  border-bottom: 0;
-}
-
-.data-key {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 5px;
-}
-
-.data-value {
-  font-size: 13px;
-  font-weight: 800;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-
-.copy-btn {
-  min-width: 36px;
-  height: 36px;
-  border: 1px solid var(--border);
-  background: var(--panel2);
-  border-radius: 12px;
-}
-
-/* Navigation */
-
-.bottom-nav {
-  position: fixed;
-  z-index: 20;
-  bottom: max(10px, env(safe-area-inset-bottom));
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(calc(100% - 24px), 540px);
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 4px;
-  padding: 8px;
-  border-radius: 23px;
-  background: color-mix(in srgb, var(--bg2) 87%, transparent);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(25px);
-  box-shadow: 0 14px 45px rgba(0,0,0,.35);
-}
-
-.nav-item {
-  min-width: 0;
-  min-height: 54px;
-  border: 0;
-  border-radius: 15px;
-  background: transparent;
-  color: var(--muted);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.nav-item .nav-icon {
-  font-size: 19px;
-  line-height: 1;
-}
-
-.nav-item.active {
-  color: var(--text);
-  background: linear-gradient(145deg,
-    color-mix(in srgb, var(--accent) 25%, transparent),
-    color-mix(in srgb, var(--accent2) 10%, transparent));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
-}
-
-/* Side drawer */
-
-.drawer-overlay {
-  position: fixed;
-  z-index: 40;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(5px);
-}
-
-.drawer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: min(86%, 340px);
-  padding: 23px;
-  overflow-y: auto;
-  background: var(--bg2);
-  border-left: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  animation: appear .22s ease;
-}
-
-.drawer-head {
-  padding: 12px 0 24px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 18px;
-}
-
-.drawer-item {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  width: 100%;
-  padding: 14px;
-  margin: 4px 0;
-  border: 1px solid transparent;
-  border-radius: 14px;
-  background: transparent;
-  text-align: right;
-  font-size: 13px;
-}
-
-.drawer-item:hover {
-  background: var(--panel);
-  border-color: var(--border);
-}
-
-.drawer-item span:first-child {
-  width: 25px;
-  text-align: center;
-  font-size: 18px;
-}
-
-/* Themes */
-
-.theme-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 11px;
-}
-
-.theme-option {
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 10px 5px;
-  background: var(--panel2);
-  text-align: center;
-  font-size: 10px;
-}
-
-.theme-option.selected {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
-}
-
-.theme-swatch {
-  width: 32px;
-  height: 32px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background: var(--swatch);
-  box-shadow: 0 0 20px color-mix(in srgb, var(--swatch) 25%, transparent);
-}
-
-/* Contact and notification forms */
-
-textarea.input {
-  resize: vertical;
-  min-height: 110px;
-  direction: rtl;
-  text-align: right;
-}
-
-.switch-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.switch-row:last-child {
-  border-bottom: 0;
-}
-
-.switch {
-  width: 46px;
-  height: 26px;
-  appearance: none;
-  border-radius: 30px;
-  background: #647084;
-  position: relative;
-  cursor: pointer;
-  flex: 0 0 auto;
-  transition: .2s;
-}
-
-.switch::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: white;
-  transition: .2s;
-}
-
-.switch:checked {
-  background: var(--accent);
-}
-
-.switch:checked::after {
-  right: 23px;
-}
-
-.notification-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.notification-item:last-child {
-  border-bottom: 0;
-}
-
-.notification-icon {
-  width: 40px;
-  height: 40px;
-  flex: 0 0 auto;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: var(--panel2);
-}
-
-.empty-state {
-  text-align: center;
-  padding: 35px 15px;
-  color: var(--muted);
-}
-
-.empty-state .big-icon {
-  font-size: 38px;
-  margin-bottom: 14px;
-}
-
-/* Toast */
-
-.toast-container {
-  position: fixed;
-  z-index: 100;
-  top: max(16px, env(safe-area-inset-top));
-  left: 15px;
-  right: 15px;
-  display: grid;
-  justify-items: center;
-  gap: 9px;
-  pointer-events: none;
-}
-
-.toast {
-  width: fit-content;
-  max-width: min(100%, 440px);
-  padding: 12px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  color: var(--text);
-  box-shadow: var(--shadow);
-  font-size: 12px;
-  animation: appear .2s ease;
-  overflow-wrap: anywhere;
-}
-
-/* Loading */
-
-.loading-spinner {
-  width: 17px;
-  height: 17px;
-  border: 2px solid rgba(255,255,255,.4);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-}
-
-/* Footer */
-
-.app-footer {
-  margin-top: 30px;
-  text-align: center;
-  font-size: 10px;
-  line-height: 1.9;
-  color: var(--muted);
-}
-
-/* Desktop */
-
-@media (min-width: 800px) {
-  .app-shell {
-    padding-top: 28px;
-  }
-
-  .desktop-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr);
-    gap: 16px;
-    align-items: start;
-  }
-
-  .desktop-sidebar {
-    display: grid;
-    gap: 15px;
-  }
-
-  .hero-title {
-    font-size: 34px;
-  }
-
-  .bottom-nav {
-    bottom: 20px;
-  }
-}
-
-@media (max-width: 560px) {
-  .grid.two,
-  .grid.three {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .card {
-    padding: 15px;
-    border-radius: 19px;
-  }
-
-  .hero-card {
-    padding: 19px;
-  }
-
-  .hero-title {
-    font-size: 24px;
-  }
-
-  .metric {
-    padding: 13px;
-    min-height: 115px;
-  }
-
-  .metric-value {
-    font-size: 17px;
-  }
-
-  .days-layout {
-    gap: 15px;
-  }
-
-  .progress-ring {
-    width: 108px;
-    height: 108px;
-  }
-
-  .ring-number {
-    font-size: 25px;
-  }
-
-  .theme-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 350px) {
-  .grid.two,
-  .grid.three {
-    grid-template-columns: 1fr;
-  }
-
-  .days-layout {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-item {
-    font-size: 8px;
-  }
-
-  .nav-item .nav-icon {
-    font-size: 17px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
+:root{
+ --bg:#080a12;--panel:#111522;--panel2:#171c2c;--text:#f4f5ff;
+ --muted:#929bb5;--line:rgba(255,255,255,.09);--accent:#9a7bff;
+ --accent2:#5de4ff;--green:#58efb1;--red:#ff6888;--gold:#ffd58a;
+ --shadow:0 22px 65px rgba(0,0,0,.30);--radius:25px;
+}
+body.light{
+ --bg:#f2f4fb;--panel:#fff;--panel2:#f8f9ff;--text:#1b2032;
+ --muted:#69728c;--line:rgba(27,32,50,.10);--accent:#7556ed;
+ --accent2:#009fbc;--green:#008b62;--red:#d93860;--gold:#a66c00;
+ --shadow:0 18px 45px rgba(40,45,80,.10);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;min-height:100%;background:var(--bg)}
+body{
+ margin:0;background:
+ radial-gradient(ellipse at 10% 0%,rgba(119,83,255,.16),transparent 38%),
+ radial-gradient(ellipse at 90% 25%,rgba(45,208,236,.10),transparent 35%),var(--bg);
+ color:var(--text);font-family:"Alexandria","Cairo",sans-serif;
+ min-height:100vh;min-height:100dvh;overflow-x:hidden;
+ transition:background .35s,color .25s;user-select:none;-webkit-user-select:none;
+}
+input,button,textarea{font:inherit}
+button{color:inherit;cursor:pointer}
+button:focus,input:focus{outline:none}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+::selection{background:transparent;color:inherit}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:10px}
+#app{max-width:1500px;margin:auto;min-height:100dvh;position:relative;padding-bottom:105px}
+.topbar{
+ position:sticky;top:0;z-index:15;display:flex;align-items:center;justify-content:space-between;
+ gap:12px;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;
+ background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(22px);
+ border-bottom:1px solid var(--line)
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brandmark{
+ width:44px;height:44px;flex:0 0 44px;border-radius:15px;display:grid;place-items:center;
+ color:#fff;background:linear-gradient(135deg,#9a7bff,#5de4ff);
+ box-shadow:0 0 24px #8b70ff42;position:relative;overflow:hidden
+}
+.brandmark:after{content:"";position:absolute;width:100%;height:100%;background:linear-gradient(120deg,transparent, #ffffff70,transparent);transform:translateX(-120%);animation:shine 5s infinite}
+.brandname{font-family:"Outfit","Alexandria",sans-serif;font-size:16px;font-weight:800;letter-spacing:1.1px}
+.brandsub{font-size:9px;color:var(--muted);letter-spacing:1.1px;margin-top:3px}
+.topactions{display:flex;gap:8px;align-items:center}
+.iconbtn{
+ width:42px;height:42px;border:1px solid var(--line);border-radius:15px;background:var(--panel);
+ display:grid;place-items:center;transition:.25s;position:relative
+}
+.iconbtn:active,.navbtn:active,.actionbtn:active{transform:scale(.93)}
+.iconbtn:hover{border-color:var(--accent);box-shadow:0 0 20px #9a7bff25}
+.avatar{
+ width:39px;height:39px;border-radius:14px;object-fit:cover;
+ background:linear-gradient(135deg,#9a7bff,#5de4ff);border:1px solid #ffffff33;
+}
+.main{padding:19px 16px 22px}
+.view{display:none;animation:rise .35s ease both}
+.view.active{display:block}
+.welcome{
+ position:relative;overflow:hidden;padding:24px 22px;border:1px solid #a78bff35;border-radius:29px;
+ background:linear-gradient(130deg,#1b1834ed,#101e2bed 70%,#102a36dd);
+ box-shadow:var(--shadow);min-height:175px
+}
+body.light .welcome{background:linear-gradient(130deg,#e6e0ff,#e2f8ff)}
+.welcome:before,.welcome:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.welcome:before{width:210px;height:210px;border:1px solid #b6a1ff30;right:-85px;top:-100px;box-shadow:0 0 0 20px #b6a1ff09,0 0 0 42px #b6a1ff06}
+.welcome:after{width:120px;height:120px;background:#5de4ff12;filter:blur(3px);left:-25px;bottom:-65px}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--accent2);font-family:"Outfit",sans-serif}
+.heroTitle{font-size:clamp(22px,5vw,34px);font-weight:800;line-height:1.5;margin:10px 0 5px;max-width:620px}
+.heroText{font-size:11px;color:var(--muted);line-height:2}
+.heroBadge{display:inline-flex;align-items:center;gap:7px;border:1px solid #58efb14d;background:#58efb114;color:var(--green);padding:8px 12px;border-radius:100px;font-size:10px;margin-top:15px}
+.pulse{width:7px;height:7px;background:currentColor;border-radius:50%;box-shadow:0 0 12px currentColor;animation:pulse 1.7s infinite}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:25px 2px 14px}
+.sectiontitle{font-size:15px;font-weight:700}
+.sectionhint{font-size:10px;color:var(--muted);margin-top:4px}
+.sectionicon{width:39px;height:39px;border-radius:14px;display:grid;place-items:center;background:#9a7bff18;color:var(--accent);border:1px solid #9a7bff30}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{
+ min-width:0;border:1px solid var(--line);border-radius:22px;padding:16px 14px;
+ background:linear-gradient(150deg,var(--panel),var(--panel2));box-shadow:var(--shadow);
+ position:relative;overflow:hidden;transition:transform .25s,border .25s
+}
+.stat:after{content:"";position:absolute;width:75px;height:75px;border-radius:50%;background:var(--glow,#9a7bff);opacity:.07;filter:blur(25px);right:-20px;bottom:-25px}
+.stat:hover{transform:translateY(-3px);border-color:#9a7bff50}
+.statTop{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.statIcon{width:37px;height:37px;border-radius:13px;display:grid;place-items:center;color:var(--tone,var(--accent));background:color-mix(in srgb,var(--tone,var(--accent)) 12%,transparent)}
+.statLabel{font-size:10px;color:var(--muted);margin-top:14px}
+.statValue{font-size:clamp(14px,3.7vw,19px);font-weight:800;margin-top:7px;overflow-wrap:anywhere;line-height:1.6}
+.statMeta{font-size:9px;color:var(--muted);margin-top:5px}
+.panel{border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:18px;box-shadow:var(--shadow);margin-top:14px}
+.profileRow{display:flex;align-items:center;gap:14px}
+.profilePic{width:67px;height:67px;object-fit:cover;border-radius:22px;border:1px solid #9a7bff66;background:var(--panel2)}
+.profileName{font-size:16px;font-weight:800;overflow-wrap:anywhere}
+.profileSub{font-size:10px;color:var(--muted);margin-top:6px;overflow-wrap:anywhere}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--line);border-radius:100px;font-size:10px;background:var(--panel2)}
+.detailgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail{
+ padding:13px;border:1px solid var(--line);border-radius:17px;background:var(--panel2);min-width:0
+}
+.detailLabel{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.detailValue{font-size:12px;font-weight:700;margin-top:9px;overflow-wrap:anywhere;line-height:1.8}
+.rowactions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.actionbtn{
+ border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:11px 14px;
+ display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:11px;transition:.2s
+}
+.actionbtn.primary{background:linear-gradient(110deg,#8b6aff,#4fbdde);border:0;color:#fff;font-weight:700}
+.actionbtn.danger{color:var(--red)}
+.bottomnav{
+ position:fixed;z-index:25;left:0;right:0;bottom:0;padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+ background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(25px);
+ border-top:1px solid var(--line)
+}
+.navinner{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.navbtn{
+ border:0;background:transparent;color:var(--muted);border-radius:17px;min-width:0;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:7px 2px;
+ transition:.25s
+}
+.navbtn svg{width:21px;height:21px;transition:.25s}
+.navbtn span{font-size:9px;white-space:nowrap}
+.navbtn.active{color:var(--accent2);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.navbtn.active svg{filter:drop-shadow(0 0 6px var(--accent2));transform:translateY(-2px)}
+.overlay{position:fixed;inset:0;z-index:40;background:#02030ac2;opacity:0;visibility:hidden;transition:.25s}
+.overlay.open{opacity:1;visibility:visible}
+.sidebar{
+ position:fixed;z-index:41;top:0;bottom:0;right:0;width:min(335px,87vw);padding:25px 17px;
+ background:var(--panel);border-left:1px solid var(--line);transform:translateX(105%);
+ transition:transform .32s cubic-bezier(.2,.8,.2,1);overflow:auto;
+ padding-top:calc(24px + env(safe-area-inset-top))
+}
+.sidebar.open{transform:translateX(0)}
+.sidehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.sidebrand{font-family:"Outfit",sans-serif;font-weight:800;letter-spacing:1px}
+.sidegroup{font-size:10px;color:var(--muted);padding:14px 10px 8px}
+.sideitem{
+ display:flex;align-items:center;gap:12px;padding:13px 12px;width:100%;border:1px solid transparent;
+ border-radius:15px;background:transparent;text-align:right;font-size:12px;margin:3px 0
+}
+.sideitem svg{color:var(--accent2);width:19px;height:19px}
+.sideitem.active,.sideitem:hover{background:#9a7bff15;border-color:#9a7bff25}
+.fieldlabel{font-size:11px;color:var(--muted);display:block;margin:15px 0 8px}
+.field{
+ width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);
+ border-radius:15px;padding:14px;font-size:13px;user-select:text;-webkit-user-select:text
+}
+.field::placeholder{color:var(--muted)}
+.loginwrap{min-height:calc(100dvh - 85px);display:grid;place-items:center;padding:22px 4px}
+.loginbox{width:100%;max-width:450px;border:1px solid var(--line);background:var(--panel);border-radius:30px;padding:25px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.loginbox:before{content:"";position:absolute;top:-80px;left:-60px;width:200px;height:200px;border-radius:50%;background:#9a7bff20;filter:blur(30px)}
+.loginbrand{display:flex;justify-content:center;margin:6px 0 18px}
+.loginlogo{width:80px;height:80px;border-radius:27px;display:grid;place-items:center;background:linear-gradient(135deg,#9876ff,#4ccfe9);box-shadow:0 0 40px #9a7bff38;color:white}
+.loginTitle{text-align:center;font-size:23px;font-weight:800;margin:10px 0}
+.loginSub{text-align:center;font-size:11px;color:var(--muted);line-height:2;margin-bottom:24px}
+.loginError{display:none;color:var(--red);font-size:11px;line-height:1.8;background:#ff688814;border:1px solid #ff688833;padding:11px;border-radius:13px;margin-top:12px;overflow-wrap:anywhere}
+.loginError.show{display:block}
+.spinner{width:15px;height:15px;border:2px solid #ffffff55;border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
+.toastarea{position:fixed;z-index:80;top:calc(78px + env(safe-area-inset-top));left:14px;right:14px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{width:min(420px,100%);display:flex;align-items:center;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:13px 15px;box-shadow:var(--shadow);animation:toastIn .25s ease;pointer-events:auto;font-size:11px}
+.toastIcon{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;background:#58efb11a;color:var(--green);flex:0 0 auto}
+.toast.error .toastIcon{background:#ff68881a;color:var(--red)}
+.themegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.themeCard{border:1px solid var(--line);border-radius:20px;padding:13px;background:var(--panel);text-align:right}
+.themePreview{height:78px;border-radius:14px;margin-bottom:12px;overflow:hidden;position:relative}
+.themePreview:before{content:"";position:absolute;inset:13px 12px auto;height:9px;border-radius:6px;background:#ffffff77;box-shadow:0 17px 0 #ffffff30,0 34px 0 #ffffff20}
+.themeCard strong{font-size:11px}
+.themeCard small{display:block;font-size:9px;color:var(--muted);margin-top:5px}
+.logitem{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.logitem:last-child{border-bottom:0}
+.logdot{width:35px;height:35px;flex:0 0 35px;border-radius:13px;background:#9a7bff19;color:var(--accent);display:grid;place-items:center}
+.logtitle{font-size:11px;font-weight:700}
+.logdesc{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.8}
+.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+.empty svg{width:34px;height:34px;opacity:.65;margin-bottom:10px}
+.settingrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.settingrow:last-child{border-bottom:0}
+.settingname{font-size:12px;font-weight:600}
+.settingdesc{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.8}
+.switch{appearance:none;width:45px;height:26px;background:var(--line);border:1px solid var(--line);border-radius:100px;position:relative;flex:0 0 auto;cursor:pointer}
+.switch:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:var(--muted);top:3px;right:3px;transition:.2s}
+.switch:checked{background:var(--accent);border-color:var(--accent)}
+.switch:checked:after{right:21px;background:white}
+.clock{font-family:"Outfit",sans-serif;font-size:25px;font-weight:700;letter-spacing:1px}
+.footer{text-align:center;color:var(--muted);font-size:9px;padding:25px 0 5px}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+@keyframes shine{0%,70%,100%{transform:translateX(-120%)}85%{transform:translateX(120%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+@media(min-width:760px){
+ #app{padding-bottom:35px}
+ .main{padding:26px 28px}
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .detailgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .themegrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .bottomnav{position:static;border-top:0;background:transparent;backdrop-filter:none;padding:8px 20px 22px}
+ .navinner{max-width:900px;border:1px solid var(--line);border-radius:22px;background:var(--panel);padding:7px;box-shadow:var(--shadow)}
+ .navbtn{flex-direction:row;gap:9px;padding:13px}
+ .navbtn span{font-size:11px}
+ .heroTitle{font-size:34px}
+ .welcome{padding:32px}
+}
+@media(max-width:380px){
+ .main{padding:14px 11px}
+ .topbar{padding-left:12px;padding-right:12px}
+ .brandname{font-size:14px}
+ .grid{gap:9px}
+ .stat{padding:13px 11px}
+ .detailgrid{gap:8px}
+ .detail{padding:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
-
-<body data-theme="violet">
-
-<div class="background-layer" id="backgroundLayer"></div>
-<div class="ambient" aria-hidden="true">
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-</div>
-
-<div class="toast-container" id="toastContainer" aria-live="polite"></div>
-
-<!-- =======================================================
-     LOGIN
-     ======================================================= -->
-
-<main id="loginScreen" class="login-wrap">
-
-  <div class="login-hero">
-    <img
-      id="loginLogo"
-      class="login-logo"
-      src="AA.jpg"
-      alt="Earthlink Pro logo"
-      onerror="this.style.display='none'"
-    >
-    <div class="eyebrow">SUBSCRIBER COMMAND CENTER</div>
-    <h1>LOGIN TO EARTHLINK</h1>
-    <p>SECURE ACCESS · SUBSCRIBER SERVICES</p>
-  </div>
-
-  <div class="welcome-box">
-    WELCOME TO EARTHLINK
-    <div class="small muted" style="margin-top:7px;font-weight:500">
-      أهلاً بك في مركز إدارة اشتراكك
-    </div>
-  </div>
-
-  <form id="loginForm" class="card" autocomplete="on">
-    <div class="between" style="margin-bottom:20px">
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <button class="iconbtn" id="menuBtn" aria-label="فتح القائمة" title="القائمة">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="brandmark">
+        <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5.5 6.5c4 2 9 2 13 0M5.5 17.5c4-2 9-2 13 0"/></svg>
+      </div>
       <div>
-        <div class="eyebrow">AUTHENTICATION</div>
-        <h2 style="margin:7px 0 0">حساب إيرثلنك</h2>
-      </div>
-      <div class="status-pill" id="loginStatus">
-        <span class="status-dot"></span>
-        <span>بانتظار الدخول</span>
+        <div class="brandname">EARTHLINK PRO</div>
+        <div class="brandsub" id="brandSub">SUBSCRIBER COMMAND CENTER</div>
       </div>
     </div>
-
-    <div class="field">
-      <label for="username">اسم المستخدم</label>
-      <input
-        class="input"
-        id="username"
-        name="username"
-        placeholder="USERNAME"
-        autocomplete="username"
-        autocapitalize="none"
-        required
-      >
+    <div class="topactions">
+      <button class="iconbtn" id="languageBtn" title="Language" aria-label="تغيير اللغة">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+      </button>
+      <button class="iconbtn" id="themeToggle" title="تبديل الوضع" aria-label="تبديل الوضع">
+        <svg id="themeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/></svg>
+      </button>
+      <button class="iconbtn" id="headerAvatarBtn" aria-label="الحساب" title="الحساب">
+        <img id="headerAvatar" class="avatar" src="AA.jpg" alt="Account" onerror="this.style.display='none'">
+      </button>
     </div>
+  </header>
 
-    <div class="field">
-      <label for="password">كلمة المرور</label>
-      <div class="input-wrap">
-        <input
-          class="input with-toggle"
-          id="password"
-          name="password"
-          type="password"
-          placeholder="PASSWORD"
-          autocomplete="current-password"
-          required
-        >
-        <button
-          class="password-toggle"
-          type="button"
-          id="togglePassword"
-          aria-label="إظهار أو إخفاء كلمة المرور"
-        >◉</button>
-      </div>
-    </div>
-
-    <label class="checkbox-line">
-      <input type="checkbox" id="rememberMe">
-      <span>تذكّر اسم المستخدم على هذا الجهاز</span>
-    </label>
-
-    <div id="loginError" class="error-box hidden" role="alert"></div>
-
-    <button class="btn primary full" id="loginButton" type="submit">
-      <span>تسجيل الدخول</span>
-      <span>←</span>
-    </button>
-
-    <div class="info-box" style="margin-top:15px">
-      تسجيل الدخول يحتاج إلى الخادم الآمن المهيأ للمشروع.
-      لا تضع بيانات حسابك داخل رابط الموقع أو في ملفات JavaScript.
-    </div>
-  </form>
-
-  <div class="login-footer">
-    EARTHLINK PRO · SECURE SUBSCRIBER INTERFACE
-    <br>
-    Version 2.0
-  </div>
-</main>
-
-<!-- =======================================================
-     APPLICATION
-     ======================================================= -->
-
-<div id="appScreen" class="hidden">
-
-  <div class="app-shell">
-
-    <header class="topbar">
-      <div class="brand">
-        <img
-          class="brand-logo"
-          id="headerLogo"
-          src="AA.jpg"
-          alt="Logo"
-          onerror="this.style.display='none'"
-        >
-        <div>
-          <div class="brand-name">EARTHLINK PRO</div>
-          <div class="brand-sub">SUBSCRIBER COMMAND CENTER</div>
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <button class="icon-btn" id="refreshButton" title="تحديث البيانات" aria-label="تحديث">
-          ↻
-        </button>
-        <button class="icon-btn" id="openDrawerButton" title="القائمة" aria-label="القائمة">
-          ☰
-        </button>
-      </div>
-    </header>
-
-    <!-- HOME -->
-
-    <section id="page-home" class="section active">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">YOUR ACCOUNT OVERVIEW</div>
-          <h1 style="margin-top:7px">الرئيسية</h1>
-          <p class="muted small">ملخص حالة اشتراكك وبيانات حسابك</p>
-        </div>
-        <div class="status-pill" id="connectionStatus">
-          <span class="status-dot"></span>
-          <span>غير متصل</span>
-        </div>
-      </div>
-
-      <div class="desktop-layout">
-        <div class="stack">
-
-          <article class="card hero-card">
-            <div class="hero-content">
-              <div class="between wrap">
-                <div class="eyebrow">WELCOME BACK</div>
-                <div class="status-pill" id="serviceStatus">
-                  <span class="status-dot"></span>
-                  <span>غير معروف</span>
-                </div>
-              </div>
-
-              <h2 class="hero-title" id="homeName">بانتظار بيانات الحساب</h2>
-              <div class="hero-subtitle" id="homeUser">سجّل الدخول لعرض اشتراكك</div>
-
-              <div class="hero-meta">
-                <div class="status-pill">
-                  <span>◈</span>
-                  <span id="homePackage">الباقة: —</span>
-                </div>
-                <div class="status-pill">
-                  <span>◷</span>
-                  <span id="clock">--:--:-- --</span>
-                </div>
-              </div>
+  <main class="main">
+    <section class="view active" id="view-login">
+      <div class="loginwrap">
+        <div class="loginbox">
+          <div class="loginbrand"><div class="loginlogo">
+            <svg viewBox="0 0 24 24" width="45" height="45" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5.5 6.5c4 2 9 2 13 0M5.5 17.5c4-2 9-2 13 0"/></svg>
+          </div></div>
+          <div class="eyebrow" style="text-align:center">SECURE SUBSCRIBER ACCESS</div>
+          <h1 class="loginTitle" data-i18n="loginTitle">LOGIN TO EARTHLINK</h1>
+          <div class="loginSub" data-i18n="loginSub">أهلاً بك في لوحة التحكم الخاصة باشتراكك</div>
+          <form id="loginForm">
+            <label class="fieldlabel" for="username" data-i18n="username">اسم المستخدم</label>
+            <input class="field" id="username" name="username" autocomplete="username" placeholder="USERNAME" required>
+            <label class="fieldlabel" for="password" data-i18n="password">كلمة المرور</label>
+            <input class="field" id="password" name="password" type="password" autocomplete="current-password" placeholder="PASSWORD" required>
+            <div style="display:flex;align-items:center;gap:8px;margin:15px 0;color:var(--muted);font-size:10px">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--green)" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <span data-i18n="secure">اتصال آمن بخدمة إيرثلنك</span>
             </div>
-          </article>
-
-          <div class="grid two">
-            <article class="card metric">
-              <div class="metric-icon">◈</div>
-              <div class="metric-label">سعر الاشتراك</div>
-              <div class="metric-value" id="homePrice">—</div>
-            </article>
-
-            <article class="card metric">
-              <div class="metric-icon">▤</div>
-              <div class="metric-label">نوع الاشتراك</div>
-              <div class="metric-value compact" id="homePackageMetric">—</div>
-            </article>
-
-            <article class="card metric">
-              <div class="metric-icon">⌁</div>
-              <div class="metric-label">عنوان IP</div>
-              <div class="metric-value compact" id="homeIP">—</div>
-            </article>
-
-            <article class="card metric">
-              <div class="metric-icon">◷</div>
-              <div class="metric-label">تاريخ الانتهاء</div>
-              <div class="metric-value compact" id="homeExpiry">—</div>
-            </article>
-          </div>
-
-          <article class="card">
-            <div class="between" style="margin-bottom:17px">
-              <div>
-                <div class="eyebrow">SUBSCRIPTION LIFETIME</div>
-                <h2 style="margin:7px 0 0">مدة الاشتراك</h2>
-              </div>
-              <span class="muted small">حسب بيانات API</span>
-            </div>
-
-            <div class="days-layout">
-              <div class="progress-ring">
-                <svg viewBox="0 0 120 120" aria-hidden="true">
-                  <circle class="track" cx="60" cy="60" r="50"></circle>
-                  <circle class="progress" id="daysProgress" cx="60" cy="60" r="50"></circle>
-                </svg>
-                <div class="ring-label">
-                  <div class="ring-number" id="daysLeft">—</div>
-                  <div class="ring-caption">يوم متبقٍ</div>
-                </div>
-              </div>
-
-              <div style="min-width:0">
-                <h3 id="expiryHeading">بانتظار البيانات</h3>
-                <p class="muted small" id="expiryDescription">
-                  سيظهر تاريخ الانتهاء بعد نجاح الاتصال.
-                </p>
-                <button class="btn small-btn" data-page="data">عرض التفاصيل ←</button>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <aside class="desktop-sidebar stack">
-          <article class="card">
-            <div class="eyebrow">ACCOUNT STATUS</div>
-            <h2 style="margin-top:9px">حالة الحساب</h2>
-            <div class="data-row">
-              <div>
-                <div class="data-key">حالة الخدمة</div>
-                <div class="data-value" id="sideService">—</div>
-              </div>
-              <span>◉</span>
-            </div>
-            <div class="data-row">
-              <div>
-                <div class="data-key">معرّف الحساب</div>
-                <div class="data-value" id="sideUserID">—</div>
-              </div>
-              <button class="copy-btn" data-copy-field="userID" title="نسخ">▣</button>
-            </div>
-            <div class="data-row">
-              <div>
-                <div class="data-key">آخر تحديث ناجح</div>
-                <div class="data-value" id="lastUpdated">لم يحدث بعد</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="eyebrow">QUICK ACTIONS</div>
-            <h2 style="margin-top:9px">اختصارات</h2>
-            <div class="stack">
-              <button class="btn full" data-page="data">▤ بيانات الحساب</button>
-              <button class="btn full" data-page="contact">✉ التواصل والدعم</button>
-              <button class="btn full" data-page="settings">⚙ الإعدادات والمظهر</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="eyebrow">LIVE CLOCK</div>
-            <h2 id="largeClock" style="font-size:30px;margin:10px 0">--:--</h2>
-            <div class="muted small" id="clockDate">—</div>
-          </article>
-        </aside>
-      </div>
-    </section>
-
-    <!-- DATA -->
-
-    <section id="page-data" class="section">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">ACCOUNT INFORMATION</div>
-          <h1 style="margin-top:7px">بيانات الحساب</h1>
-          <p class="muted small">الحقول التي يوفرها الخادم وإيرثلنك</p>
-        </div>
-        <button class="btn small-btn" id="copyReportButton">نسخ التقرير</button>
-      </div>
-
-      <div class="stack">
-        <article class="card">
-          <div class="between">
-            <div>
-              <div class="eyebrow">SUBSCRIBER PROFILE</div>
-              <h2 style="margin-top:8px">معلومات المشترك</h2>
-            </div>
-            <img
-              id="accountImage"
-              src="AA.jpg"
-              alt="صورة الحساب"
-              style="width:62px;height:62px;border-radius:19px;object-fit:cover;border:1px solid var(--border)"
-              onerror="this.style.display='none'"
-            >
-          </div>
-          <div id="accountFields"></div>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">REPORT CENTER</div>
-          <h2 style="margin-top:8px">تقرير الاشتراك</h2>
-          <p class="muted small">
-            التقرير يتكون من البيانات التي استلمها الموقع من الخادم.
-          </p>
-          <textarea
-            class="input"
-            id="reportPreview"
-            rows="9"
-            readonly
-            placeholder="سيظهر التقرير بعد تسجيل الدخول بنجاح."
-          ></textarea>
-          <div class="grid two" style="margin-top:12px">
-            <button class="btn" id="copyReportButton2">▣ نسخ التقرير</button>
-            <button class="btn primary" id="sendReportButton">↗ إرسال إلى Discord</button>
-          </div>
-          <div class="info-box" style="margin-top:12px">
-            إرسال Discord يحتاج إلى endpoint خلفي آمن؛ لا يتم إرسال Webhook من المتصفح.
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-
-    <section id="page-contact" class="section">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">CONTACT & SUPPORT</div>
-          <h1 style="margin-top:7px">التواصل والدعم</h1>
-          <p class="muted small">قنوات التواصل الخاصة بالمشروع</p>
-        </div>
-      </div>
-
-      <div class="grid two">
-        <article class="card">
-          <div class="metric-icon">✈</div>
-          <h2>Telegram</h2>
-          <p class="muted small">للدعم والاستفسارات</p>
-          <a class="btn full" href="https://t.me/MOTRXVIP" target="_blank" rel="noopener noreferrer">
-            فتح Telegram ↗
-          </a>
-        </article>
-
-        <article class="card">
-          <div class="metric-icon">♪</div>
-          <h2>TikTok</h2>
-          <p class="muted small">حساب التواصل</p>
-          <a class="btn full" href="https://www.tiktok.com/@00.tnr" target="_blank" rel="noopener noreferrer">
-            فتح TikTok ↗
-          </a>
-        </article>
-
-        <article class="card">
-          <div class="metric-icon">◉</div>
-          <h2>Discord</h2>
-          <p class="muted small">معرّف Discord المسجل للمشروع</p>
-          <div class="data-value" dir="ltr">1487837632716079344</div>
-          <button class="btn full" style="margin-top:12px" data-copy-text="1487837632716079344">
-            نسخ المعرّف
-          </button>
-        </article>
-
-        <article class="card">
-          <div class="metric-icon">✉</div>
-          <h2>مراسلة الدعم</h2>
-          <p class="muted small">أرسل رسالة من خلال الخادم الخلفي.</p>
-          <button class="btn full" data-page="contactForm">كتابة رسالة ↓</button>
-        </article>
-      </div>
-
-      <article class="card" id="contactForm" style="margin-top:15px">
-        <div class="eyebrow">SUPPORT MESSAGE</div>
-        <h2 style="margin-top:8px">نموذج التواصل</h2>
-
-        <form id="contactFormElement">
-          <div class="field">
-            <label for="contactName">الاسم</label>
-            <input class="input" id="contactName" maxlength="80" required placeholder="اكتب اسمك">
-          </div>
-
-          <div class="field">
-            <label for="contactMessage">الرسالة</label>
-            <textarea class="input" id="contactMessage" maxlength="3000" required placeholder="اكتب تفاصيل رسالتك"></textarea>
-          </div>
-
-          <button class="btn primary full" type="submit" id="contactSendButton">
-            إرسال الرسالة ↗
-          </button>
-        </form>
-
-        <div class="info-box" style="margin-top:12px">
-          لا تُدرج كلمة مرور حسابك أو Access Token داخل رسالة الدعم.
-        </div>
-      </article>
-    </section>
-
-    <!-- SETTINGS -->
-
-    <section id="page-settings" class="section">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">PERSONALIZATION</div>
-          <h1 style="margin-top:7px">الإعدادات</h1>
-          <p class="muted small">خصّص مظهر الموقع حسب رغبتك</p>
-        </div>
-      </div>
-
-      <div class="stack">
-        <article class="card">
-          <div class="eyebrow">COLOR SYSTEM</div>
-          <h2 style="margin-top:8px">الألوان والثيمات</h2>
-
-          <div class="theme-grid" id="themeGrid">
-            <button class="theme-option selected" data-theme-choice="violet">
-              <div class="theme-swatch" style="--swatch:#8b5cf6"></div>
-              بنفسجي
+            <button class="actionbtn primary" id="loginSubmit" type="submit" style="width:100%;padding:15px;margin-top:6px">
+              <span data-i18n="login">تسجيل الدخول</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
-            <button class="theme-option" data-theme-choice="ocean">
-              <div class="theme-swatch" style="--swatch:#22d3ee"></div>
-              محيطي
-            </button>
-            <button class="theme-option" data-theme-choice="emerald">
-              <div class="theme-swatch" style="--swatch:#10b981"></div>
-              زمردي
-            </button>
-            <button class="theme-option" data-theme-choice="rose">
-              <div class="theme-swatch" style="--swatch:#fb7185"></div>
-              وردي
-            </button>
-            <button class="theme-option" data-theme-choice="gold">
-              <div class="theme-swatch" style="--swatch:#fbbf24"></div>
-              ذهبي
-            </button>
-            <button class="theme-option" data-theme-choice="ruby">
-              <div class="theme-swatch" style="--swatch:#f43f5e"></div>
-              ياقوتي
-            </button>
-            <button class="theme-option" data-theme-choice="ice">
-              <div class="theme-swatch" style="--swatch:#60a5fa"></div>
-              جليدي
-            </button>
-            <button class="theme-option" data-theme-choice="light">
-              <div class="theme-swatch" style="--swatch:#eef2fa"></div>
-              فاتح
-            </button>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">BACKGROUND</div>
-          <h2 style="margin-top:8px">خلفية الموقع</h2>
-          <p class="muted small">اختر صورة الخلفية من جهازك. لا تُرفع الصورة إلى أي خادم.</p>
-          <div class="field">
-            <label for="backgroundPicker">اختيار صورة</label>
-            <input class="input" id="backgroundPicker" type="file" accept="image/jpeg,image/png,image/webp">
-          </div>
-          <button class="btn" id="resetBackgroundButton">إعادة الخلفية الافتراضية</button>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">INTERFACE</div>
-          <h2 style="margin-top:8px">تفضيلات الواجهة</h2>
-
-          <div class="switch-row">
-            <div>
-              <strong>تأثيرات الحركة</strong>
-              <div class="muted small">تأثيرات انتقال خفيفة</div>
-            </div>
-            <input type="checkbox" class="switch" id="animationsSetting" checked>
-          </div>
-
-          <div class="switch-row">
-            <div>
-              <strong>تحديث تلقائي أثناء فتح الموقع</strong>
-              <div class="muted small">يحاول التحديث كل خمس دقائق</div>
-            </div>
-            <input type="checkbox" class="switch" id="autoRefreshSetting">
-          </div>
-
-          <div class="switch-row">
-            <div>
-              <strong>إشعارات المتصفح</strong>
-              <div class="muted small">عند دعم المتصفح والإذن</div>
-            </div>
-            <button class="btn small-btn" id="enableBrowserNotifications">تفعيل</button>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">SESSION</div>
-          <h2 style="margin-top:8px">إدارة الجلسة</h2>
-          <p class="muted small">
-            تسجيل الخروج يمسح الجلسة المحلية. يجب على الخادم إبطال الجلسة أيضاً إذا كان يدعم ذلك.
-          </p>
-          <button class="btn danger full" id="logoutButton">تسجيل الخروج</button>
-        </article>
-      </div>
-    </section>
-
-    <!-- NOTIFICATIONS -->
-
-    <section id="page-notifications" class="section">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">ALERT CENTER</div>
-          <h1 style="margin-top:7px">الإشعارات</h1>
-          <p class="muted small">إعداد تنبيهات الحساب والإرسال المجدول عبر الخادم</p>
-        </div>
-      </div>
-
-      <div class="stack">
-        <article class="card">
-          <div class="eyebrow">LOCAL PREFERENCES</div>
-          <h2 style="margin-top:8px">تفضيلات الإشعارات</h2>
-
-          <div class="switch-row">
-            <div>
-              <strong>تنبيه انتهاء الاشتراك</strong>
-              <div class="muted small">تنبيه عند فحص بيانات الحساب</div>
-            </div>
-            <input class="switch" type="checkbox" id="expiryNotify" checked>
-          </div>
-
-          <div class="switch-row">
-            <div>
-              <strong>تنبيه تغير حالة الخدمة</strong>
-              <div class="muted small">مقارنة الحالة عند التحديث</div>
-            </div>
-            <input class="switch" type="checkbox" id="statusNotify" checked>
-          </div>
-
-          <div class="switch-row">
-            <div>
-              <strong>تنبيه داخل المتصفح</strong>
-              <div class="muted small">يتطلب بقاء الصفحة مفتوحة للأحداث المحلية</div>
-            </div>
-            <input class="switch" type="checkbox" id="browserNotify" checked>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">SCHEDULED DELIVERY</div>
-          <h2 style="margin-top:8px">جدولة إرسال تقرير</h2>
-
-          <div class="info-box" style="margin-bottom:15px">
-            هذه الإعدادات تُرسل إلى الخادم ليحفظها وينفذها بجدولة فعلية.
-            لن ينفّذ المتصفح الإرسال بعد إغلاق الصفحة بمفرده.
-          </div>
-
-          <form id="scheduleForm">
-            <div class="field">
-              <label for="scheduleTitle">عنوان المهمة</label>
-              <input class="input" id="scheduleTitle" maxlength="100" required placeholder="تقرير حالة الاشتراك">
-            </div>
-
-            <div class="field">
-              <label for="scheduleDestination">جهة الإرسال</label>
-              <select class="input" id="scheduleDestination" required>
-                <option value="discord">Discord</option>
-                <option value="telegram">Telegram</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="scheduleAt">موعد الإرسال</label>
-              <input class="input" id="scheduleAt" type="datetime-local" required>
-            </div>
-
-            <div class="field">
-              <label for="scheduleRepeat">التكرار</label>
-              <select class="input" id="scheduleRepeat">
-                <option value="once">مرة واحدة</option>
-                <option value="daily">يومياً</option>
-                <option value="weekly">أسبوعياً</option>
-              </select>
-            </div>
-
-            <button class="btn primary full" type="submit" id="scheduleButton">
-              حفظ الجدولة على الخادم
-            </button>
+            <div class="loginError" id="loginError"></div>
           </form>
-
-          <div id="scheduleList" style="margin-top:18px">
-            <div class="empty-state">
-              <div class="big-icon">◷</div>
-              لا توجد جدولات محمّلة من الخادم.
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="eyebrow">RECENT ACTIVITY</div>
-          <h2 style="margin-top:8px">سجل النشاط المحلي</h2>
-          <div id="activityList">
-            <div class="empty-state">
-              <div class="big-icon">⌁</div>
-              لا توجد أحداث بعد.
-            </div>
-          </div>
-          <button class="btn full" id="clearActivityButton">مسح سجل النشاط المحلي</button>
-        </article>
+          <div class="footer">EARTHLINK PRO · PRIVATE SUBSCRIBER SPACE</div>
+        </div>
       </div>
     </section>
 
-    <footer class="app-footer">
-      EARTHLINK PRO · SUBSCRIBER COMMAND CENTER
-      <br>
-      البيانات المعروضة تعتمد على الاستجابات التي يوفرها الخادم.
-      <br>
-      <span id="footerConnection">الخادم غير مفحوص بعد.</span>
-    </footer>
+    <section class="view" id="view-home">
+      <div class="welcome">
+        <div class="eyebrow">WELCOME BACK · EARTHLINK PRO</div>
+        <div class="heroTitle" id="welcomeName">مرحباً بك في لوحة اشتراكك</div>
+        <div class="heroText" id="welcomeText">كل تفاصيل حسابك واتصالك في مكان واحد.</div>
+        <div class="heroBadge"><span class="pulse"></span><span id="connectionText">متصل بلوحة الحساب</span></div>
+      </div>
 
-  </div>
+      <div class="sectionhead">
+        <div><div class="sectiontitle" data-i18n="overview">نظرة عامة</div><div class="sectionhint" data-i18n="overviewSub">ملخص اشتراكك الحالي</div></div>
+        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></div>
+      </div>
+      <div class="grid" id="summaryGrid"></div>
 
-  <!-- BOTTOM NAVIGATION -->
-
-  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
-    <button class="nav-item active" data-page="home">
-      <span class="nav-icon">⌂</span>
-      <span>الرئيسية</span>
-    </button>
-    <button class="nav-item" data-page="data">
-      <span class="nav-icon">▤</span>
-      <span>البيانات</span>
-    </button>
-    <button class="nav-item" data-page="contact">
-      <span class="nav-icon">✉</span>
-      <span>التواصل</span>
-    </button>
-    <button class="nav-item" data-page="notifications">
-      <span class="nav-icon">♧</span>
-      <span>الإشعارات</span>
-    </button>
-    <button class="nav-item" data-page="settings">
-      <span class="nav-icon">⚙</span>
-      <span>الإعدادات</span>
-    </button>
-  </nav>
-
-</div>
-
-<!-- SIDE DRAWER -->
-
-<div class="drawer-overlay hidden" id="drawerOverlay">
-  <aside class="drawer" aria-label="القائمة الجانبية">
-    <div class="between">
-      <div class="brand">
-        <img src="AA.jpg" class="brand-logo" alt="" onerror="this.style.display='none'">
-        <div>
-          <div class="brand-name">EARTHLINK PRO</div>
-          <div class="brand-sub">QUICK MENU</div>
+      <div class="sectionhead">
+        <div><div class="sectiontitle" data-i18n="accountCard">بطاقة الحساب</div><div class="sectionhint" data-i18n="accountCardSub">معلومات المشترك الأساسية</div></div>
+        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+      </div>
+      <div class="panel">
+        <div class="profileRow">
+          <img class="profilePic" id="accountImage" src="AA.jpg" alt="Account image">
+          <div style="min-width:0;flex:1">
+            <div class="profileName" id="profileName">—</div>
+            <div class="profileSub"><span data-i18n="userId">اسم المستخدم</span>: <b id="profileId">—</b></div>
+            <div style="margin-top:9px"><span class="pill" id="statusPill"><span class="pulse"></span><span>—</span></span></div>
+          </div>
+        </div>
+        <div class="rowactions">
+          <button class="actionbtn primary" data-goto="data"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h16"/></svg><span data-i18n="allDetails">عرض كل البيانات</span></button>
+          <button class="actionbtn" id="refreshBtn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/></svg><span data-i18n="refresh">تحديث البيانات</span></button>
         </div>
       </div>
-      <button class="icon-btn" id="closeDrawerButton" aria-label="إغلاق القائمة">×</button>
-    </div>
+    </section>
 
-    <div class="drawer-head">
-      <div class="eyebrow">ACCOUNT</div>
-      <h2 id="drawerName" style="margin:9px 0 5px">المشترك</h2>
-      <div class="muted small" id="drawerUsername">—</div>
-    </div>
+    <section class="view" id="view-data">
+      <div class="sectionhead" style="margin-top:4px">
+        <div><div class="sectiontitle" data-i18n="allDetails">كل بيانات الاشتراك</div><div class="sectionhint" data-i18n="dataSub">تُحمّل الحقول من استجابة إيرثلنك</div></div>
+        <div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h16"/></svg></div>
+      </div>
+      <div class="panel" id="dataProfile"></div>
+      <div class="detailgrid" id="detailGrid" style="margin-top:13px"></div>
+      <div class="panel">
+        <div class="sectiontitle" data-i18n="connectionInfo">معلومات الاتصال</div>
+        <div class="settingdesc" style="margin-top:8px" data-i18n="connectionInfoSub">تظهر حالة الاتصال عند نجاح تحديث البيانات.</div>
+        <div class="rowactions"><button class="actionbtn primary" id="dataRefresh"><span data-i18n="refresh">تحديث البيانات</span></button></div>
+      </div>
+    </section>
 
-    <button class="drawer-item" data-page="home">
-      <span>⌂</span><span>الرئيسية</span>
-    </button>
-    <button class="drawer-item" data-page="data">
-      <span>▤</span><span>بيانات الحساب</span>
-    </button>
-    <button class="drawer-item" data-page="settings">
-      <span>◐</span><span>الثيمات والمظهر</span>
-    </button>
-    <button class="drawer-item" data-page="settings">
-      <span>Aa</span><span>إعدادات الواجهة</span>
-    </button>
-    <button class="drawer-item" data-page="notifications">
-      <span>♧</span><span>مركز الإشعارات</span>
-    </button>
-    <button class="drawer-item" data-page="contact">
-      <span>✉</span><span>المساعدة والتواصل</span>
-    </button>
+    <section class="view" id="view-themes">
+      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="themes">الثيمات والمظهر</div><div class="sectionhint" data-i18n="themesSub">اختر الواجهة التي تناسبك</div></div><div class="sectionicon">✦</div></div>
+      <div class="themegrid">
+        <button class="themeCard" data-theme="dark"><div class="themePreview" style="background:linear-gradient(135deg,#090b13,#272048)"></div><strong data-i18n="darkTheme">ليل بنفسجي</strong><small data-i18n="darkDesc">داكن وهادئ</small></button>
+        <button class="themeCard" data-theme="light"><div class="themePreview" style="background:linear-gradient(135deg,#edf0ff,#d5f7ff)"></div><strong data-i18n="lightTheme">نهاري فاتح</strong><small data-i18n="lightDesc">مشرق وواضح</small></button>
+        <button class="themeCard" data-theme="ocean"><div class="themePreview" style="background:linear-gradient(135deg,#061d2a,#007f95)"></div><strong data-i18n="oceanTheme">محيط مضيء</strong><small data-i18n="oceanDesc">درجات بحرية</small></button>
+        <button class="themeCard" data-theme="royal"><div class="themePreview" style="background:linear-gradient(135deg,#190e2d,#6c2ab5)"></div><strong data-i18n="royalTheme">ملكي</strong><small data-i18n="royalDesc">بنفسجي فاخر</small></button>
+      </div>
+      <div class="panel">
+        <div class="sectiontitle" data-i18n="personalize">تخصيص الواجهة</div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="darkMode">الوضع الليلي</div><div class="settingdesc" data-i18n="darkModeSub">تبديل الوضع الداكن والفاتح</div></div><input class="switch" id="darkSwitch" type="checkbox" checked></div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="language">لغة التطبيق</div><div class="settingdesc" data-i18n="languageSub">العربية أو English</div></div><button class="actionbtn" id="languageSetting">العربية / EN</button></div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="motion">التأثيرات الحركية</div><div class="settingdesc" data-i18n="motionSub">إضاءة وانتقالات ناعمة</div></div><input class="switch" id="motionSwitch" type="checkbox" checked></div>
+      </div>
+    </section>
 
-    <div style="margin-top:20px">
-      <button class="btn danger full" id="drawerLogoutButton">تسجيل الخروج</button>
-    </div>
+    <section class="view" id="view-counters">
+      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="counters">العدادات</div><div class="sectionhint" data-i18n="countersSub">الوقت وتفاصيل صلاحية الاشتراك</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg></div></div>
+      <div class="panel">
+        <div class="sectionhint" data-i18n="localTime">الوقت المحلي</div>
+        <div class="clock" id="liveClock">--:--:--</div>
+        <div class="settingdesc" id="liveDate">—</div>
+      </div>
+      <div class="grid" id="counterGrid" style="margin-top:13px"></div>
+      <div class="panel">
+        <div class="sectiontitle" data-i18n="expiry">انتهاء الصلاحية</div>
+        <div class="detailValue" id="expiryValue" style="font-size:16px;margin-top:12px">—</div>
+        <div class="settingdesc" id="expiryHint"></div>
+      </div>
+    </section>
 
-    <div class="app-footer">
-      Version 2.0 · EARTHLINK PRO
-    </div>
-  </aside>
+    <section class="view" id="view-contact">
+      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="contact">التواصل والدعم</div><div class="sectionhint" data-i18n="contactSub">خيارات مساعدة واتصال</div></div><div class="sectionicon">✉</div></div>
+      <div class="panel">
+        <div class="profileRow"><div class="sectionicon" style="width:50px;height:50px"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 10h8M8 13h5"/></svg></div><div><div class="profileName" data-i18n="supportTitle">مركز مساعدة المشترك</div><div class="profileSub" data-i18n="supportDesc">يمكنك استخدام معلومات حسابك للتواصل مع وكيلك.</div></div></div>
+        <div class="detailgrid" style="margin-top:18px">
+          <div class="detail"><div class="detailLabel" data-i18n="agent">اسم الوكيل</div><div class="detailValue" id="contactAgent">—</div></div>
+          <div class="detail"><div class="detailLabel" data-i18n="phone">رقم الهاتف</div><div class="detailValue" id="contactPhone">—</div></div>
+          <div class="detail"><div class="detailLabel" data-i18n="email">البريد الإلكتروني</div><div class="detailValue" id="contactEmail">—</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="sectiontitle" data-i18n="sendReport">إرسال تقرير الحساب</div>
+        <div class="settingdesc" style="margin-top:8px" data-i18n="reportSub">يرسل ملخصاً غير متضمن لكلمة المرور إلى قناة Discord المضبوطة على الخادم.</div>
+        <div class="rowactions"><button class="actionbtn primary" id="discordReport"><span data-i18n="sendDiscord">إرسال إلى Discord</span></button></div>
+      </div>
+      <div class="panel">
+        <div class="sectiontitle" data-i18n="about">حول التطبيق</div>
+        <div class="settingdesc" style="line-height:2.2;margin-top:9px" data-i18n="aboutDesc">EARTHLINK PRO واجهة لإدارة بيانات الاشتراك. حالة الاتصال تعتمد على خادم إيرثلنك واستجابة الخدمة الفعلية.</div>
+        <div class="pill" style="margin-top:12px">VERSION 3.0 · SECURE SESSION</div>
+      </div>
+    </section>
+
+    <section class="view" id="view-notifications">
+      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="notifications">سجل التنبيهات</div><div class="sectionhint" data-i18n="notificationsSub">رسائل تحديث الحساب والأحداث</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></div></div>
+      <div class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="sectiontitle" data-i18n="recentActivity">آخر الأحداث</div><button class="actionbtn" id="clearLogs" data-i18n="clear">مسح السجل</button></div>
+        <div id="logList"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <div class="sectionhead" style="margin-top:4px"><div><div class="sectiontitle" data-i18n="settings">الإعدادات</div><div class="sectionhint" data-i18n="settingsSub">الحساب والواجهة والاتصال</div></div><div class="sectionicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.8.2l-.2.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.5-1.1 1.7 1.7 0 0 0-1.5.8l-.1.2-3-1.7.1-.2a1.7 1.7 0 0 0-.2-1.8l-.1-.2v-3.4l.2-.1a1.7 1.7 0 0 0 1.1-1.5 1.7 1.7 0 0 0-.8-1.5l-.2-.1 1.7-3 .2.1a1.7 1.7 0 0 0 1.8-.2l.2-.1h3.4l.1.2a1.7 1.7 0 0 0 1.5 1.1 1.7 1.7 0 0 0 1.5-.8l.1-.2 3 1.7-.1.2a1.7 1.7 0 0 0 .2 1.8l.1.2V14z"/></svg></div></div>
+      <div class="panel">
+        <div class="settingrow"><div><div class="settingname" data-i18n="language">لغة التطبيق</div><div class="settingdesc" data-i18n="languageSub">العربية أو English</div></div><button class="actionbtn" id="languageSetting2">العربية / EN</button></div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="appearance">المظهر</div><div class="settingdesc" data-i18n="appearanceSub">تغيير ألوان الواجهة</div></div><button class="actionbtn" data-goto="themes" data-i18n="themes">الثيمات</button></div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="refresh">تحديث البيانات</div><div class="settingdesc" data-i18n="refreshSub">طلب أحدث معلومات الحساب</div></div><button class="actionbtn" id="settingsRefresh">↻</button></div>
+        <div class="settingrow"><div><div class="settingname" data-i18n="logout">تسجيل الخروج</div><div class="settingdesc" data-i18n="logoutSub">إنهاء جلسة هذا التطبيق</div></div><button class="actionbtn danger" id="logoutBtn" data-i18n="logout">تسجيل الخروج</button></div>
+      </div>
+      <div class="footer">YOUR ACCOUNT · YOUR CONTROL</div>
+    </section>
+  </main>
+
+  <div class="bottomnav" id="bottomNav" style="display:none">
+    <nav class="navinner">
+      <button class="navbtn active" data-goto="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="home">الرئيسية</span></button>
+      <button class="navbtn" data-goto="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span data-i18n="data">البيانات</span></button>
+      <button class="navbtn" data-goto="themes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.5-3.3 1.5 1.5 0 0 1 1.1-2.5H18a3 3 0 0 0 3-3c0-5.1-4-9.2-9-9.2Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="15" cy="8" r="1"/></svg><span data-i18n="themes">الثيمات</span></button>
+      <button class="navbtn" data-goto="counters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><span data-i18n="counters">العدادات</span></button>
+      <button class="navbtn" data-goto="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/></svg><span data-i18n="contact">تواصل</span></button>
+    </nav>
+  </div>
 </div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidehead"><div><div class="sidebrand">EARTHLINK PRO</div><div class="brandsub">PERSONAL SPACE</div></div><button class="iconbtn" id="closeMenu" aria-label="إغلاق">✕</button></div>
+  <div class="panel" style="margin:0 0 16px">
+    <div class="profileRow"><img class="profilePic" id="sideAvatar" src="AA.jpg" alt=""><div style="min-width:0"><div class="profileName" id="sideName">حساب المشترك</div><div class="profileSub" id="sideId">—</div></div></div>
+  </div>
+  <div class="sidegroup" data-i18n="account">الحساب</div>
+  <button class="sideitem" data-goto="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/></svg><span data-i18n="home">الرئيسية</span></button>
+  <button class="sideitem" data-goto="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span data-i18n="data">البيانات</span></button>
+  <button class="sideitem" data-goto="notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span data-i18n="notifications">التنبيهات والسجل</span></button>
+  <button class="sideitem" data-goto="themes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg><span data-i18n="themes">الثيمات</span></button>
+  <button class="sideitem" data-goto="counters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/></svg><span data-i18n="counters">العدادات</span></button>
+  <button class="sideitem" data-goto="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.5 7.4L3 21l2.1-5.5A8.5 8.5 0 1 1 21 11.5Z"/></svg><span data-i18n="contact">تواصل</span></button>
+  <button class="sideitem" data-goto="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19 13.5a7 7 0 0 0 0-3l2-1.5-2-3.5-2.5 1a7 7 0 0 0-2.5-1.5L13.5 2h-4L9 5a7 7 0 0 0-2.5 1.5l-2.5-1-2 3.5L4 10.5a7 7 0 0 0 0 3l-2 1.5 2 3.5 2.5-1A7 7 0 0 0 9 19l.5 3h4l.5-3a7 7 0 0 0 2.5-1.5l2.5 1 2-3.5z"/></svg><span data-i18n="settings">الإعدادات</span></button>
+  <button class="sideitem" data-goto="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg><span data-i18n="about">حول التطبيق</span></button>
+  <button class="sideitem" id="sideLogout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 17l5-5-5-5M15 12H3M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg><span data-i18n="logout">تسجيل الخروج</span></button>
+</aside>
+<div class="toastarea" id="toastArea" aria-live="polite"></div>
 
 <script>
 "use strict";
 
-/* =========================================================
-   EARTHLINK PRO — APPLICATION CONTROLLER
-   ========================================================= */
-
 /*
-  CONFIGURATION
-
-  The browser talks only to your backend.
-  Do not put WEB, TOK, ID, Earthlink passwords or private
-  API tokens in this file.
-
-  Required backend routes:
-    POST /api/login
-    GET  /api/account
-    POST /api/logout
-    POST /api/reports/discord
-    POST /api/contact
-    POST /api/schedules
-    GET  /api/schedules
-    GET  /api/health
-
-  These endpoints must be implemented on a secure server
-  or serverless platform before live data and delivery work.
+  مهم: ضع رابط Cloudflare Worker الحقيقي هنا بعد نشر worker.js.
+  مثال الشكل فقط: https://اسم-المشروع.اسم-حسابك.workers.dev
+  لا تضع كلمة المرور أو Access Token في هذا الملف.
 */
+const API_BASE = "https://YOUR-WORKER-NAME.workers.dev";
 
-const CONFIG = Object.freeze({
-  apiBase: "/api",
-  refreshIntervalMs: 5 * 60 * 1000,
-  maxActivityItems: 30,
-  maxReportChars: 12000,
-  themes: [
-    "violet", "ocean", "emerald", "rose",
-    "gold", "ruby", "ice", "light"
-  ]
-});
-
-const STORAGE = Object.freeze({
-  theme: "elpro_theme",
-  username: "elpro_username",
-  background: "elpro_custom_background",
-  preferences: "elpro_preferences",
-  activity: "elpro_activity"
-});
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
 
 const state = {
-  authenticated: false,
   account: null,
-  lastSuccessfulRefresh: null,
-  lastServiceStatus: null,
-  refreshTimer: null,
-  requestInProgress: false,
-  lastAccountError: null,
-  activity: [],
-  preferences: {
-    animations: true,
-    autoRefresh: false,
-    expiryNotify: true,
-    statusNotify: true,
-    browserNotify: true
-  }
+  language: localStorage.getItem("el_language") || "ar",
+  theme: localStorage.getItem("el_theme") || "dark",
+  logs: [],
+  page: "login",
+  busy: false
 };
 
-const $ = (id) => document.getElementById(id);
+const translations = {
+ ar: {
+  loginTitle:"LOGIN TO EARTHLINK",loginSub:"أهلاً بك في لوحة التحكم الخاصة باشتراكك",
+  username:"اسم المستخدم",password:"كلمة المرور",secure:"اتصال آمن بخدمة إيرثلنك",login:"تسجيل الدخول",
+  home:"الرئيسية",data:"البيانات",themes:"الثيمات",counters:"العدادات",contact:"تواصل",
+  overview:"نظرة عامة",overviewSub:"ملخص اشتراكك الحالي",accountCard:"بطاقة الحساب",
+  accountCardSub:"معلومات المشترك الأساسية",userId:"اسم المستخدم",allDetails:"كل بيانات الاشتراك",
+  refresh:"تحديث البيانات",dataSub:"تُحمّل الحقول من استجابة إيرثلنك",connectionInfo:"معلومات الاتصال",
+  connectionInfoSub:"تظهر حالة الاتصال عند نجاح تحديث البيانات",themesSub:"اختر الواجهة التي تناسبك",
+  darkTheme:"ليل بنفسجي",darkDesc:"داكن وهادئ",lightTheme:"نهاري فاتح",lightDesc:"مشرق وواضح",
+  oceanTheme:"محيط مضيء",oceanDesc:"درجات بحرية",royalTheme:"ملكي",royalDesc:"بنفسجي فاخر",
+  personalize:"تخصيص الواجهة",darkMode:"الوضع الليلي",darkModeSub:"تبديل الوضع الداكن والفاتح",
+  language:"لغة التطبيق",languageSub:"العربية أو English",motion:"التأثيرات الحركية",
+  motionSub:"إضاءة وانتقالات ناعمة",countersSub:"الوقت وتفاصيل صلاحية الاشتراك",
+  localTime:"الوقت المحلي",expiry:"انتهاء الصلاحية",contactSub:"خيارات مساعدة واتصال",
+  supportTitle:"مركز مساعدة المشترك",supportDesc:"يمكنك استخدام معلومات حسابك للتواصل مع وكيلك.",
+  agent:"اسم الوكيل",phone:"رقم الهاتف",email:"البريد الإلكتروني",sendReport:"إرسال تقرير الحساب",
+  reportSub:"يرسل ملخصاً غير متضمن لكلمة المرور إلى قناة Discord المضبوطة على الخادم.",
+  sendDiscord:"إرسال إلى Discord",about:"حول التطبيق",
+  aboutDesc:"EARTHLINK PRO واجهة لإدارة بيانات الاشتراك. حالة الاتصال تعتمد على خادم إيرثلنك واستجابة الخدمة الفعلية.",
+  notifications:"التنبيهات والسجل",notificationsSub:"رسائل تحديث الحساب والأحداث",
+  recentActivity:"آخر الأحداث",clear:"مسح السجل",settings:"الإعدادات",settingsSub:"الحساب والواجهة والاتصال",
+  logout:"تسجيل الخروج",logoutSub:"إنهاء جلسة هذا التطبيق",account:"الحساب",appearance:"المظهر",
+  appearanceSub:"تغيير ألوان الواجهة",refreshSub:"طلب أحدث معلومات الحساب",
+  noValue:"غير متوفر",daysLeft:"الأيام المتبقية",price:"سعر الاشتراك",package:"نوع الاشتراك",
+  status:"حالة الاشتراك",expiryDate:"تاريخ انتهاء الصلاحية",ip:"عنوان IP",
+  loading:"جارٍ الاتصال بإيرثلنك…",loginSuccess:"تم تسجيل الدخول بنجاح",
+  updated:"تم تحديث بيانات الحساب",failed:"تعذر إكمال الطلب",offline:"تعذر تحديث البيانات",
+  noSession:"انتهت الجلسة. سجّل الدخول مرة ثانية.",loggedOut:"تم تسجيل الخروج",
+  reportSent:"تم إرسال التقرير إلى Discord",reportFailed:"فشل إرسال التقرير",
+  logLogin:"تسجيل الدخول",logUpdate:"تحديث البيانات",logLogout:"تسجيل الخروج",
+  logTheme:"تغيير المظهر",logLanguage:"تغيير اللغة",logError:"خطأ في الاتصال",
+  aboutTitle:"حول التطبيق",counters:"العدادات",accountName:"اسم المشترك"
+ },
+ en: {
+  loginTitle:"LOGIN TO EARTHLINK",loginSub:"Welcome to your subscriber dashboard",
+  username:"Username",password:"Password",secure:"Secure connection to Earthlink",login:"Sign in",
+  home:"Home",data:"Data",themes:"Themes",counters:"Counters",contact:"Contact",
+  overview:"Overview",overviewSub:"Your current subscription summary",accountCard:"Account card",
+  accountCardSub:"Subscriber profile",userId:"Username",allDetails:"All subscription data",
+  refresh:"Refresh data",dataSub:"Fields are loaded from the Earthlink response",
+  connectionInfo:"Connection information",connectionInfoSub:"Connection status appears after a successful refresh",
+  themesSub:"Choose the appearance you prefer",darkTheme:"Violet Night",darkDesc:"Dark and calm",
+  lightTheme:"Daylight",lightDesc:"Bright and clear",oceanTheme:"Ocean Glow",oceanDesc:"Ocean shades",
+  royalTheme:"Royal",royalDesc:"Premium violet",personalize:"Personalize",darkMode:"Dark mode",
+  darkModeSub:"Switch between light and dark",language:"App language",languageSub:"Arabic or English",
+  motion:"Motion effects",motionSub:"Soft glow and transitions",countersSub:"Clock and subscription validity",
+  localTime:"Local time",expiry:"Expiration",contactSub:"Support and contact options",
+  supportTitle:"Subscriber support",supportDesc:"Use your account information to contact your agent.",
+  agent:"Agent name",phone:"Phone number",email:"Email",sendReport:"Send account report",
+  reportSub:"Sends a summary without your password to the server-configured Discord channel.",
+  sendDiscord:"Send to Discord",about:"About",
+  aboutDesc:"EARTHLINK PRO is an interface for subscription information. Connection status depends on the actual Earthlink service response.",
+  notifications:"Notifications & log",notificationsSub:"Account updates and recent events",
+  recentActivity:"Recent activity",clear:"Clear log",settings:"Settings",settingsSub:"Account, appearance and connection",
+  logout:"Sign out",logoutSub:"End this app session",account:"Account",appearance:"Appearance",
+  appearanceSub:"Change interface colors",refreshSub:"Request the latest account information",
+  noValue:"Not available",daysLeft:"Days left",price:"Subscription price",package:"Package",
+  status:"Subscription status",expiryDate:"Expiration date",ip:"IP address",
+  loading:"Connecting to Earthlink…",loginSuccess:"Signed in successfully",
+  updated:"Account data updated",failed:"Request failed",offline:"Could not refresh data",
+  noSession:"Session expired. Please sign in again.",loggedOut:"Signed out",
+  reportSent:"Report sent to Discord",reportFailed:"Could not send report",
+  logLogin:"Sign in",logUpdate:"Data refresh",logLogout:"Sign out",
+  logTheme:"Appearance changed",logLanguage:"Language changed",logError:"Connection error",
+  aboutTitle:"About app",accountName:"Subscriber name"
+ }
+};
 
-function safeText(value, fallback = "—") {
-  if (value === undefined || value === null || value === "") {
-    return fallback;
-  }
-  return String(value);
+function tr(key) {
+  return translations[state.language]?.[key] || translations.ar[key] || key;
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
 
-function showToast(message, duration = 3000) {
-  const container = $("toastContainer");
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.textContent = String(message);
-  container.appendChild(toast);
-
-  window.setTimeout(() => {
-    toast.remove();
-  }, duration);
+function toast(message, error = false) {
+  const el = document.createElement("div");
+  el.className = "toast" + (error ? " error" : "");
+  el.innerHTML = `<div class="toastIcon">${error ? "!" : "✓"}</div><div>${escapeHtml(message)}</div>`;
+  $("#toastArea").appendChild(el);
+  setTimeout(() => el.remove(), 3800);
 }
 
-function addActivity(title, detail = "") {
-  const item = {
-    title: String(title),
-    detail: String(detail),
-    time: new Date().toISOString()
-  };
-
-  state.activity.unshift(item);
-  state.activity = state.activity.slice(0, CONFIG.maxActivityItems);
-
-  try {
-    localStorage.setItem(STORAGE.activity, JSON.stringify(state.activity));
-  } catch (_) {}
-
-  renderActivity();
+function addLog(title, description = "", error = false) {
+  state.logs.unshift({
+    title, description,
+    time: new Date().toLocaleString(state.language === "ar" ? "ar-IQ" : "en-US"),
+    error
+  });
+  state.logs = state.logs.slice(0, 60);
+  try { localStorage.setItem("el_logs", JSON.stringify(state.logs)); } catch {}
+  renderLogs();
 }
 
-function loadActivity() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE.activity) || "[]");
-    state.activity = Array.isArray(stored) ? stored.slice(0, CONFIG.maxActivityItems) : [];
-  } catch (_) {
-    state.activity = [];
-  }
-  renderActivity();
-}
-
-function renderActivity() {
-  const container = $("activityList");
-  if (!container) return;
-
-  if (!state.activity.length) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="big-icon">⌁</div>
-        لا توجد أحداث بعد.
-      </div>`;
+function renderLogs() {
+  const target = $("#logList");
+  if (!target) return;
+  if (!state.logs.length) {
+    target.innerHTML = `<div class="empty">◌<br>${escapeHtml(state.language === "ar" ? "لا توجد أحداث مسجلة بعد" : "No activity recorded yet")}</div>`;
     return;
   }
-
-  container.innerHTML = state.activity.map((item) => {
-    const date = new Date(item.time);
-    const dateText = Number.isNaN(date.getTime())
-      ? ""
-      : date.toLocaleString("ar-IQ");
-
-    return `
-      <div class="notification-item">
-        <div class="notification-icon">⌁</div>
-        <div style="min-width:0">
-          <strong>${escapeHTML(item.title)}</strong>
-          <div class="muted small" style="margin-top:5px">
-            ${escapeHTML(item.detail)}
-          </div>
-          <div class="muted small" style="margin-top:5px">
-            ${escapeHTML(dateText)}
-          </div>
-        </div>
-      </div>`;
-  }).join("");
-}
-
-/* =========================================================
-   SAFE API CLIENT
-   ========================================================= */
-
-function apiURL(path) {
-  if (!path.startsWith("/") || path.startsWith("//")) {
-    throw new Error("مسار API غير صالح.");
-  }
-
-  return CONFIG.apiBase + path;
-}
-
-async function apiRequest(path, options = {}) {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 20000);
-
-  const headers = new Headers(options.headers || {});
-  headers.set("Accept", "application/json");
-
-  let body = options.body;
-
-  if (body !== undefined && body !== null && !(body instanceof FormData)) {
-    headers.set("Content-Type", "application/json");
-    body = JSON.stringify(body);
-  }
-
-  try {
-    const response = await fetch(apiURL(path), {
-      method: options.method || "GET",
-      headers,
-      body,
-      credentials: "same-origin",
-      cache: "no-store",
-      redirect: "error",
-      signal: controller.signal
-    });
-
-    const contentType = response.headers.get("content-type") || "";
-
-    let payload = null;
-
-    if (contentType.includes("application/json")) {
-      payload = await response.json();
-    } else {
-      const raw = await response.text();
-
-      if (raw.length > 10000) {
-        throw new Error("استجابة الخادم كبيرة أو غير متوقعة.");
-      }
-
-      payload = raw ? { message: raw } : {};
-    }
-
-    if (!response.ok) {
-      const message =
-        payload && typeof payload === "object" && payload.message
-          ? String(payload.message)
-          : `فشل الطلب. HTTP ${response.status}`;
-
-      const error = new Error(message);
-      error.status = response.status;
-      throw error;
-    }
-
-    if (payload && typeof payload === "object" && payload.success === false) {
-      throw new Error(payload.message || "رفض الخادم الطلب.");
-    }
-
-    return payload;
-  } catch (error) {
-    if (error.name === "AbortError") {
-      throw new Error("انتهت مهلة الاتصال بالخادم.");
-    }
-
-    if (error instanceof TypeError) {
-      throw new Error("تعذر الاتصال بالخادم. تحقق من إعداد API والاتصال.");
-    }
-
-    throw error;
-  } finally {
-    window.clearTimeout(timeout);
-  }
-}
-
-/* =========================================================
-   ACCOUNT DATA NORMALIZATION
-   ========================================================= */
-
-function getFieldValue(object, names) {
-  for (const name of names) {
-    const candidate = object?.[name];
-
-    if (candidate !== undefined && candidate !== null) {
-      if (
-        typeof candidate === "object" &&
-        !Array.isArray(candidate) &&
-        Object.prototype.hasOwnProperty.call(candidate, "value")
-      ) {
-        return candidate.value;
-      }
-
-      return candidate;
-    }
-  }
-
-  return null;
-}
-
-function unwrapAccount(payload) {
-  if (!payload || typeof payload !== "object") return null;
-
-  const candidates = [
-    payload.account,
-    payload.userData,
-    payload.user,
-    payload.result,
-    payload.data,
-    payload.payload,
-    payload
-  ];
-
-  for (const candidate of candidates) {
-    if (candidate && typeof candidate === "object" && !Array.isArray(candidate)) {
-      const hasKnownField = [
-        "fullName", "accountName", "userID",
-        "accountStatus", "activeDaysLeft"
-      ].some((key) => candidate[key] !== undefined);
-
-      if (hasKnownField) return candidate;
-    }
-  }
-
-  return null;
-}
-
-function normalizeAccount(payload) {
-  const raw = unwrapAccount(payload);
-  if (!raw) {
-    throw new Error("استجابة API لا تحتوي على بيانات حساب معروفة.");
-  }
-
-  const normalized = {
-    fullName: getFieldValue(raw, ["fullName", "name", "displayName"]),
-    userID: getFieldValue(raw, ["userID", "username", "userName", "accountID"]),
-    accountName: getFieldValue(raw, ["accountName", "packageName", "subscriptionType"]),
-    accountPrice: getFieldValue(raw, ["accountPrice", "price", "subscriptionPrice"]),
-    accountStatus: getFieldValue(raw, ["accountStatus", "status", "serviceStatus"]),
-    serviceStatusColor: getFieldValue(raw, ["serviceStatusColor"]),
-    accountExpirationDate: getFieldValue(raw, ["accountExpirationDate", "expirationDate", "expiryDate"]),
-    activeDaysLeft: getFieldValue(raw, ["activeDaysLeft", "daysLeft", "remainingDays"]),
-    userIP: getFieldValue(raw, ["userIP", "ip", "ipAddress"]),
-    mobileNumber: getFieldValue(raw, ["mobileNumber", "phone", "phoneNumber"]),
-    agentName: getFieldValue(raw, ["agentName", "agent"]),
-    fullAddress: getFieldValue(raw, ["address", "fullAddress"]),
-    city: getFieldValue(raw, ["city"]),
-    email: getFieldValue(raw, ["email"]),
-    accountImagePath: getFieldValue(raw, ["accountImagePath", "avatar", "imageUrl"]),
-    raw
-  };
-
-  return normalized;
-}
-
-function displayPrice(value) {
-  if (value === null || value === undefined || value === "") return "—";
-
-  if (typeof value === "number") {
-    return new Intl.NumberFormat("en-US").format(value) + " IQD";
-  }
-
-  return String(value);
-}
-
-function numericDays(value) {
-  if (value === null || value === undefined || value === "") return null;
-
-  const number = Number(value);
-  if (!Number.isFinite(number)) return null;
-
-  return Math.max(0, Math.floor(number));
-}
-
-function formatDate(value) {
-  if (value === null || value === undefined || value === "") return "—";
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value);
-
-  return date.toLocaleDateString("ar-IQ", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-}
-
-function serviceIsActive(account) {
-  const status = String(account.accountStatus || "").toLowerCase();
-  const color = String(account.serviceStatusColor || "").toLowerCase();
-
-  if (["green", "active", "online", "فعال", "نشط"].includes(color)) return true;
-  if (["active", "online", "فعال", "نشط", "فعال"].includes(status)) return true;
-
-  return false;
-}
-
-/* =========================================================
-   RENDER ACCOUNT
-   ========================================================= */
-
-function setText(id, value) {
-  const element = $(id);
-  if (element) element.textContent = safeText(value);
-}
-
-function renderConnection(isOnline, label) {
-  const ids = ["connectionStatus", "loginStatus"];
-
-  ids.forEach((id) => {
-    const element = $(id);
-    if (!element) return;
-
-    element.classList.toggle("online", Boolean(isOnline));
-    element.classList.toggle("offline", !isOnline);
-
-    const span = element.querySelector("span:last-child");
-    if (span) span.textContent = label;
-  });
-
-  setText("footerConnection", label);
-}
-
-function renderAccount(account) {
-  state.account = account;
-
-  setText("homeName", account.fullName || account.userID || "المشترك");
-  setText("homeUser", account.userID ? "USER ID: " + account.userID : "حساب إيرثلنك");
-  setText("homePackage", "الباقة: " + safeText(account.accountName));
-  setText("homePackageMetric", account.accountName);
-  setText("homePrice", displayPrice(account.accountPrice));
-  setText("homeIP", account.userIP);
-  setText("homeExpiry", formatDate(account.accountExpirationDate));
-  setText("sideUserID", account.userID);
-  setText("drawerName", account.fullName || "المشترك");
-  setText("drawerUsername", account.userID);
-  setText("sideService", account.accountStatus);
-
-  const active = serviceIsActive(account);
-  const servicePill = $("serviceStatus");
-
-  if (servicePill) {
-    servicePill.classList.toggle("online", active);
-    servicePill.classList.toggle("offline", !active);
-    const span = servicePill.querySelector("span:last-child");
-    if (span) span.textContent = safeText(account.accountStatus, "غير معروف");
-  }
-
-  const days = numericDays(account.activeDaysLeft);
-  setText("daysLeft", days === null ? "—" : days);
-
-  const progress = $("daysProgress");
-  if (progress) {
-    /*
-      Exact total subscription duration is not assumed.
-      This ring communicates remaining days on a capped
-      visual scale, not a calculated full-term percentage.
-    */
-    const visualScale = days === null ? 0 : Math.min(days, 30) / 30;
-    const circumference = 2 * Math.PI * 50;
-    progress.style.strokeDasharray = String(circumference);
-    progress.style.strokeDashoffset = String(circumference * (1 - visualScale));
-  }
-
-  if (days !== null) {
-    setText(
-      "expiryHeading",
-      days === 0 ? "الاشتراك يحتاج إلى مراجعة" : `متبقي ${days} يوم`
-    );
-
-    setText(
-      "expiryDescription",
-      days === 0
-        ? "راجع حالة الاشتراك وتاريخ الانتهاء في بيانات إيرثلنك."
-        : "عدد الأيام المتبقية حسب البيانات المستلمة من الخادم."
-    );
-  } else {
-    setText("expiryHeading", "مدة الاشتراك غير متاحة");
-    setText("expiryDescription", "لم يرسل API قيمة عدد الأيام المتبقية.");
-  }
-
-  const imagePath = account.accountImagePath;
-
-  if (imagePath) {
-    try {
-      const imageURL = new URL(String(imagePath), window.location.origin);
-
-      if (imageURL.protocol === "https:" || imageURL.origin === window.location.origin) {
-        $("accountImage").src = imageURL.href;
-        $("accountImage").style.display = "";
-      }
-    } catch (_) {
-      // Ignore invalid image URLs.
-    }
-  }
-
-  renderAccountFields(account);
-  renderReport(account);
-
-  state.lastSuccessfulRefresh = new Date();
-  setText("lastUpdated", state.lastSuccessfulRefresh.toLocaleTimeString("ar-IQ"));
-  renderConnection(true, "تم الاتصال");
-}
-
-function renderAccountFields(account) {
-  const fields = [
-    ["الاسم الكامل", "fullName", account.fullName],
-    ["معرّف المستخدم", "userID", account.userID],
-    ["نوع الاشتراك", "accountName", account.accountName],
-    ["سعر الاشتراك", "accountPrice", displayPrice(account.accountPrice)],
-    ["حالة الاشتراك", "accountStatus", account.accountStatus],
-    ["لون حالة الخدمة", "serviceStatusColor", account.serviceStatusColor],
-    ["تاريخ الانتهاء", "accountExpirationDate", formatDate(account.accountExpirationDate)],
-    ["الأيام المتبقية", "activeDaysLeft", account.activeDaysLeft],
-    ["عنوان IP", "userIP", account.userIP],
-    ["رقم الهاتف", "mobileNumber", account.mobileNumber],
-    ["اسم الوكيل", "agentName", account.agentName],
-    ["العنوان", "fullAddress", account.fullAddress],
-    ["المدينة", "city", account.city],
-    ["البريد الإلكتروني", "email", account.email]
-  ];
-
-  $("accountFields").innerHTML = fields.map(([label, key, value]) => `
-    <div class="data-row">
-      <div>
-        <div class="data-key">${escapeHTML(label)}</div>
-        <div class="data-value">${escapeHTML(safeText(value))}</div>
+  target.innerHTML = state.logs.map(log => `
+    <div class="logitem">
+      <div class="logdot" style="${log.error ? "color:var(--red);background:#ff688814" : ""}">${log.error ? "!" : "✦"}</div>
+      <div style="min-width:0;flex:1">
+        <div class="logtitle">${escapeHtml(log.title)}</div>
+        <div class="logdesc">${escapeHtml(log.description)}</div>
+        <div class="logdesc">${escapeHtml(log.time)}</div>
       </div>
-      <button
-        class="copy-btn"
-        data-copy-field="${escapeHTML(key)}"
-        title="نسخ ${escapeHTML(label)}"
-        aria-label="نسخ ${escapeHTML(label)}"
-      >▣</button>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
 
-function makeReport(account) {
-  const lines = [
-    "EARTHLINK PRO — SUBSCRIBER REPORT",
-    "--------------------------------",
-    "الاسم: " + safeText(account.fullName),
-    "معرّف المستخدم: " + safeText(account.userID),
-    "نوع الاشتراك: " + safeText(account.accountName),
-    "السعر: " + displayPrice(account.accountPrice),
-    "حالة الاشتراك: " + safeText(account.accountStatus),
-    "تاريخ الانتهاء: " + formatDate(account.accountExpirationDate),
-    "الأيام المتبقية: " + safeText(account.activeDaysLeft),
-    "عنوان IP: " + safeText(account.userIP),
-    "رقم الهاتف: " + safeText(account.mobileNumber),
-    "الوكيل: " + safeText(account.agentName),
-    "وقت إنشاء التقرير: " + new Date().toLocaleString("ar-IQ")
-  ];
-
-  return lines.join("\n").slice(0, CONFIG.maxReportChars);
+function valueOf(key) {
+  const account = state.account || {};
+  const field = account[key];
+  if (field && typeof field === "object" && "value" in field) return field.value;
+  return field ?? null;
 }
 
-function renderReport(account) {
-  $("reportPreview").value = makeReport(account);
+function fieldLabel(key, field) {
+  if (field && typeof field === "object" && field.displayName) return field.displayName;
+  const map = {
+    accountImagePath:"صورة الحساب",serviceStatusColor:"لون حالة الخدمة",
+    accountPrice:tr("price"),accountStatus:tr("status"),accountName:tr("package"),
+    fullName:tr("accountName"),userID:tr("userId"),agentName:tr("agent"),
+    accountExpirationDate:tr("expiryDate"),activeDaysLeft:tr("daysLeft"),
+    userIP:tr("ip"),mobileNumber:tr("phone"),address:"العنوان",
+    email:tr("email"),city:"المدينة"
+  };
+  return map[key] || key;
 }
 
-/* =========================================================
-   LOGIN AND SESSION
-   ========================================================= */
-
-function setLoginError(message) {
-  const error = $("loginError");
-  error.textContent = String(message || "");
-  error.classList.toggle("hidden", !message);
-}
-
-function setLoginLoading(isLoading) {
-  const button = $("loginButton");
-  button.disabled = isLoading;
-
-  button.innerHTML = isLoading
-    ? '<span class="loading-spinner"></span><span>جارٍ التحقق...</span>'
-    : '<span>تسجيل الدخول</span><span>←</span>';
-}
-
-function showApp() {
-  $("loginScreen").classList.add("hidden");
-  $("appScreen").classList.remove("hidden");
-  state.authenticated = true;
-  startClock();
-  updateRefreshTimer();
-}
-
-function showLogin() {
-  $("appScreen").classList.add("hidden");
-  $("loginScreen").classList.remove("hidden");
-  state.authenticated = false;
-
-  if (state.refreshTimer) {
-    clearInterval(state.refreshTimer);
-    state.refreshTimer = null;
+function normalizeAccount(raw) {
+  let account = raw;
+  for (let i = 0; i < 3; i++) {
+    if (account && typeof account === "object" &&
+        (account.result || account.data || account.userData)) {
+      account = account.result || account.data || account.userData;
+    } else break;
   }
+  return account && typeof account === "object" ? account : {};
+}
+
+function renderAccount() {
+  if (!state.account) return;
+  const a = state.account;
+  const name = valueOf("fullName") || valueOf("userID") || "Earthlink Subscriber";
+  const id = valueOf("userID") || "—";
+  const status = valueOf("accountStatus") || "—";
+  const img = valueOf("accountImagePath");
+  const image = typeof img === "string" && /^https:\/\/user\.earthlink\.iq\//i.test(img) ? img : "AA.jpg";
+
+  $("#welcomeName").textContent = (state.language === "ar" ? "مرحباً، " : "Welcome, ") + name;
+  $("#welcomeText").textContent = state.language === "ar"
+    ? "تابع تفاصيل اشتراكك وحالته من لوحة التحكم."
+    : "Your subscription details and status at a glance.";
+  $("#profileName").textContent = name;
+  $("#profileId").textContent = id;
+  $("#sideName").textContent = name;
+  $("#sideId").textContent = id;
+  $("#accountImage").src = image;
+  $("#headerAvatar").src = image;
+  $("#sideAvatar").src = image;
+
+  const color = String(valueOf("serviceStatusColor") || "").toLowerCase();
+  const statusColor = color.includes("green") ? "var(--green)" :
+                      color.includes("red") ? "var(--red)" :
+                      color.includes("orange") ? "var(--gold)" : "var(--accent2)";
+  $("#statusPill").style.color = statusColor;
+  $("#statusPill").style.borderColor = statusColor;
+  $("#statusPill").innerHTML = `<span class="pulse"></span><span>${escapeHtml(status)}</span>`;
+
+  const summary = [
+    ["accountPrice","price","$", "var(--gold)"],
+    ["accountName","package","◈","var(--accent)"],
+    ["activeDaysLeft","daysLeft","◷","var(--green)"],
+    ["accountStatus","status","◉",statusColor]
+  ];
+  $("#summaryGrid").innerHTML = summary.map(([key,label,icon,tone]) => `
+    <div class="stat" style="--tone:${tone};--glow:${tone}">
+      <div class="statTop"><div class="statIcon">${icon}</div><span class="eyebrow">EL PRO</span></div>
+      <div class="statLabel">${escapeHtml(tr(label))}</div>
+      <div class="statValue">${escapeHtml(valueOf(key) ?? tr("noValue"))}</div>
+      <div class="statMeta">${escapeHtml(fieldLabel(key,a[key]))}</div>
+    </div>`).join("");
+
+  const hiddenFields = new Set(["accountImagePath"]);
+  const entries = Object.entries(a).filter(([key, field]) => {
+    if (hiddenFields.has(key)) return false;
+    if (field && typeof field === "object" && field.visible === false) return false;
+    return true;
+  });
+
+  $("#detailGrid").innerHTML = entries.map(([key,field]) => {
+    const value = field && typeof field === "object" && "value" in field ? field.value : field;
+    const displayValue = value === null || value === undefined || value === "" ? tr("noValue") : value;
+    return `<div class="detail">
+      <div class="detailLabel"><span style="color:var(--accent2)">✦</span>${escapeHtml(fieldLabel(key,field))}</div>
+      <div class="detailValue">${escapeHtml(displayValue)}</div>
+    </div>`;
+  }).join("") || `<div class="empty">${escapeHtml(tr("noValue"))}</div>`;
+
+  $("#dataProfile").innerHTML = `
+    <div class="profileRow">
+      <img class="profilePic" src="${escapeHtml(image)}" alt="" onerror="this.src='AA.jpg'">
+      <div style="min-width:0"><div class="profileName">${escapeHtml(name)}</div>
+      <div class="profileSub">${escapeHtml(tr("userId"))}: ${escapeHtml(id)}</div>
+      <div class="profileSub">${escapeHtml(status)}</div></div>
+    </div>`;
+
+  $("#counterGrid").innerHTML = [
+    ["activeDaysLeft","daysLeft","◷"],
+    ["accountExpirationDate","expiryDate","◴"],
+    ["accountPrice","price","◈"],
+    ["accountStatus","status","◉"]
+  ].map(([key,label,icon]) => `<div class="stat">
+    <div class="statTop"><div class="statIcon">${icon}</div></div>
+    <div class="statLabel">${escapeHtml(tr(label))}</div>
+    <div class="statValue">${escapeHtml(valueOf(key) ?? tr("noValue"))}</div>
+  </div>`).join("");
+
+  $("#expiryValue").textContent = valueOf("accountExpirationDate") || tr("noValue");
+  const days = Number.parseInt(valueOf("activeDaysLeft"), 10);
+  $("#expiryHint").textContent = Number.isFinite(days)
+    ? (state.language === "ar" ? `الأيام المتبقية حسب بيانات إيرثلنك: ${days}` : `Days remaining according to Earthlink: ${days}`)
+    : (state.language === "ar" ? "لا توجد قيمة أيام قابلة للقراءة في الاستجابة." : "No readable days-left value in the response.");
+
+  $("#contactAgent").textContent = valueOf("agentName") || tr("noValue");
+  $("#contactPhone").textContent = valueOf("mobileNumber") || tr("noValue");
+  $("#contactEmail").textContent = valueOf("email") || tr("noValue");
+}
+
+async function api(path, options = {}) {
+  if (!API_BASE || API_BASE.includes("YOUR-WORKER-NAME")) {
+    throw new Error(state.language === "ar"
+      ? "لم تضبط رابط Worker بعد. عدّل API_BASE داخل index.html."
+      : "Worker URL is not configured. Set API_BASE in index.html.");
+  }
+
+  const response = await fetch(API_BASE.replace(/\/+$/,"") + path, {
+    method: options.method || "GET",
+    credentials: "include",
+    cache: "no-store",
+    headers: {
+      ...(options.body ? {"Content-Type":"application/json"} : {}),
+      ...(options.headers || {})
+    },
+    body: options.body ? JSON.stringify(options.body) : undefined
+  });
+
+  const text = await response.text();
+  let data;
+  try { data = JSON.parse(text); }
+  catch { throw new Error(`HTTP ${response.status}: ${text.slice(0,220)}`); }
+
+  if (!response.ok || data.ok === false) {
+    throw new Error(data.error || `HTTP ${response.status}`);
+  }
+  return data;
 }
 
 async function login(username, password) {
-  /*
-    The server must authenticate the credentials with the
-    upstream provider, validate the response and establish
-    a secure session cookie. It must not return upstream
-    passwords or long-lived private tokens to the browser.
-  */
-  return apiRequest("/login", {
-    method: "POST",
-    body: { username, password }
+  const data = await api("/api/login", {
+    method:"POST", body:{username,password}
   });
+  state.account = normalizeAccount(data.account);
+  showApp();
+  renderAccount();
+  addLog(tr("logLogin"), tr("loginSuccess"));
+  toast(tr("loginSuccess"));
+  return data;
 }
 
-$("loginForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  setLoginError("");
-
-  const username = $("username").value.trim();
-  const password = $("password").value;
-
-  if (!username || !password) {
-    setLoginError("اكتب اسم المستخدم وكلمة المرور.");
-    return;
-  }
-
-  setLoginLoading(true);
-
+async function refreshAccount() {
+  if (state.busy) return;
+  state.busy = true;
+  ["#refreshBtn","#dataRefresh","#settingsRefresh"].forEach(sel => {
+    const el = $(sel); if (el) el.disabled = true;
+  });
   try {
-    await login(username, password);
-
-    if ($("rememberMe").checked) {
-      try {
-        localStorage.setItem(STORAGE.username, username);
-      } catch (_) {}
-    } else {
-      localStorage.removeItem(STORAGE.username);
-    }
-
-    /*
-      Authentication alone is not enough: retrieve the
-      subscriber data from the authenticated backend.
-    */
-    await refreshAccount({ showErrors: true });
-
-    showApp();
-    addActivity("تسجيل الدخول", "تم قبول الجلسة من الخادم.");
-    showToast("تم تسجيل الدخول بنجاح.");
+    const data = await api("/api/account");
+    state.account = normalizeAccount(data.account);
+    renderAccount();
+    addLog(tr("logUpdate"), tr("updated"));
+    toast(tr("updated"));
   } catch (error) {
-    setLoginError(error.message || "تعذر تسجيل الدخول.");
-    renderConnection(false, "فشل الاتصال");
-    addActivity("فشل تسجيل الدخول", error.message || "خطأ غير محدد");
+    addLog(tr("logError"), error.message, true);
+    toast(error.message || tr("offline"), true);
+    if (/جلسة|session|sign in|سجّل الدخول/i.test(error.message)) showLogin();
   } finally {
-    setLoginLoading(false);
-  }
-});
-
-$("togglePassword").addEventListener("click", () => {
-  const input = $("password");
-  input.type = input.type === "password" ? "text" : "password";
-});
-
-async function checkExistingSession() {
-  /*
-    The backend may expose GET /api/account as the session
-    check. An unauthenticated response returns to login.
-  */
-  try {
-    await refreshAccount({ showErrors: false });
-    showApp();
-  } catch (_) {
-    showLogin();
-  }
-}
-
-/* =========================================================
-   REFRESH ACCOUNT
-   ========================================================= */
-
-async function refreshAccount(options = {}) {
-  if (state.requestInProgress) return;
-
-  state.requestInProgress = true;
-  $("refreshButton").disabled = true;
-
-  try {
-    const payload = await apiRequest("/account", {
-      method: "GET"
+    state.busy = false;
+    ["#refreshBtn","#dataRefresh","#settingsRefresh"].forEach(sel => {
+      const el = $(sel); if (el) el.disabled = false;
     });
-
-    const account = normalizeAccount(payload);
-    renderAccount(account);
-
-    if (
-      state.preferences.expiryNotify &&
-      numericDays(account.activeDaysLeft) !== null &&
-      numericDays(account.activeDaysLeft) <= 3
-    ) {
-      addActivity(
-        "تنبيه مدة الاشتراك",
-        "عدد الأيام المتبقية: " + numericDays(account.activeDaysLeft)
-      );
-    }
-
-    if (
-      state.preferences.statusNotify &&
-      state.lastServiceStatus !== null &&
-      state.lastServiceStatus !== account.accountStatus
-    ) {
-      addActivity(
-        "تغير حالة الاشتراك",
-        safeText(state.lastServiceStatus) + " ← " + safeText(account.accountStatus)
-      );
-    }
-
-    state.lastServiceStatus = account.accountStatus;
-    state.lastAccountError = null;
-    return account;
-  } catch (error) {
-    state.lastAccountError = error.message;
-    renderConnection(false, "تعذر الاتصال");
-
-    if (options.showErrors) {
-      throw error;
-    }
-
-    if (state.authenticated) {
-      showToast(error.message || "تعذر تحديث البيانات.");
-    }
-
-    throw error;
-  } finally {
-    state.requestInProgress = false;
-    $("refreshButton").disabled = false;
   }
 }
 
-$("refreshButton").addEventListener("click", async () => {
-  try {
-    await refreshAccount({ showErrors: true });
-    addActivity("تحديث الحساب", "تم تحديث البيانات بنجاح.");
-    showToast("تم تحديث البيانات.");
-  } catch (error) {
-    showToast(error.message);
-  }
-});
+function showLogin() {
+  state.page = "login";
+  $$(".view").forEach(v => v.classList.toggle("active", v.id === "view-login"));
+  $("#bottomNav").style.display = "none";
+  $("#headerAvatarBtn").style.display = "none";
+}
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-const validPages = new Set([
-  "home", "data", "contact", "settings", "notifications"
-]);
+function showApp() {
+  $("#bottomNav").style.display = "";
+  $("#headerAvatarBtn").style.display = "";
+  navigate("home");
+}
 
 function navigate(page) {
-  if (page === "contactForm") {
-    showPage("contact");
-    window.setTimeout(() => {
-      $("contactForm").scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
-    closeDrawer();
-    return;
-  }
-
-  if (!validPages.has(page)) return;
-
-  showPage(page);
-  closeDrawer();
+  if (page === "about") page = "contact";
+  if (page === "login") return showLogin();
+  if (!$("#view-" + page)) page = "home";
+  state.page = page;
+  $$(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + page));
+  $$(".navbtn").forEach(b => b.classList.toggle("active", b.dataset.goto === page));
+  $$(".sideitem").forEach(b => b.classList.toggle("active", b.dataset.goto === page));
+  closeSidebar();
+  window.scrollTo({top:0,behavior:"smooth"});
+  if (page === "notifications") renderLogs();
 }
 
-function showPage(page) {
-  document.querySelectorAll(".section").forEach((section) => {
-    section.classList.toggle("active", section.id === "page-" + page);
-  });
-
-  document.querySelectorAll(".nav-item").forEach((button) => {
-    button.classList.toggle("active", button.dataset.page === page);
-  });
-
-  if (page === "data" && state.account) {
-    renderAccountFields(state.account);
-  }
+function openSidebar() {
+  $("#overlay").classList.add("open");
+  $("#sidebar").classList.add("open");
 }
-
-document.addEventListener("click", (event) => {
-  const pageButton = event.target.closest("[data-page]");
-  if (pageButton) {
-    navigate(pageButton.dataset.page);
-  }
-
-  const themeButton = event.target.closest("[data-theme-choice]");
-  if (themeButton) {
-    setTheme(themeButton.dataset.themeChoice);
-  }
-
-  const copyFieldButton = event.target.closest("[data-copy-field]");
-  if (copyFieldButton) {
-    copyAccountField(copyFieldButton.dataset.copyField);
-  }
-
-  const copyTextButton = event.target.closest("[data-copy-text]");
-  if (copyTextButton) {
-    copyText(copyTextButton.dataset.copyText);
-  }
-});
-
-/* =========================================================
-   DRAWER
-   ========================================================= */
-
-function openDrawer() {
-  $("drawerOverlay").classList.remove("hidden");
+function closeSidebar() {
+  $("#overlay").classList.remove("open");
+  $("#sidebar").classList.remove("open");
 }
-
-function closeDrawer() {
-  $("drawerOverlay").classList.add("hidden");
-}
-
-$("openDrawerButton").addEventListener("click", openDrawer);
-$("closeDrawerButton").addEventListener("click", closeDrawer);
-
-$("drawerOverlay").addEventListener("click", (event) => {
-  if (event.target === $("drawerOverlay")) {
-    closeDrawer();
-  }
-});
-
-/* =========================================================
-   COPY UTILITIES
-   ========================================================= */
-
-async function copyText(text) {
-  const value = String(text ?? "");
-
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(value);
-    } else {
-      const temporary = document.createElement("textarea");
-      temporary.value = value;
-      temporary.style.position = "fixed";
-      temporary.style.opacity = "0";
-      document.body.appendChild(temporary);
-      temporary.select();
-
-      const succeeded = document.execCommand("copy");
-      temporary.remove();
-
-      if (!succeeded) throw new Error("تعذر النسخ");
-    }
-
-    showToast("تم النسخ.");
-  } catch (_) {
-    showToast("تعذر النسخ. حاول تحديد النص يدوياً.");
-  }
-}
-
-function copyAccountField(key) {
-  if (!state.account || !Object.prototype.hasOwnProperty.call(state.account, key)) {
-    showToast("لا توجد قيمة متاحة لهذا الحقل.");
-    return;
-  }
-
-  const value = state.account[key];
-
-  if (value === null || value === undefined || value === "") {
-    showToast("هذا الحقل لا يحتوي على قيمة.");
-    return;
-  }
-
-  copyText(value);
-}
-
-$("copyReportButton").addEventListener("click", () => {
-  copyText($("reportPreview").value);
-});
-
-$("copyReportButton2").addEventListener("click", () => {
-  copyText($("reportPreview").value);
-});
-
-/* =========================================================
-   DISCORD REPORT
-   ========================================================= */
-
-$("sendReportButton").addEventListener("click", async () => {
-  if (!state.account) {
-    showToast("سجّل الدخول وحمّل بيانات الحساب أولاً.");
-    return;
-  }
-
-  const button = $("sendReportButton");
-  button.disabled = true;
-
-  try {
-    await apiRequest("/reports/discord", {
-      method: "POST",
-      body: {
-        report: makeReport(state.account)
-      }
-    });
-
-    addActivity("إرسال تقرير", "أكد الخادم إرسال التقرير إلى Discord.");
-    showToast("أكد الخادم إرسال التقرير.");
-  } catch (error) {
-    showToast("تعذر إرسال التقرير: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* =========================================================
-   CONTACT FORM
-   ========================================================= */
-
-$("contactFormElement").addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const name = $("contactName").value.trim();
-  const message = $("contactMessage").value.trim();
-
-  if (!name || !message) {
-    showToast("يرجى ملء الاسم والرسالة.");
-    return;
-  }
-
-  const button = $("contactSendButton");
-  button.disabled = true;
-
-  try {
-    await apiRequest("/contact", {
-      method: "POST",
-      body: {
-        name,
-        message,
-        createdAt: new Date().toISOString()
-      }
-    });
-
-    $("contactMessage").value = "";
-    addActivity("إرسال رسالة دعم", "أكد الخادم استلام الرسالة.");
-    showToast("تم إرسال الرسالة إلى الخادم.");
-  } catch (error) {
-    showToast("تعذر إرسال الرسالة: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* =========================================================
-   THEME PREFERENCES
-   ========================================================= */
 
 function setTheme(theme) {
-  if (!CONFIG.themes.includes(theme)) return;
+  state.theme = theme;
+  localStorage.setItem("el_theme", theme);
+  document.body.classList.toggle("light", theme === "light");
+  if (theme === "ocean") {
+    document.documentElement.style.setProperty("--accent","#35c9e8");
+    document.documentElement.style.setProperty("--accent2","#63f4d6");
+  } else if (theme === "royal") {
+    document.documentElement.style.setProperty("--accent","#c18aff");
+    document.documentElement.style.setProperty("--accent2","#f0a5ff");
+  } else {
+    document.documentElement.style.setProperty("--accent", theme === "light" ? "#7556ed" : "#9a7bff");
+    document.documentElement.style.setProperty("--accent2", theme === "light" ? "#009fbc" : "#5de4ff");
+  }
+  $("#darkSwitch").checked = theme !== "light";
+  $("#themeIcon").innerHTML = theme === "light"
+    ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>'
+    : '<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>';
+  addLog(tr("logTheme"), theme);
+}
 
-  document.body.dataset.theme = theme;
-
-  try {
-    localStorage.setItem(STORAGE.theme, theme);
-  } catch (_) {}
-
-  document.querySelectorAll("[data-theme-choice]").forEach((button) => {
-    button.classList.toggle(
-      "selected",
-      button.dataset.themeChoice === theme
-    );
+function setLanguage(language) {
+  state.language = language;
+  localStorage.setItem("el_language", language);
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  $$(".sideitem").forEach(el => el.style.textAlign = language === "ar" ? "right" : "left");
+  $$("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (translations[language][key]) el.textContent = translations[language][key];
   });
+  $("#username").placeholder = language === "ar" ? "اسم المستخدم" : "USERNAME";
+  $("#password").placeholder = language === "ar" ? "كلمة المرور" : "PASSWORD";
+  if (state.account) renderAccount();
+  renderLogs();
+  addLog(tr("logLanguage"), language);
 }
-
-function loadTheme() {
-  let theme = "violet";
-
-  try {
-    const stored = localStorage.getItem(STORAGE.theme);
-    if (CONFIG.themes.includes(stored)) theme = stored;
-  } catch (_) {}
-
-  setTheme(theme);
-}
-
-/* =========================================================
-   BACKGROUND IMAGE
-   ========================================================= */
-
-let customBackgroundURL = null;
-
-function setDefaultBackground() {
-  if (customBackgroundURL) {
-    URL.revokeObjectURL(customBackgroundURL);
-    customBackgroundURL = null;
-  }
-
-  $("backgroundLayer").style.backgroundImage = 'url("A.jpg")';
-
-  try {
-    localStorage.removeItem(STORAGE.background);
-  } catch (_) {}
-}
-
-function loadBackground() {
-  /*
-    Custom file selection uses an in-memory object URL.
-    It is not uploaded anywhere. The default A.jpg is used
-    after reload unless a future safe persistence strategy
-    is explicitly added.
-  */
-  $("backgroundLayer").style.backgroundImage = 'url("A.jpg")';
-}
-
-$("backgroundPicker").addEventListener("change", () => {
-  const file = $("backgroundPicker").files?.[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    showToast("الملف المختار ليس صورة.");
-    return;
-  }
-
-  if (file.size > 8 * 1024 * 1024) {
-    showToast("حجم الصورة أكبر من 8 ميغابايت.");
-    return;
-  }
-
-  if (customBackgroundURL) {
-    URL.revokeObjectURL(customBackgroundURL);
-  }
-
-  customBackgroundURL = URL.createObjectURL(file);
-  $("backgroundLayer").style.backgroundImage =
-    `url("${customBackgroundURL}")`;
-
-  showToast("تم تغيير الخلفية لهذه الجلسة.");
-});
-
-$("resetBackgroundButton").addEventListener("click", () => {
-  setDefaultBackground();
-  showToast("تمت إعادة الخلفية A.jpg.");
-});
-
-/* =========================================================
-   PREFERENCES
-   ========================================================= */
-
-function savePreferences() {
-  state.preferences.animations = $("animationsSetting").checked;
-  state.preferences.autoRefresh = $("autoRefreshSetting").checked;
-  state.preferences.expiryNotify = $("expiryNotify").checked;
-  state.preferences.statusNotify = $("statusNotify").checked;
-  state.preferences.browserNotify = $("browserNotify").checked;
-
-  try {
-    localStorage.setItem(
-      STORAGE.preferences,
-      JSON.stringify(state.preferences)
-    );
-  } catch (_) {}
-
-  document.body.style.setProperty(
-    "--motion-enabled",
-    state.preferences.animations ? "1" : "0"
-  );
-
-  updateRefreshTimer();
-}
-
-function loadPreferences() {
-  try {
-    const saved = JSON.parse(
-      localStorage.getItem(STORAGE.preferences) || "{}"
-    );
-
-    state.preferences = {
-      ...state.preferences,
-      ...saved
-    };
-  } catch (_) {}
-
-  $("animationsSetting").checked = Boolean(state.preferences.animations);
-  $("autoRefreshSetting").checked = Boolean(state.preferences.autoRefresh);
-  $("expiryNotify").checked = Boolean(state.preferences.expiryNotify);
-  $("statusNotify").checked = Boolean(state.preferences.statusNotify);
-  $("browserNotify").checked = Boolean(state.preferences.browserNotify);
-
-  savePreferences();
-}
-
-[
-  "animationsSetting",
-  "autoRefreshSetting",
-  "expiryNotify",
-  "statusNotify",
-  "browserNotify"
-].forEach((id) => {
-  $(id).addEventListener("change", savePreferences);
-});
-
-function updateRefreshTimer() {
-  if (state.refreshTimer) {
-    clearInterval(state.refreshTimer);
-    state.refreshTimer = null;
-  }
-
-  if (!state.authenticated || !state.preferences.autoRefresh) return;
-
-  state.refreshTimer = setInterval(async () => {
-    if (!document.hidden && state.authenticated) {
-      try {
-        await refreshAccount({ showErrors: false });
-      } catch (_) {}
-    }
-  }, CONFIG.refreshIntervalMs);
-}
-
-/* =========================================================
-   BROWSER NOTIFICATIONS
-   ========================================================= */
-
-$("enableBrowserNotifications").addEventListener("click", async () => {
-  if (!("Notification" in window)) {
-    showToast("هذا المتصفح لا يدعم إشعارات الويب.");
-    return;
-  }
-
-  try {
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-      new Notification("EARTHLINK PRO", {
-        body: "تم تفعيل إشعارات المتصفح."
-      });
-
-      showToast("تم تفعيل الإشعارات.");
-    } else {
-      showToast("لم يمنح المتصفح إذن الإشعارات.");
-    }
-  } catch (_) {
-    showToast("تعذر تفعيل الإشعارات.");
-  }
-});
-
-function notifyBrowser(title, message) {
-  if (!state.preferences.browserNotify) return;
-  if (!("Notification" in window)) return;
-  if (Notification.permission !== "granted") return;
-
-  try {
-    new Notification(title, { body: message });
-  } catch (_) {}
-}
-
-/* =========================================================
-   SCHEDULED REPORTS
-   ========================================================= */
-
-async function loadSchedules() {
-  const container = $("scheduleList");
-
-  try {
-    const payload = await apiRequest("/schedules", { method: "GET" });
-    const schedules = Array.isArray(payload.schedules)
-      ? payload.schedules
-      : [];
-
-    if (!schedules.length) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="big-icon">◷</div>
-          لا توجد جدولات مسجلة على الخادم.
-        </div>`;
-      return;
-    }
-
-    container.innerHTML = schedules.map((schedule) => `
-      <div class="notification-item">
-        <div class="notification-icon">◷</div>
-        <div style="min-width:0">
-          <strong>${escapeHTML(schedule.title || "مهمة مجدولة")}</strong>
-          <div class="muted small" style="margin-top:5px">
-            الجهة: ${escapeHTML(schedule.destination || "—")}
-          </div>
-          <div class="muted small" style="margin-top:5px">
-            الموعد: ${escapeHTML(schedule.runAt || "—")}
-          </div>
-          <div class="muted small" style="margin-top:5px">
-            الحالة: ${escapeHTML(schedule.status || "—")}
-          </div>
-        </div>
-      </div>
-    `).join("");
-  } catch (error) {
-    container.innerHTML = `
-      <div class="info-box">
-        تعذر تحميل الجدولات من الخادم.
-        <br>
-        ${escapeHTML(error.message)}
-      </div>`;
-  }
-}
-
-$("scheduleForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const title = $("scheduleTitle").value.trim();
-  const destination = $("scheduleDestination").value;
-  const runAt = $("scheduleAt").value;
-  const repeat = $("scheduleRepeat").value;
-
-  if (!title || !runAt) {
-    showToast("أدخل عنوان المهمة وموعدها.");
-    return;
-  }
-
-  const runDate = new Date(runAt);
-
-  if (Number.isNaN(runDate.getTime()) || runDate.getTime() <= Date.now()) {
-    showToast("اختر موعداً مستقبلياً صحيحاً.");
-    return;
-  }
-
-  const button = $("scheduleButton");
-  button.disabled = true;
-
-  try {
-    await apiRequest("/schedules", {
-      method: "POST",
-      body: {
-        title,
-        destination,
-        runAt: runDate.toISOString(),
-        repeat
-      }
-    });
-
-    addActivity("حفظ جدولة", title);
-    showToast("أكد الخادم حفظ الجدولة.");
-    await loadSchedules();
-  } catch (error) {
-    showToast("لم تُحفظ الجدولة: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* =========================================================
-   CLOCK
-   ========================================================= */
-
-function updateClock() {
-  const now = new Date();
-
-  const time = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true
-  });
-
-  const shortTime = now.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
-
-  setText("clock", time);
-  setText("largeClock", shortTime);
-
-  setText(
-    "clockDate",
-    now.toLocaleDateString("ar-IQ", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    })
-  );
-}
-
-let clockTimer = null;
-
-function startClock() {
-  updateClock();
-
-  if (clockTimer) clearInterval(clockTimer);
-
-  clockTimer = setInterval(updateClock, 1000);
-}
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
 
 async function logout() {
-  try {
-    await apiRequest("/logout", { method: "POST", body: {} });
-  } catch (error) {
-    /*
-      The local UI still logs out. The backend must invalidate
-      the server-side session; if this request fails, the
-      server session may remain active until expiry.
-    */
-    console.warn("Server logout request failed.");
-  }
-
+  try { await api("/api/logout", {method:"POST"}); } catch {}
   state.account = null;
-  state.authenticated = false;
-  state.lastServiceStatus = null;
-
-  $("password").value = "";
-  $("loginError").classList.add("hidden");
-  $("reportPreview").value = "";
-
-  if (state.refreshTimer) {
-    clearInterval(state.refreshTimer);
-    state.refreshTimer = null;
-  }
-
   showLogin();
-  addActivity("تسجيل الخروج", "تم إنهاء الواجهة المحلية.");
-  showToast("تم تسجيل الخروج من الواجهة.");
+  addLog(tr("logLogout"), tr("loggedOut"));
+  toast(tr("loggedOut"));
 }
 
-$("logoutButton").addEventListener("click", logout);
-$("drawerLogoutButton").addEventListener("click", logout);
-
-/* =========================================================
-   ACTIVITY CONTROLS
-   ========================================================= */
-
-$("clearActivityButton").addEventListener("click", () => {
-  state.activity = [];
-
+async function sendDiscordReport() {
+  if (!state.account) return toast(tr("noSession"), true);
+  const report = [
+    "EARTHLINK PRO — Account report",
+    `Name: ${valueOf("fullName") || "N/A"}`,
+    `Username: ${valueOf("userID") || "N/A"}`,
+    `Package: ${valueOf("accountName") || "N/A"}`,
+    `Status: ${valueOf("accountStatus") || "N/A"}`,
+    `Price: ${valueOf("accountPrice") || "N/A"}`,
+    `Days left: ${valueOf("activeDaysLeft") || "N/A"}`,
+    `Expiration: ${valueOf("accountExpirationDate") || "N/A"}`,
+    `Agent: ${valueOf("agentName") || "N/A"}`
+  ].join("\n");
   try {
-    localStorage.removeItem(STORAGE.activity);
-  } catch (_) {}
-
-  renderActivity();
-  showToast("تم مسح سجل النشاط المحلي.");
-});
-
-/* =========================================================
-   HEALTH CHECK
-   ========================================================= */
-
-async function checkBackendHealth() {
-  try {
-    await apiRequest("/health", { method: "GET" });
-    setText("footerConnection", "الخادم متاح.");
-    return true;
-  } catch (_) {
-    setText(
-      "footerConnection",
-      "لم يتم تأكيد اتصال الخادم. تحقق من إعداد مسارات API."
-    );
-    return false;
+    await api("/api/reports/discord", {method:"POST",body:{message:report}});
+    addLog(tr("sendDiscord"), tr("reportSent"));
+    toast(tr("reportSent"));
+  } catch (error) {
+    addLog(tr("logError"), error.message, true);
+    toast(error.message || tr("reportFailed"), true);
   }
 }
 
-/* =========================================================
-   APP INITIALIZATION
-   ========================================================= */
+$("#loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  if (state.busy) return;
+  const username = $("#username").value.trim();
+  const password = $("#password").value;
+  const errorBox = $("#loginError");
+  const button = $("#loginSubmit");
+  errorBox.classList.remove("show");
+  if (!username || !password) {
+    errorBox.textContent = tr("username") + " / " + tr("password");
+    errorBox.classList.add("show");
+    return;
+  }
 
-function initializeApp() {
-  loadTheme();
-  loadBackground();
-  loadPreferences();
-  loadActivity();
-  updateClock();
-
+  state.busy = true;
+  button.disabled = true;
+  button.innerHTML = '<span class="spinner"></span><span>' + escapeHtml(tr("loading")) + '</span>';
   try {
-    const rememberedUsername = localStorage.getItem(STORAGE.username);
-    if (rememberedUsername) {
-      $("username").value = rememberedUsername;
-      $("rememberMe").checked = true;
-    }
-  } catch (_) {}
+    await login(username,password);
+    $("#password").value = "";
+  } catch (error) {
+    errorBox.textContent = error.message || tr("failed");
+    errorBox.classList.add("show");
+    addLog(tr("logError"), error.message, true);
+  } finally {
+    state.busy = false;
+    button.disabled = false;
+    button.innerHTML = '<span data-i18n="login">' + escapeHtml(tr("login")) + '</span><span>↗</span>';
+  }
+});
 
-  /*
-    If the backend has an existing valid session, it can
-    return the subscriber data. Otherwise the login screen
-    stays visible. No demo subscriber data is fabricated.
-  */
-  checkBackendHealth();
-  checkExistingSession().catch(() => showLogin());
+$("#menuBtn").addEventListener("click", openSidebar);
+$("#closeMenu").addEventListener("click", closeSidebar);
+$("#overlay").addEventListener("click", closeSidebar);
+$("#themeToggle").addEventListener("click", () => setTheme(state.theme === "light" ? "dark" : "light"));
+$("#languageBtn").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
+$("#languageSetting").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
+$("#languageSetting2").addEventListener("click", () => setLanguage(state.language === "ar" ? "en" : "ar"));
+$("#darkSwitch").addEventListener("change", e => setTheme(e.target.checked ? "dark" : "light"));
+$("#motionSwitch").addEventListener("change", e => {
+  document.body.style.setProperty("--motion", e.target.checked ? "1" : "0");
+  document.querySelectorAll("*").forEach(el => el.style.animationDuration = e.target.checked ? "" : "0.001ms");
+});
+$("#headerAvatarBtn").addEventListener("click", () => navigate("settings"));
+$("#refreshBtn").addEventListener("click", refreshAccount);
+$("#dataRefresh").addEventListener("click", refreshAccount);
+$("#settingsRefresh").addEventListener("click", refreshAccount);
+$("#discordReport").addEventListener("click", sendDiscordReport);
+$("#logoutBtn").addEventListener("click", logout);
+$("#sideLogout").addEventListener("click", logout);
+$("#clearLogs").addEventListener("click", () => {
+  state.logs = [];
+  try { localStorage.removeItem("el_logs"); } catch {}
+  renderLogs();
+  toast(state.language === "ar" ? "تم مسح السجل المحلي" : "Local log cleared");
+});
+
+$$("[data-goto]").forEach(button => {
+  button.addEventListener("click", () => navigate(button.dataset.goto));
+});
+$$("[data-theme]").forEach(button => {
+  button.addEventListener("click", () => setTheme(button.dataset.theme));
+});
+
+function tickClock() {
+  const now = new Date();
+  $("#liveClock").textContent = now.toLocaleTimeString(state.language === "ar" ? "ar-IQ" : "en-US");
+  $("#liveDate").textContent = now.toLocaleDateString(state.language === "ar" ? "ar-IQ" : "en-US", {
+    weekday:"long",year:"numeric",month:"long",day:"numeric"
+  });
 }
+setInterval(tickClock, 1000);
+tickClock();
 
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && state.authenticated && state.preferences.autoRefresh) {
-    refreshAccount({ showErrors: false }).catch(() => {});
-  }
-});
+try {
+  const savedLogs = JSON.parse(localStorage.getItem("el_logs") || "[]");
+  if (Array.isArray(savedLogs)) state.logs = savedLogs.slice(0,60);
+} catch {}
 
-window.addEventListener("beforeunload", () => {
-  if (customBackgroundURL) {
-    URL.revokeObjectURL(customBackgroundURL);
-  }
-});
+setTheme(state.theme);
+setLanguage(state.language);
+renderLogs();
+showLogin();
 
-initializeApp();
+// لا نخزن اسم المستخدم أو كلمة المرور أو رمز الوصول في localStorage.
+// الجلسة تُدار بواسطة كوكي HttpOnly من الخادم.
 </script>
 </body>
 </html>
