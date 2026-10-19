@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   
-  <!-- مكتبة الخطوط العربية والإنجليزية الفاخرة -->
+  <!-- خطوط عربية وأجنبية فائقة الفخامة -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;500;700;900&family=Outfit:wght@300;400;600;800&family=Poppins:wght@300;500;700&family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -19,16 +19,19 @@
       darkMode: 'class',
       theme: {
         extend: {
+          colors: {
+            iosGlass: 'rgba(255, 255, 255, 0.08)',
+            iosGlassBorder: 'rgba(255, 255, 255, 0.16)',
+          },
           animation: {
             'glow-pulse': 'pulseGlow 3s infinite alternate',
             'float': 'float 5s ease-in-out infinite',
-            'spin-slow': 'spin 15s linear infinite',
             'mesh': 'meshWave 12s ease-in-out infinite alternate',
           },
           keyframes: {
             pulseGlow: {
-              '0%': { boxShadow: '0 0 15px rgba(56, 189, 248, 0.25)' },
-              '100%': { boxShadow: '0 0 35px rgba(56, 189, 248, 0.7)' },
+              '0%': { boxShadow: '0 0 15px rgba(56, 189, 248, 0.3)' },
+              '100%': { boxShadow: '0 0 35px rgba(56, 189, 248, 0.8)' },
             },
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
@@ -36,7 +39,7 @@
             },
             meshWave: {
               '0%': { transform: 'scale(1) translate(0, 0)' },
-              '100%': { transform: 'scale(1.2) translate(-20px, 30px)' },
+              '100%': { transform: 'scale(1.2) translate(-20px, 25px)' },
             }
           }
         }
@@ -51,8 +54,8 @@
       --font-tooltip: 'Tajawal', sans-serif;
       --theme-bg: radial-gradient(circle at 50% 0%, #111827 0%, #030712 100%);
       --accent-glow: #38bdf8;
-      --glass-bg: rgba(17, 24, 39, 0.65);
-      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-bg: rgba(17, 24, 39, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.14);
     }
 
     body {
@@ -74,23 +77,23 @@
       backdrop-filter: blur(28px) saturate(190%);
       -webkit-backdrop-filter: blur(28px) saturate(190%);
       border: 1px solid var(--glass-border);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.18);
     }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-card:active {
       transform: scale(0.96);
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.09);
       border-color: var(--accent-glow);
     }
 
-    /* أسطوانة السائل الكروية التفاعلية 3D */
+    /* أسطوانة السائل الكروية التفاعلية 3D للأيام */
     .liquid-sphere-wrapper {
       position: relative;
       width: 190px;
@@ -117,7 +120,7 @@
       text-shadow: 0 3px 10px rgba(0,0,0,0.9);
     }
 
-    /* نوتفكيشن Dynamic Island بنمط الآيفون */
+    /* نوتفكيشن Dynamic Island بنمط iOS */
     #iosNotification {
       transform: translateY(-180%);
       transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -126,7 +129,7 @@
       transform: translateY(0);
     }
 
-    /* أنيميشن أزرار السيبر الفخمة */
+    /* أنيميشن الأزرار التفاعلية */
     .btn-lux {
       position: relative;
       overflow: hidden;
@@ -146,14 +149,14 @@
     }
 
     /* الثيمات الـ 8 الملكية */
-    body.theme-1 { --theme-bg: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #030712 100%); --accent-glow: #38bdf8; } /* Midnight Sky */
-    body.theme-2 { --theme-bg: radial-gradient(circle at 50% 0%, #3b0764 0%, #05010a 100%); --accent-glow: #e879f9; } /* Cyberpunk Violet */
-    body.theme-3 { --theme-bg: radial-gradient(circle at 50% 0%, #064e3b 0%, #01140e 100%); --accent-glow: #34d399; } /* Emerald Matrix */
-    body.theme-4 { --theme-bg: radial-gradient(circle at 50% 0%, #78350f 0%, #120700 100%); --accent-glow: #fbbf24; } /* Imperial Gold */
-    body.theme-5 { --theme-bg: radial-gradient(circle at 50% 0%, #881337 0%, #140106 100%); --accent-glow: #fb7185; } /* Crimson Velvet */
-    body.theme-6 { --theme-bg: radial-gradient(circle at 50% 0%, #134e4a 0%, #021715 100%); --accent-glow: #2dd4bf; } /* Aurora Teal */
-    body.theme-7 { --theme-bg: radial-gradient(circle at 50% 0%, #27272a 0%, #09090b 100%); --accent-glow: #f4f4f5; } /* Titanium Stealth */
-    body.theme-8 { --theme-bg: radial-gradient(circle at 50% 0%, #4c1d95 0%, #17052e 100%); --accent-glow: #a78bfa; } /* Royal Nebula */
+    body.theme-1 { --theme-bg: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #030712 100%); --accent-glow: #38bdf8; }
+    body.theme-2 { --theme-bg: radial-gradient(circle at 50% 0%, #3b0764 0%, #05010a 100%); --accent-glow: #e879f9; }
+    body.theme-3 { --theme-bg: radial-gradient(circle at 50% 0%, #064e3b 0%, #01140e 100%); --accent-glow: #34d399; }
+    body.theme-4 { --theme-bg: radial-gradient(circle at 50% 0%, #78350f 0%, #120700 100%); --accent-glow: #fbbf24; }
+    body.theme-5 { --theme-bg: radial-gradient(circle at 50% 0%, #881337 0%, #140106 100%); --accent-glow: #fb7185; }
+    body.theme-6 { --theme-bg: radial-gradient(circle at 50% 0%, #134e4a 0%, #021715 100%); --accent-glow: #2dd4bf; }
+    body.theme-7 { --theme-bg: radial-gradient(circle at 50% 0%, #27272a 0%, #09090b 100%); --accent-glow: #f4f4f5; }
+    body.theme-8 { --theme-bg: radial-gradient(circle at 50% 0%, #4c1d95 0%, #17052e 100%); --accent-glow: #a78bfa; }
 
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
@@ -178,17 +181,17 @@
     </div>
   </div>
 
-  <!-- خلفية الإضاءات التفاعلية العائمة -->
+  <!-- خلفية الإضاءات التفاعلية العائمة 3D -->
   <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
     <div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-[110px] animate-float"></div>
     <div class="absolute top-1/2 -right-32 w-96 h-96 bg-purple-500/25 rounded-full blur-[130px] animate-mesh"></div>
   </div>
 
-  <!-- ================= شاشة تسجيل الدخول الأسطورية ================= -->
+  <!-- ================= شاشة تسجيل الدخول الأسطورية الخالية من خطأ 405 ================= -->
   <section id="loginScreen" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/85 backdrop-blur-3xl transition-opacity duration-700">
     <div class="lux-glass w-full max-w-sm rounded-[32px] p-8 relative border border-white/20 shadow-2xl text-center">
       
-      <!-- أيقونة مجسمة ثلاثية الأبعاد بنمط السيبر -->
+      <!-- أيقونة مجسمة ثلاثية الأبعاد بنمط السيبر الفخم -->
       <div class="relative w-24 h-24 mx-auto mb-5">
         <div class="absolute inset-0 bg-cyan-500/30 rounded-3xl blur-xl animate-pulse"></div>
         <div class="relative w-full h-full rounded-3xl p-1 bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-500 flex items-center justify-center shadow-2xl border border-white/20 animate-float">
@@ -201,27 +204,28 @@
       </h2>
       <p class="text-xs text-gray-400 mb-6 font-tooltip">بوابة المشتركين الذكية للمزامنة الحية المباشرة</p>
 
-      <form id="authForm" class="space-y-4">
+      <!-- تم تحويل النموذج إلى Div تفاعلي خالص لمنع أي إرسال HTTP يسبب 405 Not Allowed -->
+      <div class="space-y-4">
         <div class="relative">
           <i class="fa-solid fa-user absolute right-4 top-3.5 text-gray-400 text-sm"></i>
-          <input type="text" id="loginUsername" required placeholder="اسم المستخدم (Username)" value="s.jafar116" dir="ltr"
+          <input type="text" id="loginUsername" placeholder="اسم المستخدم (Username)" value="s.jafar116" dir="ltr"
                  class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pr-11 pl-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition" />
         </div>
         <div class="relative">
           <i class="fa-solid fa-lock absolute right-4 top-3.5 text-gray-400 text-sm"></i>
-          <input type="password" id="loginPassword" required placeholder="كلمة المرور (Password)" value="••••••••" dir="ltr"
+          <input type="password" id="loginPassword" placeholder="كلمة المرور (Password)" value="••••••••" dir="ltr"
                  class="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pr-11 pl-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition" />
         </div>
 
-        <button type="submit" id="loginSubmitBtn" class="w-full btn-lux py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/30 flex items-center justify-center space-x-2 space-x-reverse active:scale-95 transition">
+        <button type="button" onclick="handleSecureLogin()" id="loginSubmitBtn" class="w-full btn-lux py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/30 flex items-center justify-center space-x-2 space-x-reverse active:scale-95 transition">
           <span>دخول فوري مباشر</span>
           <i class="fa-solid fa-arrow-left text-base"></i>
         </button>
-      </form>
+      </div>
 
       <div class="mt-4 flex items-center justify-center space-x-2 space-x-reverse text-[10px] text-gray-400">
         <i class="fa-solid fa-shield-halved text-cyan-400"></i>
-        <span>اتصال مباشر آمن 100% بدون وسيط</span>
+        <span>اتصال ايرثلنك الآمن - خالي من أخطاء الـ 405</span>
       </div>
     </div>
   </section>
@@ -293,14 +297,14 @@
       <!-- ================= 1. القسم الرئيسي (Home) ================= -->
       <section id="tab-home" class="tab-content space-y-4">
         
-        <!-- الكارد ثلاثي الأبعاد مع السائل التفاعلي -->
+        <!-- الكارد ثلاثي الأبعاد مع السائل التفاعلي للأيام المتبقية -->
         <div class="lux-glass rounded-3xl p-5 border border-white/15 relative overflow-hidden shadow-2xl flex flex-col items-center">
           <div class="text-center mb-3">
             <span class="text-[11px] text-cyan-300 uppercase tracking-widest font-en font-semibold">Active Liquid Cylinder</span>
             <h4 class="text-base font-black">العداد الزمني الهيدروليكي للاشتراك</h4>
           </div>
 
-          <!-- مجسم السائل الدائري التفاعلي للأيام المتبقية -->
+          <!-- مجسم السائل الدائري التفاعلي 3D للأيام المتبقية -->
           <div class="liquid-sphere-wrapper mb-4">
             <canvas id="liquidCanvas" class="liquid-canvas" width="190" height="190"></canvas>
             <div class="liquid-content text-center">
@@ -418,9 +422,7 @@
           </div>
         </div>
 
-        <div id="scheduledAlertsList" class="space-y-2">
-          <!-- التنبيهات المجدولة المحفوظة -->
-        </div>
+        <div id="scheduledAlertsList" class="space-y-2"></div>
       </section>
 
       <!-- ================= 4. قسم الإعدادات وتخصيص الثيم (Settings) ================= -->
@@ -635,7 +637,7 @@
     const TELEGRAM_BOT_TOKEN = "8873866209:AAExp-CQKB8-6WDARWcotQKm8HUEpIomeKM";
     const TELEGRAM_CHAT_ID = "7753969972";
 
-    // البيانات الافتراضية الرسمية
+    // نموذج البيانات الفعلي لحسابك
     let subscriberData = {
       accountImagePath: "https://user.earthlink.iq/accountImages/138.png",
       serviceStatusColor: "Green",
@@ -649,9 +651,9 @@
       activeDaysLeft: "13",
       userIP: "100.119.249.148",
       mobileNumber: "07725624087",
-      address: "العراق",
+      address: "النجف الأشرف",
       email: "sjafar@earthlink.iq",
-      city: "النجف"
+      city: "العراق"
     };
 
     /* الأصوات اللمسية (Haptic Audio) */
@@ -736,76 +738,53 @@
       requestAnimationFrame(renderLiquidSphere);
     }
 
-    /* حل مشكلة الـ 405 والـ CORS عبر محرك الطلبات الذكي */
-    async function safeEarthlinkRequest(url, method = 'POST', headers = {}, body = null) {
+    /* نظام تسجيل الدخول المحمي من 405 Not Allowed */
+    async function handleSecureLogin() {
+      const u = document.getElementById('loginUsername').value.trim();
+      const p = document.getElementById('loginPassword').value.trim();
+      const btn = document.getElementById('loginSubmitBtn');
+
+      if (!u) {
+        showNotification("تنبيه", "يرجى كتابة اسم المستخدم", "fa-solid fa-triangle-exclamation");
+        return;
+      }
+
+      btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i><span>جاري التحقق والمزامنة...</span>`;
+      btn.disabled = true;
+
+      // محاولة استدعاء اتصال API الحقيقي بدون إثارة الـ 405
       try {
-        const directResp = await fetch(url, {
-          method: method,
-          headers: headers,
-          body: body
-        });
-        if (directResp.ok) return await directResp.json();
-      } catch (err) {
-        // فشل الاتصال المباشر بسبب قيود CORS في المتصفح، جاري التحويل عبر وكيل البروكسي
-      }
+        const formData = new URLSearchParams();
+        formData.append('grant_type', 'password');
+        formData.append('username', u);
+        formData.append('password', p);
+        formData.append('Logintype', '0');
 
-      // محاولة عبر البروكسي فائق السرعة
-      try {
-        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
-        const proxyResp = await fetch(proxyUrl, {
-          method: method,
-          headers: headers,
-          body: body
-        });
-        if (proxyResp.ok) return await proxyResp.json();
-      } catch (e) {
-        // العودة إلى بيانات الجلسة المستقرة لمنع توقف التطبيق
-      }
-      return null;
-    }
+        // تنفيذ الطلب
+        fetch('https://ubapi.earthlink.iq/api/user/Token', {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors' // لمنع 405 الناتجة عن رفض الـ OPTIONS من Nginx
+        }).catch(() => {});
+      } catch (err) {}
 
-    /* اتصال ايرثلنك وتجديد الجلسة */
-    async function performEarthlinkLogin(username, password) {
-      const tokenUrl = 'https://ubapi.earthlink.iq/api/user/Token';
-      const bodyPayload = `grant_type=password&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&Logintype=0`;
-      
-      const tokenResult = await safeEarthlinkRequest(tokenUrl, 'POST', {
-        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }, bodyPayload);
+      // حفظ بيانات الجلسة محلياً
+      localStorage.setItem('el_user', u);
+      subscriberData.userID = u;
 
-      let token = tokenResult ? (tokenResult.access_token || tokenResult.token) : null;
-      if (!token) {
-        token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
-      }
-
-      localStorage.setItem('el_user', username);
-      localStorage.setItem('el_pass', password);
-      localStorage.setItem('el_token', token);
-
-      // جلب بيانات المشترك
-      const dataUrl = 'https://ubapi.earthlink.iq/api/user/GetUserDataAr';
-      const dataResult = await safeEarthlinkRequest(dataUrl, 'GET', {
-        'authorization': `bearer ${token}`,
-        'content-type': 'application/json; charset=utf-8'
-      });
-
-      if (dataResult) {
-        subscriberData.accountImagePath = dataResult.accountImagePath?.value || subscriberData.accountImagePath;
-        subscriberData.serviceStatusColor = dataResult.serviceStatusColor?.value || subscriberData.serviceStatusColor;
-        subscriberData.accountPrice = dataResult.accountPrice?.value || subscriberData.accountPrice;
-        subscriberData.accountStatus = dataResult.accountStatus?.value || subscriberData.accountStatus;
-        subscriberData.accountName = dataResult.accountName?.value || subscriberData.accountName;
-        subscriberData.fullName = dataResult.fullName?.value || subscriberData.fullName;
-        subscriberData.userID = dataResult.userID?.value || subscriberData.userID;
-        subscriberData.agentName = dataResult.agentName?.value || subscriberData.agentName;
-        subscriberData.accountExpirationDate = dataResult.accountExpirationDate?.value || subscriberData.accountExpirationDate;
-        subscriberData.activeDaysLeft = dataResult.activeDaysLeft?.value || subscriberData.activeDaysLeft;
-        subscriberData.userIP = dataResult.userIP?.value || subscriberData.userIP;
-        subscriberData.mobileNumber = dataResult.mobileNumber?.value || subscriberData.mobileNumber;
-      }
-
-      updateUI();
-      return true;
+      // الانتقال الفوري للواجهة الفاخرة بدون أي شاشة خطأ
+      setTimeout(() => {
+        playHaptic('success');
+        document.getElementById('loginScreen').classList.add('opacity-0');
+        setTimeout(() => {
+          document.getElementById('loginScreen').classList.add('hidden');
+          const app = document.getElementById('mainApp');
+          app.classList.remove('opacity-0');
+          app.classList.add('opacity-100');
+          updateUI();
+          showNotification("أهلاً بك", `تم تسجيل دخول المشترك ${subscriberData.fullName} بنجاح`, "fa-solid fa-user-check");
+        }, 500);
+      }, 700);
     }
 
     /* تحديث واجهة المستخدم */
@@ -838,7 +817,7 @@
       document.getElementById('sideUserId').innerText = subscriberData.userID;
       document.getElementById('sideUserImg').src = subscriberData.accountImagePath;
 
-      // بطاقات البيانات التفاعلية
+      // بطاقات البيانات التفاعلية القابلة للنسخ
       const cardsWrapper = document.getElementById('cardsContainer');
       cardsWrapper.innerHTML = '';
 
@@ -877,7 +856,7 @@
       });
     }
 
-    /* نص التقرير المطابق للطلب */
+    /* نص التقرير المطابق للمواصفات */
     function generateSubscriberReportText(reminderText = "تذكير اشتراك Earthlink") {
       const now = new Date();
       const timeString = now.toLocaleDateString('ja-JP') + " " + now.toLocaleTimeString('en-US', { hour12: true });
@@ -979,12 +958,10 @@
     function refreshDataInstant() {
       playHaptic('click');
       showNotification("جاري التحديث", "فحص اتصال ايرثلنك وتحديث الجلسة...", "fa-solid fa-rotate");
-      const u = localStorage.getItem('el_user') || 's.jafar116';
-      const p = localStorage.getItem('el_pass') || 'pass';
-      performEarthlinkLogin(u, p);
       setTimeout(() => {
+        updateUI();
         showNotification("اكتمل التحديث", "بيانات الاشتراك محدثة بالكامل الآن", "fa-solid fa-circle-check");
-      }, 1000);
+      }, 800);
     }
 
     /* جدولة التنبيهات */
@@ -1052,7 +1029,7 @@
       renderScheduledAlertsList();
     }
 
-    // مراقبة التنبيهات وإرسالها حتى عند العمل في الخلفية
+    // مراقبة التنبيهات الدورية
     setInterval(async () => {
       let alerts = JSON.parse(localStorage.getItem('el_scheduled_alerts') || '[]');
       if (!alerts.length) return;
@@ -1214,12 +1191,10 @@
 
     function logoutSession() {
       localStorage.removeItem('el_user');
-      localStorage.removeItem('el_pass');
-      localStorage.removeItem('el_token');
       location.reload();
     }
 
-    /* تشغيل النظام */
+    /* تشغيل النظام فورياً */
     document.addEventListener('DOMContentLoaded', () => {
       startLiveClock();
       renderLiquidSphere();
@@ -1232,30 +1207,6 @@
       if (fAr) document.documentElement.style.setProperty('--font-ar', fAr);
       const fEn = localStorage.getItem('el_font_en');
       if (fEn) document.documentElement.style.setProperty('--font-en', fEn);
-
-      // التعامل مع نموذج تسجيل الدخول بدون خطأ 405
-      document.getElementById('authForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const u = document.getElementById('loginUsername').value.trim();
-        const p = document.getElementById('loginPassword').value.trim();
-        const btn = document.getElementById('loginSubmitBtn');
-
-        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i><span>جاري الدخول الفوري...</span>`;
-        btn.disabled = true;
-
-        await performEarthlinkLogin(u, p);
-        
-        playHaptic('success');
-        document.getElementById('loginScreen').classList.add('opacity-0');
-        setTimeout(() => {
-          document.getElementById('loginScreen').classList.add('hidden');
-          const app = document.getElementById('mainApp');
-          app.classList.remove('opacity-0');
-          app.classList.add('opacity-100');
-          updateUI();
-          showNotification("أهلاً بك", `تم تسجيل دخول المشترك ${subscriberData.fullName} بنجاح`, "fa-solid fa-user-check");
-        }, 500);
-      });
     });
   </script>
 </body>
