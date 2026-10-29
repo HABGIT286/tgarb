@@ -1,0 +1,2230 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>QUIZ-TAQ | Ultimate Quiz</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg:#080b18;
+  --panel:rgba(19,24,47,.76);
+  --panel2:rgba(255,255,255,.045);
+  --text:#f6f6ff;
+  --muted:#9ba6c8;
+  --border:rgba(169,181,255,.17);
+  --purple:#9c7bff;
+  --cyan:#47e8ff;
+  --pink:#ff69c9;
+  --green:#5af5b1;
+  --red:#ff6586;
+  --gold:#ffda83;
+  --shadow:0 24px 70px #0005;
+  --radius:23px;
+}
+* {
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
+}
+input,textarea {
+  -webkit-user-select:text;
+  user-select:text;
+}
+html {
+  scroll-behavior:smooth;
+}
+body {
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text);
+  font-family:'Cairo',sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 0%,#6740bd30,transparent 37%),
+    radial-gradient(ellipse at 100% 30%,#00c7e51c,transparent 35%),
+    radial-gradient(ellipse at 45% 100%,#ba328f17,transparent 45%),
+    var(--bg);
+  transition:background .35s,color .35s;
+}
+button {
+  font:inherit;
+  cursor:pointer;
+  color:inherit;
+  -webkit-appearance:none;
+  appearance:none;
+  outline:none;
+}
+button:focus {
+  outline:none;
+}
+button:focus-visible {
+  outline:2px solid var(--cyan);
+  outline-offset:3px;
+}
+button:disabled {
+  cursor:not-allowed;
+  opacity:.45;
+}
+svg {
+  width:22px;
+  height:22px;
+  display:block;
+  flex-shrink:0;
+}
+#universe {
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:-5;
+  pointer-events:none;
+}
+.aurora {
+  position:fixed;
+  width:55vw;
+  height:55vw;
+  min-width:300px;
+  min-height:300px;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.13;
+  z-index:-4;
+  pointer-events:none;
+  animation:auroraMove 18s ease-in-out infinite alternate;
+}
+.aurora.a {
+  background:#824cff;
+  top:-30%;
+  left:-15%;
+}
+.aurora.b {
+  background:#00d9e8;
+  right:-20%;
+  top:20%;
+  animation-delay:-7s;
+}
+.aurora.c {
+  background:#ed3da7;
+  bottom:-35%;
+  left:25%;
+  animation-delay:-11s;
+}
+@keyframes auroraMove {
+  0% {transform:translate3d(-5%,0,0) scale(.85)}
+  50% {transform:translate3d(10%,8%,0) scale(1.12)}
+  100% {transform:translate3d(-4%,15%,0) scale(.95)}
+}
+.scanlines {
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  pointer-events:none;
+  opacity:.15;
+  background:repeating-linear-gradient(
+    to bottom,transparent 0,transparent 3px,#9fa8ff08 4px
+  );
+}
+.grid-floor {
+  position:fixed;
+  width:160vw;
+  height:70vh;
+  bottom:-39vh;
+  left:-30vw;
+  z-index:-3;
+  pointer-events:none;
+  opacity:.12;
+  transform:perspective(450px) rotateX(58deg);
+  transform-origin:center top;
+  background-image:
+    linear-gradient(#7d83ff55 1px,transparent 1px),
+    linear-gradient(90deg,#7d83ff55 1px,transparent 1px);
+  background-size:55px 55px;
+  mask-image:linear-gradient(to bottom,transparent,black 35%,transparent);
+}
+.orbit {
+  position:fixed;
+  width:520px;
+  height:520px;
+  border:1px solid #a59cff15;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-2;
+  top:-320px;
+  right:-160px;
+  animation:spin 40s linear infinite;
+  box-shadow:0 0 0 35px #8b7aff05,0 0 0 85px #8b7aff03;
+}
+.orbit:before,.orbit:after {
+  content:"";
+  position:absolute;
+  border:1px solid #47e7ff1b;
+  border-radius:50%;
+  inset:70px;
+}
+.orbit:after {
+  inset:145px;
+  border-color:#ff68c720;
+}
+@keyframes spin {
+  to {transform:rotate(360deg)}
+}
+.app {
+  width:min(1200px,100%);
+  margin:auto;
+  padding:20px 20px 45px;
+}
+.glass {
+  background:linear-gradient(140deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 48%,rgba(134,110,255,.035));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow),inset 0 1px 0 #ffffff0c;
+  backdrop-filter:blur(22px) saturate(135%);
+  -webkit-backdrop-filter:blur(22px) saturate(135%);
+  border-radius:var(--radius);
+}
+.topbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:23px;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo {
+  width:49px;
+  height:49px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  background:linear-gradient(135deg,#a68aff,#4e52cf 53%,#38dff4);
+  box-shadow:0 0 30px #8970ff40;
+}
+.logo:after {
+  content:"";
+  position:absolute;
+  inset:-60%;
+  background:linear-gradient(110deg,transparent 40%,#ffffff85 50%,transparent 60%);
+  animation:shine 5s ease-in-out infinite;
+}
+@keyframes shine {
+  0%,35% {transform:translateX(-100%)}
+  65%,100% {transform:translateX(100%)}
+}
+.brand-name {
+  font:900 21px Inter,sans-serif;
+  letter-spacing:1.2px;
+}
+.brand-name span {
+  color:var(--cyan);
+}
+.brand-sub {
+  font:600 9px Inter,sans-serif;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-top:5px;
+}
+.actions {
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.btn {
+  min-height:43px;
+  padding:0 14px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#ffffff08;
+  color:var(--text);
+  transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;
+}
+.btn:hover {
+  transform:translateY(-2px);
+  border-color:#a58bff91;
+  background:#9879ff16;
+  box-shadow:0 8px 25px #876bff12;
+}
+.btn:active {
+  transform:scale(.96);
+}
+.btn svg {
+  width:18px;
+  height:18px;
+}
+.btn.primary {
+  background:linear-gradient(110deg,#8060ef,#5b73ef 52%,#28bfd9);
+  border-color:#ffffff32;
+  color:white;
+  box-shadow:0 9px 25px #7660ff24;
+}
+.btn.icon {
+  width:43px;
+  padding:0;
+}
+.hero {
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:16px;
+  margin-bottom:22px;
+}
+.hero-main {
+  padding:30px;
+  position:relative;
+  overflow:hidden;
+  animation:enter .65s both;
+}
+.hero-main:before {
+  content:"";
+  position:absolute;
+  left:-70px;
+  bottom:-140px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  border:1px solid #b2a5ff1b;
+  box-shadow:0 0 0 28px #8b75ff06,0 0 0 65px #8b75ff04;
+  animation:spin 45s linear infinite;
+}
+.eyebrow {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:800;
+}
+.status-dot {
+  width:7px;
+  height:7px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 14px var(--green);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse {
+  50% {opacity:.45;box-shadow:0 0 2px var(--green)}
+}
+.hero h1 {
+  font-size:clamp(30px,4vw,47px);
+  line-height:1.55;
+  margin:14px 0 8px;
+  font-weight:900;
+  position:relative;
+}
+.gradient-text {
+  background:linear-gradient(100deg,#c3b1ff 5%,#62ecff 52%,#f19fe3 95%);
+  background-size:200%;
+  animation:gradientMove 7s linear infinite;
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+}
+@keyframes gradientMove {
+  to {background-position:200% center}
+}
+.hero p {
+  font-size:13px;
+  line-height:2;
+  color:var(--muted);
+  max-width:620px;
+  position:relative;
+}
+.hero-tags {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+  position:relative;
+}
+.tag {
+  border:1px solid var(--border);
+  background:#ffffff05;
+  padding:7px 11px;
+  border-radius:10px;
+  font-size:10px;
+  color:#c8c9e9;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.tag svg {
+  width:14px;
+  height:14px;
+  color:var(--cyan);
+}
+.hero-side {
+  padding:23px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+  animation:enter .8s both;
+}
+.stat-label {
+  font-size:11px;
+  color:var(--muted);
+}
+.big-number {
+  font:900 38px Inter,sans-serif;
+  margin-top:7px;
+}
+.big-number small {
+  font-size:13px;
+  color:var(--muted);
+}
+.progress {
+  height:7px;
+  border-radius:20px;
+  background:#ffffff12;
+  overflow:hidden;
+  margin-top:13px;
+}
+.progress span {
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
+  background-size:200%;
+  border-radius:20px;
+  transition:width .5s;
+  box-shadow:0 0 12px #46dfff55;
+}
+.stat-row {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:9px;
+  font-size:11px;
+  color:var(--muted);
+}
+.stat-row b {
+  color:var(--text);
+}
+.hero-divider {
+  height:1px;
+  background:var(--border);
+}
+.section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:26px 3px 14px;
+}
+.section-head h2 {
+  font-size:17px;
+  margin:0;
+  font-weight:800;
+}
+.section-head small {
+  color:var(--muted);
+  font-size:10px;
+}
+.section-title {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-title svg {
+  width:21px;
+  height:21px;
+  color:var(--cyan);
+}
+.quiz-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 285px;
+  gap:16px;
+  align-items:start;
+}
+.question-card {
+  padding:24px;
+  min-width:0;
+  animation:enter .35s both;
+  position:relative;
+  overflow:hidden;
+}
+.question-card:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:10%;
+  right:10%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);
+  opacity:.6;
+}
+@keyframes enter {
+  from {opacity:0;transform:translateY(13px)}
+  to {opacity:1;transform:translateY(0)}
+}
+.qtop {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:19px;
+}
+.qtag {
+  font:800 10px Inter,sans-serif;
+  letter-spacing:1px;
+  color:var(--cyan);
+  padding:9px 11px;
+  background:#42d9e810;
+  border:1px solid #42d9e82a;
+  border-radius:10px;
+}
+.qnum {
+  font-size:11px;
+  color:var(--muted);
+}
+.question {
+  font-size:clamp(19px,2.5vw,25px);
+  line-height:1.9;
+  margin:0 0 8px;
+  font-weight:800;
+}
+.subquestion {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+.options {
+  display:grid;
+  gap:10px;
+}
+.option {
+  width:100%;
+  min-height:65px;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-align:right;
+  color:var(--text);
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border);
+  border-radius:16px;
+  transition:transform .22s,border-color .22s,background .22s,box-shadow .22s;
+  animation:optionEnter .35s both;
+}
+.option:nth-child(2) {animation-delay:.04s}
+.option:nth-child(3) {animation-delay:.08s}
+.option:nth-child(4) {animation-delay:.12s}
+@keyframes optionEnter {
+  from {opacity:0;transform:translateX(9px)}
+  to {opacity:1;transform:translateX(0)}
+}
+.option:hover:not(:disabled) {
+  transform:translateX(-3px);
+  border-color:#a38bff9c;
+  background:#9879ff0d;
+  box-shadow:0 7px 25px #8c72ff0c;
+}
+.letter {
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#ffffff07;
+  border:1px solid var(--border);
+  color:#b9a8ff;
+  font:800 11px Inter,sans-serif;
+}
+.option-text {
+  flex:1;
+  font:800 17px Inter,sans-serif;
+  direction:ltr;
+  text-align:right;
+  letter-spacing:.4px;
+}
+.option-symbol {
+  width:23px;
+  height:23px;
+  color:#8e98bd;
+  transition:color .2s,transform .2s;
+}
+.option.correct {
+  border-color:#56f4b0b5;
+  background:#56f4b012;
+  box-shadow:0 0 24px #56f4b00a;
+}
+.option.correct .letter {
+  color:var(--green);
+  border-color:#56f4b055;
+  background:#56f4b014;
+}
+.option.correct .option-symbol {
+  color:var(--green);
+  transform:scale(1.15);
+}
+.option.wrong {
+  border-color:#ff6385b0;
+  background:#ff638510;
+}
+.option.wrong .letter {
+  color:var(--red);
+  border-color:#ff638555;
+}
+.option.wrong .option-symbol {
+  color:var(--red);
+}
+.feedback {
+  display:none;
+  margin-top:15px;
+  padding:14px 15px;
+  border-radius:14px;
+  font-size:12px;
+  line-height:1.9;
+  animation:enter .25s;
+}
+.feedback.show {
+  display:block;
+}
+.feedback.good {
+  background:#56f4b010;
+  border:1px solid #56f4b04c;
+}
+.feedback.bad {
+  background:#ff638510;
+  border:1px solid #ff63854c;
+}
+.feedback strong {
+  display:block;
+  margin-bottom:3px;
+}
+.auto-note {
+  display:none;
+  margin-top:11px;
+  font-size:10px;
+  color:var(--muted);
+  align-items:center;
+  gap:8px;
+}
+.auto-note.show {
+  display:flex;
+}
+.auto-track {
+  height:4px;
+  flex:1;
+  background:#ffffff10;
+  border-radius:20px;
+  overflow:hidden;
+}
+.auto-track span {
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  border-radius:20px;
+}
+.auto-track span.run {
+  animation:countdown 1.7s linear forwards;
+}
+@keyframes countdown {
+  from {width:0}
+  to {width:100%}
+}
+.controls {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:21px;
+}
+.sidepanel {
+  padding:20px;
+  position:sticky;
+  top:14px;
+}
+.sidepanel h3 {
+  font-size:14px;
+  margin:0 0 14px;
+}
+.mini-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.mini-stat {
+  padding:13px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+}
+.mini-stat b {
+  display:block;
+  font:800 23px Inter,sans-serif;
+}
+.mini-stat span {
+  font-size:10px;
+  color:var(--muted);
+}
+.divider {
+  height:1px;
+  background:var(--border);
+  margin:17px 0;
+}
+.question-map {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+.mapitem {
+  aspect-ratio:1;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--muted);
+  background:#ffffff04;
+  font:700 11px Inter,sans-serif;
+  transition:.2s;
+}
+.mapitem:hover {
+  transform:translateY(-2px);
+}
+.mapitem.current {
+  border-color:var(--purple);
+  color:white;
+  background:#8c72ff30;
+  box-shadow:0 0 17px #8c72ff25;
+}
+.mapitem.done {
+  border-color:#56f4b060;
+  color:var(--green);
+  background:#56f4b010;
+}
+.mapitem.missed {
+  border-color:#ff638560;
+  color:var(--red);
+  background:#ff638510;
+}
+.sidehint {
+  font-size:10px;
+  line-height:1.9;
+  color:var(--muted);
+  margin-top:13px;
+}
+.side-tip {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:17px;
+  padding:12px;
+  border:1px solid #48e8ff22;
+  border-radius:13px;
+  background:#48e8ff06;
+}
+.side-tip svg {
+  width:18px;
+  height:18px;
+  color:var(--cyan);
+}
+.side-tip span {
+  font-size:10px;
+  line-height:1.9;
+  color:var(--muted);
+}
+.tablecard {
+  padding:21px;
+  margin-top:23px;
+  position:relative;
+  overflow:hidden;
+}
+.tablecard:before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:20%;
+  right:20%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent);
+}
+.relations-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+.relation {
+  --accent:var(--cyan);
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:19px;
+  background:linear-gradient(145deg,#ffffff07,#ffffff01 70%);
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  min-height:180px;
+}
+.relation:before {
+  content:"";
+  position:absolute;
+  inset:-1px;
+  z-index:-1;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 20%,transparent),transparent 55%);
+  transition:opacity .3s;
+}
+.relation:hover {
+  transform:translateY(-5px);
+  border-color:color-mix(in srgb,var(--accent) 65%,transparent);
+  box-shadow:0 17px 45px #0002,0 0 24px color-mix(in srgb,var(--accent) 10%,transparent);
+}
+.relation:hover:before {
+  opacity:1;
+}
+.relation-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.relation-icon {
+  width:51px;
+  height:51px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+  background:color-mix(in srgb,var(--accent) 9%,transparent);
+  transition:transform .3s,box-shadow .3s;
+}
+.relation:hover .relation-icon {
+  transform:rotate(-5deg) scale(1.06);
+  box-shadow:0 0 25px color-mix(in srgb,var(--accent) 20%,transparent);
+}
+.relation-icon svg {
+  width:27px;
+  height:27px;
+}
+.relation-index {
+  font:700 10px Inter,sans-serif;
+  color:var(--muted);
+}
+.relation-code {
+  font:900 23px Inter,sans-serif;
+  direction:ltr;
+  text-align:right;
+  margin-top:13px;
+  letter-spacing:.6px;
+  color:var(--accent);
+}
+.relation-desc {
+  font-size:12px;
+  line-height:1.9;
+  margin-top:5px;
+}
+.relation-type {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  color:var(--muted);
+  margin-top:9px;
+}
+.relation-type svg {
+  width:13px;
+  height:13px;
+  color:var(--accent);
+}
+
+/* Final report */
+.modal {
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:#03040cbd;
+  backdrop-filter:blur(14px);
+  overflow-y:auto;
+}
+.modal.show {
+  display:flex;
+}
+.resultbox {
+  width:min(700px,100%);
+  max-height:94vh;
+  overflow-y:auto;
+  padding:27px;
+  text-align:center;
+  animation:enter .35s;
+}
+.result-icon {
+  width:75px;
+  height:75px;
+  margin:0 auto 14px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  border-radius:25px;
+  background:linear-gradient(135deg,#8c72ff25,#48e8ff18);
+  color:var(--cyan);
+  animation:float 3s ease-in-out infinite;
+}
+.result-icon svg {
+  width:36px;
+  height:36px;
+}
+@keyframes float {
+  50% {transform:translateY(-7px) rotate(3deg)}
+}
+.resultbox h2 {
+  font-size:24px;
+  margin:0 0 7px;
+}
+.resultbox p {
+  font-size:12px;
+  color:var(--muted);
+  line-height:2;
+}
+.result-score {
+  font:900 48px Inter,sans-serif;
+  background:linear-gradient(90deg,#c4b3ff,var(--cyan));
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  margin:10px;
+}
+.grade-ring {
+  width:150px;
+  height:150px;
+  margin:18px auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:conic-gradient(var(--cyan) 0deg,#ffffff10 0deg);
+  position:relative;
+  box-shadow:0 0 35px #48e8ff12;
+  transition:background 1s;
+}
+.grade-ring:before {
+  content:"";
+  position:absolute;
+  inset:9px;
+  background:#10152a;
+  border:1px solid var(--border);
+  border-radius:50%;
+}
+.grade-inner {
+  position:relative;
+  z-index:1;
+}
+.grade-number {
+  font:900 29px Inter,sans-serif;
+}
+.grade-caption {
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+.result-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+  margin:20px 0;
+}
+.result-stat {
+  padding:14px 7px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:var(--panel2);
+}
+.result-stat svg {
+  width:21px;
+  height:21px;
+  margin:0 auto 7px;
+}
+.result-stat b {
+  display:block;
+  font:800 21px Inter,sans-serif;
+}
+.result-stat span {
+  font-size:10px;
+  color:var(--muted);
+}
+.result-stat.success svg {color:var(--green)}
+.result-stat.failure svg {color:var(--red)}
+.result-stat.clock svg {color:var(--cyan)}
+.result-stat.grade svg {color:var(--gold)}
+.report-heading {
+  text-align:right;
+  font-size:14px;
+  margin:22px 0 10px;
+}
+.report-list {
+  display:grid;
+  gap:8px;
+  text-align:right;
+}
+.report-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--panel2);
+  animation:enter .3s both;
+}
+.report-item .left {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.report-item .mark {
+  width:29px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  flex-shrink:0;
+}
+.report-item .mark svg {
+  width:16px;
+  height:16px;
+}
+.report-item.good .mark {
+  color:var(--green);
+  background:#56f4b015;
+}
+.report-item.bad .mark {
+  color:var(--red);
+  background:#ff638515;
+}
+.report-item .desc {
+  font-size:11px;
+  line-height:1.8;
+}
+.report-item .desc small {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.report-item .answer-code {
+  direction:ltr;
+  font:800 13px Inter,sans-serif;
+  white-space:nowrap;
+}
+.result-actions {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:21px;
+}
+.toast {
+  position:fixed;
+  z-index:30;
+  bottom:22px;
+  left:50%;
+  transform:translate(-50%,25px);
+  opacity:0;
+  pointer-events:none;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:rgba(18,23,44,.95);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 17px;
+  box-shadow:var(--shadow);
+  font-size:12px;
+  transition:opacity .25s,transform .25s;
+  width:max-content;
+  max-width:calc(100% - 28px);
+}
+.toast.show {
+  opacity:1;
+  transform:translate(-50%,0);
+}
+.toast svg {
+  width:18px;
+  height:18px;
+  color:var(--cyan);
+}
+.footer {
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  line-height:2.1;
+  margin:29px 0 0;
+}
+.footer strong {
+  font:900 12px Inter,sans-serif;
+  letter-spacing:2px;
+  color:#b9a9ff;
+}
+.footer-line {
+  width:95px;
+  height:1px;
+  margin:12px auto;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);
+}
+
+/* Light theme */
+.light {
+  color-scheme:light;
+  --bg:#edf0fc;
+  --panel:rgba(255,255,255,.78);
+  --panel2:rgba(70,80,130,.045);
+  --text:#1c2038;
+  --muted:#68708f;
+  --border:rgba(70,78,135,.17);
+  --shadow:0 25px 70px rgba(50,58,100,.13);
+}
+.light body {
+  background:
+    radial-gradient(ellipse at 10% 0%,#a88aff24,transparent 35%),
+    radial-gradient(ellipse at 90% 25%,#00c7e51b,transparent 35%),
+    var(--bg);
+}
+.light .glass {
+  background:linear-gradient(140deg,#ffffffc9,#ffffff8a 60%,#e7e8ff88);
+}
+.light .option {
+  background:#ffffff7a;
+}
+.light .option-text {
+  color:var(--text);
+}
+.light .letter {
+  background:#eeeffa;
+}
+.light .tag {
+  color:var(--muted);
+}
+.light .relation {
+  background:linear-gradient(145deg,#ffffffb8,#ffffff5c);
+}
+.light .modal {
+  background:#d9ddf3bb;
+}
+.light .toast {
+  background:#fffffff2;
+}
+.light .grade-ring:before {
+  background:#f6f7ff;
+}
+
+/* Responsive */
+@media(max-width:880px) {
+  .hero {grid-template-columns:1fr}
+  .hero-side {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+  }
+  .hero-divider {display:none}
+  .quiz-layout {grid-template-columns:1fr}
+  .sidepanel {position:static;order:-1}
+  .sidepanel .divider,.sidehint,.side-tip {display:none}
+  .question-map {grid-template-columns:repeat(9,1fr)}
+  .relations-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px) {
+  .app {padding:12px 11px 30px}
+  .topbar {margin-bottom:17px}
+  .logo {width:41px;height:41px;border-radius:13px}
+  .brand-name {font-size:17px}
+  .brand-sub {font-size:7px;letter-spacing:1px}
+  .actions {gap:5px}
+  .actions .label {display:none}
+  .actions .btn.icon {width:40px;min-height:40px}
+  .hero-main {padding:22px 18px}
+  .hero h1 {font-size:30px}
+  .hero-side {padding:17px;gap:13px}
+  .big-number {font-size:31px}
+  .section-head h2 {font-size:15px}
+  .question-card {padding:16px}
+  .question {font-size:20px}
+  .option {padding:10px;gap:9px}
+  .option-text {font-size:16px}
+  .controls .btn {padding:0 10px;font-size:11px}
+  .mini-stat {padding:10px}
+  .mini-stat b {font-size:20px}
+  .question-map {gap:5px}
+  .mapitem {border-radius:8px}
+  .tablecard {padding:13px}
+  .relations-grid {gap:8px}
+  .relation {padding:12px;min-height:170px;border-radius:16px}
+  .relation-icon {width:42px;height:42px;border-radius:13px}
+  .relation-icon svg {width:22px;height:22px}
+  .relation-code {font-size:20px;margin-top:10px}
+  .relation-desc {font-size:11px}
+  .relation-type {font-size:9px}
+  .resultbox {padding:18px}
+  .result-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .report-item {padding:10px}
+  .report-item .desc {font-size:10px}
+  .result-score {font-size:42px}
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+<canvas id="universe" aria-hidden="true"></canvas>
+<div class="aurora a"></div>
+<div class="aurora b"></div>
+<div class="aurora c"></div>
+<div class="scanlines"></div>
+<div class="grid-floor"></div>
+<div class="orbit"></div>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7">
+          <path d="m12 2 9 5v10l-9 5-9-5V7z"/>
+          <path d="m3.5 7.3 8.5 5 8.5-5M12 12.3V22"/>
+          <circle cx="12" cy="7" r="1.2" fill="white"/>
+          <circle cx="7.5" cy="15" r="1.2" fill="white"/>
+          <circle cx="16.5" cy="15" r="1.2" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">QUIZ-<span>TAQ</span></div>
+        <div class="brand-sub">NEON GLASS · SMART STUDY</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn icon" id="themeBtn" title="تبديل المظهر" aria-label="تبديل المظهر">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.5 1.5m11.2 11.2 1.5 1.5m0-14.2-1.5 1.5M6.4 17.6l-1.5 1.5"/>
+        </svg>
+      </button>
+
+      <button class="btn icon" id="soundBtn" title="تشغيل أو إيقاف الأصوات" aria-label="الصوت">
+        <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M11 5 6 9H3v6h3l5 4z"/>
+          <path d="M15 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/>
+        </svg>
+      </button>
+
+      <button class="btn" id="restartTop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        <span class="label">إعادة الاختبار</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="glass hero-main">
+      <div class="eyebrow"><span class="status-dot"></span> SYSTEM ONLINE · المراجعة التفاعلية</div>
+      <h1>علاقات الأعمال<br><span class="gradient-text">الإلكترونية التسعة</span></h1>
+      <p>
+        اختبر حفظك للعلاقات الإلكترونية التسعة. اختر الرمز المطابق للتعريف،
+        شاهد التصحيح الفوري، وانتقل تلقائياً إلى السؤال التالي.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"/></svg>
+          تصحيح فوري
+        </span>
+        <span class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          حساب الوقت
+        </span>
+        <span class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg>
+          تقرير مفصل
+        </span>
+      </div>
+    </div>
+
+    <div class="glass hero-side">
+      <div>
+        <div class="stat-label">الأسئلة المجابة</div>
+        <div class="big-number"><span id="answeredCount">0</span><small> / 9</small></div>
+        <div class="progress"><span id="mainProgress"></span></div>
+        <div class="stat-row"><span>التقدم الكلي</span><b id="progressText">0%</b></div>
+      </div>
+      <div class="hero-divider"></div>
+      <div>
+        <div class="stat-label">دقة الإجابات</div>
+        <div class="big-number"><span id="accuracy">—</span><small id="accuracyUnit"></small></div>
+        <div class="stat-row"><span>النتيجة الحالية</span><b id="scoreText">0 نقاط</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-head">
+    <div class="section-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/><path d="M8 12h8M12 8v8"/>
+      </svg>
+      <h2>مركز الاختبار</h2>
+    </div>
+    <small>INTERACTIVE QUIZ · 09 QUESTIONS</small>
+  </div>
+
+  <section class="quiz-layout">
+    <main class="glass question-card">
+      <div class="qtop">
+        <span class="qtag" id="questionTag">QUESTION 01</span>
+        <span class="qnum" id="questionCounter">السؤال 1 من 9</span>
+      </div>
+      <h2 class="question" id="questionText"></h2>
+      <div class="subquestion">اختر الرمز الذي يطابق التعريف المعروض:</div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+      <div class="auto-note" id="autoNote">
+        <span id="autoText">الانتقال للسؤال التالي...</span>
+        <div class="auto-track"><span id="autoBar"></span></div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="prevBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
+          السابق
+        </button>
+        <button class="btn primary" id="nextBtn" disabled>
+          التالي
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+      </div>
+    </main>
+
+    <aside class="glass sidepanel">
+      <h3>لوحة الأداء</h3>
+      <div class="mini-grid">
+        <div class="mini-stat"><b id="correctCount">0</b><span>إجابات صحيحة</span></div>
+        <div class="mini-stat"><b id="wrongCount">0</b><span>إجابات خاطئة</span></div>
+      </div>
+      <div class="divider"></div>
+      <h3>خريطة الأسئلة</h3>
+      <div class="question-map" id="questionMap"></div>
+      <div class="sidehint">الأخضر للإجابة الصحيحة، والأحمر للإجابة الخاطئة. يمكنك الضغط على أي رقم لمراجعة السؤال.</div>
+      <div class="side-tip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 18h6m-5 3h4m-6-6c-1.5-1.1-2-2.5-2-4a6 6 0 1 1 12 0c0 1.5-.5 2.9-2 4-.8.7-1 1.1-1 2h-4c0-.9-.2-1.3-1-2Z"/>
+        </svg>
+        <span>تذكّر: الحرف الأول يعبّر عن الطرف الذي يبدأ المعاملة، والحرف الثاني عن الطرف الآخر.</span>
+      </div>
+    </aside>
+  </section>
+
+  <section class="glass tablecard" id="reference">
+    <div class="section-head" style="margin-top:0">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/>
+        </svg>
+        <h2>مكتبة العلاقات الإلكترونية</h2>
+      </div>
+      <small>RELATION DATABASE · 09 ITEMS</small>
+    </div>
+    <div class="relations-grid" id="relationsGrid"></div>
+  </section>
+
+  <footer class="footer">
+    <strong>QUIZ-TAQ</strong>
+    <div class="footer-line"></div>
+    NEON GLASS EXPERIENCE · SMART STUDY INTERFACE
+    <br>واجهة تعليمية تفاعلية للمراجعة والاختبار
+  </footer>
+</div>
+
+<div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+  <div class="glass resultbox">
+    <div class="result-icon" id="resultIcon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="10"/>
+      </svg>
+    </div>
+    <h2 id="resultTitle">اكتمل الاختبار!</h2>
+    <p id="resultMessage">انتهيت من جميع الأسئلة.</p>
+
+    <div class="grade-ring" id="gradeRing">
+      <div class="grade-inner">
+        <div class="grade-number" id="gradeNumber">0%</div>
+        <div class="grade-caption">نسبة النجاح</div>
+      </div>
+    </div>
+
+    <div class="result-score" id="finalScore">0/9</div>
+    <p id="finalDetail"></p>
+
+    <div class="result-grid">
+      <div class="result-stat success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"/></svg>
+        <b id="finalCorrect">0</b><span>إجابات ناجحة</span>
+      </div>
+      <div class="result-stat failure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        <b id="finalWrong">0</b><span>إجابات خاطئة</span>
+      </div>
+      <div class="result-stat clock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <b id="finalTime">00:00</b><span>الوقت المستغرق</span>
+      </div>
+      <div class="result-stat grade">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/></svg>
+        <b id="finalGrade">—</b><span>التقييم</span>
+      </div>
+    </div>
+
+    <h3 class="report-heading">تفاصيل كل سؤال</h3>
+    <div class="report-list" id="reportList"></div>
+
+    <div class="result-actions">
+      <button class="btn primary" id="againBtn">إعادة الاختبار</button>
+      <button class="btn" id="closeResultBtn">عرض الجدول</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 12 4 4L19 6"/></svg>
+  <span id="toastText">تم</span>
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   QUIZ-TAQ ULTIMATE EDITION
+   HTML + CSS + JavaScript in one file.
+   Automatic progression, timer, scoring and final report.
+   ========================================================= */
+
+const ICONS = {
+  people: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <circle cx="9" cy="7" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2z"/>
+      <path d="M16 4.5a3 3 0 0 1 0 5.8M18 14a5 5 0 0 1 3 4.5V20h-4"/>
+    </svg>`,
+  supplier: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <rect x="5" y="3" width="14" height="18" rx="2"/>
+      <path d="M9 7h6M9 11h6M9 15h3"/>
+      <circle cx="16.5" cy="16.5" r="3.5"/><path d="m15 16.5 1 1 2-2"/>
+    </svg>`,
+  government: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="m3 9 9-6 9 6zM5 10v8m4-8v8m6-8v8m4-8v8M3 21h18M2 18h20"/>
+    </svg>`,
+  cart: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="M3 4h2l2.3 11.2a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 1.9-1.4L22 8H6"/>
+      <circle cx="10" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M9 11h9"/>
+    </svg>`,
+  truck: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="M2 5h12v12H2zM14 9h5l3 4v4h-8z"/>
+      <circle cx="6.5" cy="19" r="2"/><circle cx="18.5" cy="19" r="2"/><path d="M14 13h8"/>
+    </svg>`,
+  building: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <rect x="3" y="3" width="11" height="18" rx="1"/><path d="M7 7h3M7 11h3M7 15h3M17 8h4v13h-7"/>
+      <path d="M18 12h1M18 16h1"/>
+    </svg>`,
+  citizen: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="M4 4h13v15H4zM7 8h7M7 11h5"/><circle cx="17.5" cy="17.5" r="4"/>
+      <path d="m15.8 17.5 1.2 1.2 2.2-2.5"/>
+    </svg>`,
+  document: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <path d="M5 3h10l4 4v14H5zM15 3v5h4M8 12h8M8 16h5M3 7l-1 1v12h13"/>
+    </svg>`,
+  network: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/>
+      <path d="m10.8 7.2-4.5 8.5m6.9-8.5 4.5 8.5M7.5 18h9"/>
+    </svg>`
+};
+
+/*
+ * Study relationship data.
+ * Change descriptions here if you need the exact wording from your source.
+ */
+const relations = [
+  {
+    code:"C2C",
+    desc:"إعلانات فردية وخدمات بين المستهلكين",
+    type:"المستهلك ← المستهلك",
+    icon:"people",
+    color:"#ff75ca"
+  },
+  {
+    code:"C2B",
+    desc:"منافسة الموردين لجذب المستهلكين",
+    type:"المستهلك ← الأعمال",
+    icon:"supplier",
+    color:"#ad91ff"
+  },
+  {
+    code:"C2G",
+    desc:"مواطنون يقدمون خدماتهم للحكومة",
+    type:"المستهلك ← الحكومة",
+    icon:"government",
+    color:"#56e4ff"
+  },
+  {
+    code:"B2C",
+    desc:"منتجات وخدمات في متجر إلكتروني",
+    type:"الأعمال ← المستهلك",
+    icon:"cart",
+    color:"#ffbf70"
+  },
+  {
+    code:"B2B",
+    desc:"طلبات مع الموردين (سلسلة الإمداد)",
+    type:"الأعمال ← الأعمال",
+    icon:"truck",
+    color:"#69f2b8"
+  },
+  {
+    code:"B2G",
+    desc:"خدمات ومنتجات الأعمال للإدارة الحكومية",
+    type:"الأعمال ← الحكومة",
+    icon:"building",
+    color:"#81a8ff"
+  },
+  {
+    code:"G2C",
+    desc:"الخدمات الحكومية المقدمة للمواطنين",
+    type:"الحكومة ← المستهلك",
+    icon:"citizen",
+    color:"#f28dff"
+  },
+  {
+    code:"G2B",
+    desc:"مناقصات عامة وإشعارات مشاريع",
+    type:"الحكومة ← الأعمال",
+    icon:"document",
+    color:"#ffc978"
+  },
+  {
+    code:"G2G",
+    desc:"التعاون في الخدمات والحكومة الإلكترونية",
+    type:"الحكومة ← الحكومة",
+    icon:"network",
+    color:"#56e4ff"
+  }
+];
+
+const $ = id => document.getElementById(id);
+
+let questions = [];
+let answers = {};
+let current = 0;
+let soundEnabled = true;
+let audioContext = null;
+let toastTimer = null;
+let autoTimer = null;
+let startedAt = 0;
+let finishedAt = 0;
+let quizFinished = false;
+const AUTO_NEXT_DELAY = 1700;
+
+function shuffle(array) {
+  const result = [...array];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+function createQuestions() {
+  return relations.map((relation,index) => {
+    const distractors = shuffle(
+      relations.filter(item => item.code !== relation.code)
+    ).slice(0,3).map(item => item.code);
+
+    return {
+      id:index,
+      prompt:relation.desc,
+      answer:relation.code,
+      choices:shuffle([relation.code,...distractors])
+    };
+  });
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g,char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+function playTone(frequency=520,duration=.07,type="sine",volume=.035) {
+  if (!soundEnabled) return;
+
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    if (!audioContext) audioContext = new AudioCtx();
+    if (audioContext.state === "suspended") audioContext.resume();
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency,audioContext.currentTime);
+
+    gain.gain.setValueAtTime(volume,audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioContext.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+  } catch (_) {
+    /* Sound is optional. */
+  }
+}
+
+function playClick() {
+  playTone(540,.045,"sine",.018);
+}
+
+function playSuccess() {
+  playTone(640,.08,"sine",.04);
+  setTimeout(() => playTone(850,.12,"sine",.035),65);
+}
+
+function playError() {
+  playTone(210,.12,"triangle",.035);
+}
+
+function showToast(message) {
+  $("toastText").textContent = message;
+  $("toast").classList.add("show");
+
+  if (toastTimer) clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    $("toast").classList.remove("show");
+  },2100);
+}
+
+function formatTime(totalSeconds) {
+  const seconds = Math.max(0,Math.floor(totalSeconds));
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainder = seconds % 60;
+
+  if (hours > 0) {
+    return [
+      String(hours).padStart(2,"0"),
+      String(minutes).padStart(2,"0"),
+      String(remainder).padStart(2,"0")
+    ].join(":");
+  }
+
+  return [
+    String(minutes).padStart(2,"0"),
+    String(remainder).padStart(2,"0")
+  ].join(":");
+}
+
+function elapsedSeconds() {
+  if (!startedAt) return 0;
+  return Math.floor(((finishedAt || Date.now()) - startedAt) / 1000);
+}
+
+function stopAutoAdvance() {
+  if (autoTimer) {
+    clearTimeout(autoTimer);
+    autoTimer = null;
+  }
+
+  $("autoNote").classList.remove("show");
+  $("autoBar").classList.remove("run");
+  $("autoBar").style.width = "0";
+}
+
+function renderRelations() {
+  $("relationsGrid").innerHTML = relations.map((relation,index) => `
+    <article class="relation"
+      style="--accent:${relation.color};animation:enter .45s ${index*.045}s both"
+      data-code="${relation.code}">
+      <div class="relation-top">
+        <div class="relation-icon">${ICONS[relation.icon]}</div>
+        <span class="relation-index">NODE ${String(index+1).padStart(2,"0")}</span>
+      </div>
+      <div class="relation-code" dir="ltr">${escapeHTML(relation.code)}</div>
+      <div class="relation-desc">${escapeHTML(relation.desc)}</div>
+      <div class="relation-type">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M5 12h14m-6-6 6 6-6 6"/>
+        </svg>
+        ${escapeHTML(relation.type)}
+      </div>
+    </article>
+  `).join("");
+
+  document.querySelectorAll(".relation").forEach(card => {
+    card.addEventListener("pointermove",event => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx",`${((event.clientX-rect.left)/rect.width)*100}%`);
+      card.style.setProperty("--my",`${((event.clientY-rect.top)/rect.height)*100}%`);
+    });
+
+    card.addEventListener("click",() => {
+      playClick();
+      const relation = relations.find(item => item.code === card.dataset.code);
+      showToast(`${relation.code} — ${relation.desc}`);
+    });
+  });
+}
+
+function renderQuestion() {
+  stopAutoAdvance();
+
+  const question = questions[current];
+  const selected = answers[current];
+
+  $("questionTag").textContent = `QUESTION ${String(current+1).padStart(2,"0")}`;
+  $("questionCounter").textContent = `السؤال ${current+1} من ${questions.length}`;
+  $("questionText").textContent = question.prompt;
+
+  $("options").innerHTML = question.choices.map((code,index) => {
+    const chosen = selected === code;
+    const correct = code === question.answer;
+    let classes = "option";
+
+    if (selected !== undefined && correct) {
+      classes += " correct";
+    } else if (chosen && !correct) {
+      classes += " wrong";
+    }
+
+    let symbol = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <circle cx="12" cy="12" r="8"/>
+      </svg>`;
+
+    if (selected !== undefined && correct) {
+      symbol = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="m5 12 4 4L19 6"/>
+        </svg>`;
+    } else if (selected !== undefined && chosen) {
+      symbol = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>`;
+    }
+
+    return `
+      <button class="${classes}" type="button" data-code="${escapeHTML(code)}"
+        ${selected !== undefined ? "disabled" : ""}>
+        <span class="letter">${String.fromCharCode(65+index)}</span>
+        <span class="option-text">${escapeHTML(code)}</span>
+        <span class="option-symbol">${symbol}</span>
+      </button>`;
+  }).join("");
+
+  document.querySelectorAll(".option").forEach(button => {
+    button.addEventListener("click",() => chooseAnswer(button.dataset.code));
+  });
+
+  const feedback = $("feedback");
+  feedback.className = "feedback";
+  feedback.innerHTML = "";
+
+  if (selected !== undefined) {
+    const isCorrect = selected === question.answer;
+    feedback.classList.add("show",isCorrect ? "good" : "bad");
+
+    feedback.innerHTML = isCorrect
+      ? `<strong>إجابة صحيحة ✓</strong>أحسنت! الرمز الصحيح هو <b dir="ltr">${escapeHTML(question.answer)}</b>.`
+      : `<strong>إجابة خاطئة</strong>الإجابة الصحيحة هي <b dir="ltr">${escapeHTML(question.answer)}</b> — ${escapeHTML(question.prompt)}.`;
+  }
+
+  $("prevBtn").disabled = current === 0;
+  $("nextBtn").disabled = selected === undefined;
+
+  $("nextBtn").innerHTML = current === questions.length-1
+    ? `عرض النتيجة <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>`
+    : `التالي <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>`;
+
+  updateStats();
+  renderQuestionMap();
+}
+
+function chooseAnswer(code) {
+  if (answers[current] !== undefined || quizFinished) return;
+
+  answers[current] = code;
+
+  const question = questions[current];
+  const correct = code === question.answer;
+
+  if (correct) {
+    playSuccess();
+    showToast("إجابة صحيحة! أحسنت");
+  } else {
+    playError();
+    showToast("تم تسجيل الإجابة ومراجعتها");
+  }
+
+  renderQuestion();
+
+  /*
+   * Automatically move to the next question after showing
+   * the correct answer and feedback for a short period.
+   */
+  $("autoNote").classList.add("show");
+  $("autoText").textContent = current === questions.length-1
+    ? "جاري تجهيز التقرير النهائي..."
+    : "الانتقال التلقائي للسؤال التالي...";
+
+  $("autoBar").classList.remove("run");
+  void $("autoBar").offsetWidth;
+  $("autoBar").classList.add("run");
+
+  autoTimer = setTimeout(() => {
+    if (current < questions.length-1) {
+      current++;
+      renderQuestion();
+      document.querySelector(".question-card").scrollIntoView({
+        behavior:"smooth",
+        block:"nearest"
+      });
+    } else {
+      showResults();
+    }
+  },AUTO_NEXT_DELAY);
+}
+
+function updateStats() {
+  const answered = Object.keys(answers).length;
+
+  const correct = Object.keys(answers).filter(index =>
+    answers[index] === questions[index].answer
+  ).length;
+
+  const wrong = answered-correct;
+  const progress = Math.round(answered/questions.length*100);
+  const accuracy = answered ? Math.round(correct/answered*100) : null;
+
+  $("answeredCount").textContent = answered;
+  $("mainProgress").style.width = `${progress}%`;
+  $("progressText").textContent = `${progress}%`;
+  $("correctCount").textContent = correct;
+  $("wrongCount").textContent = wrong;
+  $("accuracy").textContent = accuracy === null ? "—" : accuracy;
+  $("accuracyUnit").textContent = accuracy === null ? "" : "%";
+  $("scoreText").textContent = `${correct} نقاط`;
+}
+
+function renderQuestionMap() {
+  $("questionMap").innerHTML = questions.map((question,index) => {
+    let classes = "mapitem";
+
+    if (index === current) classes += " current";
+
+    if (answers[index] !== undefined) {
+      classes += answers[index] === question.answer ? " done" : " missed";
+    }
+
+    return `<button class="${classes}" type="button" data-index="${index}"
+      aria-label="السؤال ${index+1}">${index+1}</button>`;
+  }).join("");
+
+  document.querySelectorAll(".mapitem").forEach(button => {
+    button.addEventListener("click",() => {
+      playClick();
+      stopAutoAdvance();
+      current = Number(button.dataset.index);
+      renderQuestion();
+    });
+  });
+}
+
+function nextQuestion() {
+  if (answers[current] === undefined) return;
+
+  stopAutoAdvance();
+  playClick();
+
+  if (current < questions.length-1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function gradeText(percentage) {
+  if (percentage === 100) return "ممتاز+";
+  if (percentage >= 90) return "ممتاز";
+  if (percentage >= 80) return "جيد جداً";
+  if (percentage >= 70) return "جيد";
+  if (percentage >= 60) return "متوسط";
+  if (percentage >= 50) return "مقبول";
+  return "يحتاج مراجعة";
+}
+
+function buildDetailedReport() {
+  $("reportList").innerHTML = questions.map((question,index) => {
+    const userAnswer = answers[index];
+    const correct = userAnswer === question.answer;
+    const selectedRelation = relations.find(item => item.code === userAnswer);
+    const correctRelation = relations.find(item => item.code === question.answer);
+
+    return `
+      <div class="report-item ${correct ? "good" : "bad"}"
+        style="animation-delay:${index*.035}s">
+        <div class="left">
+          <div class="mark">
+            ${correct
+              ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4L19 6"/></svg>`
+              : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 6 12 12M18 6 6 18"/></svg>`
+            }
+          </div>
+          <div class="desc">
+            السؤال ${index+1}: ${escapeHTML(question.prompt)}
+            <small>
+              إجابتك: ${userAnswer ? escapeHTML(userAnswer) : "لم تتم الإجابة"}
+              ${selectedRelation ? " — "+escapeHTML(selectedRelation.desc) : ""}
+            </small>
+            ${!correct ? `<small>الصحيح: ${escapeHTML(correctRelation.code)} — ${escapeHTML(correctRelation.desc)}</small>` : ""}
+          </div>
+        </div>
+        <div class="answer-code">${correct ? "CORRECT" : "INCORRECT"}</div>
+      </div>`;
+  }).join("");
+}
+
+function showResults() {
+  stopAutoAdvance();
+
+  if (quizFinished) {
+    $("resultModal").classList.add("show");
+    return;
+  }
+
+  quizFinished = true;
+  finishedAt = Date.now();
+
+  const correct = questions.filter((question,index) =>
+    answers[index] === question.answer
+  ).length;
+
+  const wrong = questions.length-correct;
+  const percentage = Math.round(correct/questions.length*100);
+  const time = formatTime(elapsedSeconds());
+
+  $("finalScore").textContent = `${correct}/${questions.length}`;
+  $("finalCorrect").textContent = correct;
+  $("finalWrong").textContent = wrong;
+  $("finalTime").textContent = time;
+  $("finalGrade").textContent = gradeText(percentage);
+  $("gradeNumber").textContent = `${percentage}%`;
+  $("finalDetail").textContent =
+    `أجبت عن ${questions.length} أسئلة خلال ${time}. الإجابات الصحيحة ${correct} والخاطئة ${wrong}.`;
+
+  if (percentage === 100) {
+    $("resultTitle").textContent = "أداء مثالي!";
+    $("resultMessage").textContent = "رائع! أجبت عن جميع الأسئلة بشكل صحيح.";
+    playSuccess();
+  } else if (percentage >= 70) {
+    $("resultTitle").textContent = "أحسنت، أداء جيد!";
+    $("resultMessage").textContent = "نتيجتك جيدة. راجع الأخطاء لتحقق الدرجة الكاملة.";
+    playSuccess();
+  } else {
+    $("resultTitle").textContent = "استمر بالتدريب";
+    $("resultMessage").textContent = "راجع الإجابات الصحيحة ثم أعد الاختبار لتحسين نتيجتك.";
+    playError();
+  }
+
+  $("gradeRing").style.background =
+    `conic-gradient(var(--cyan) ${percentage*3.6}deg,#ffffff10 0deg)`;
+
+  buildDetailedReport();
+  $("resultModal").classList.add("show");
+
+  updateStats();
+}
+
+function restartQuiz() {
+  stopAutoAdvance();
+  playClick();
+
+  current = 0;
+  answers = {};
+  questions = createQuestions();
+  startedAt = Date.now();
+  finishedAt = 0;
+  quizFinished = false;
+
+  $("resultModal").classList.remove("show");
+
+  renderQuestion();
+  updateStats();
+
+  window.scrollTo({top:0,behavior:"smooth"});
+  showToast("بدأ اختبار جديد");
+}
+
+/* Animated background particle field */
+(function initUniverse() {
+  const canvas = $("universe");
+  const context = canvas.getContext("2d");
+
+  if (!context) return;
+
+  let width = 0;
+  let height = 0;
+  let particles = [];
+  let animationFrame = 0;
+  let lastFrame = 0;
+
+  const pointer = {x:-1000,y:-1000};
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio||1,1.7);
+
+    width = window.innerWidth;
+    height = window.innerHeight;
+
+    canvas.width = Math.round(width*ratio);
+    canvas.height = Math.round(height*ratio);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    context.setTransform(ratio,0,0,ratio,0,0);
+
+    const count = Math.min(100,Math.max(28,Math.round(width/14)));
+
+    particles = Array.from({length:count},() => ({
+      x:Math.random()*width,
+      y:Math.random()*height,
+      vx:(Math.random()-.5)*.25,
+      vy:(Math.random()-.5)*.25,
+      radius:Math.random()*1.7+.5,
+      phase:Math.random()*Math.PI*2
+    }));
+  }
+
+  function draw(time=0) {
+    if (document.hidden) {
+      animationFrame = requestAnimationFrame(draw);
+      return;
+    }
+
+    if (time-lastFrame<30) {
+      animationFrame = requestAnimationFrame(draw);
+      return;
+    }
+
+    lastFrame = time;
+    context.clearRect(0,0,width,height);
+
+    for (const particle of particles) {
+      if (!reduceMotion) {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+      }
+
+      if (particle.x<0) particle.x=width;
+      if (particle.x>width) particle.x=0;
+      if (particle.y<0) particle.y=height;
+      if (particle.y>height) particle.y=0;
+
+      const distance = Math.hypot(
+        particle.x-pointer.x,
+        particle.y-pointer.y
+      );
+
+      if (distance<130 && !reduceMotion) {
+        particle.x += (particle.x-pointer.x)/Math.max(distance,1)*.7;
+        particle.y += (particle.y-pointer.y)/Math.max(distance,1)*.7;
+      }
+
+      const alpha = .35+(Math.sin(time*.001+particle.phase)+1)*.25;
+
+      context.beginPath();
+      context.arc(particle.x,particle.y,particle.radius,0,Math.PI*2);
+      context.fillStyle = `rgba(117,208,255,${alpha})`;
+      context.fill();
+    }
+
+    const maxDistance = width<600 ? 85 : 115;
+
+    for (let i=0;i<particles.length;i++) {
+      for (let j=i+1;j<particles.length;j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const distance = Math.hypot(a.x-b.x,a.y-b.y);
+
+        if (distance<maxDistance) {
+          context.beginPath();
+          context.moveTo(a.x,a.y);
+          context.lineTo(b.x,b.y);
+          context.strokeStyle = `rgba(128,137,255,${(1-distance/maxDistance)*.16})`;
+          context.lineWidth = .7;
+          context.stroke();
+        }
+      }
+    }
+
+    animationFrame = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize",resize,{passive:true});
+
+  window.addEventListener("pointermove",event => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+  },{passive:true});
+
+  window.addEventListener("pointerleave",() => {
+    pointer.x=-1000;
+    pointer.y=-1000;
+  });
+
+  resize();
+  animationFrame = requestAnimationFrame(draw);
+})();
+
+/* UI event handlers */
+$("nextBtn").addEventListener("click",nextQuestion);
+
+$("prevBtn").addEventListener("click",() => {
+  if (current>0) {
+    stopAutoAdvance();
+    playClick();
+    current--;
+    renderQuestion();
+  }
+});
+
+$("restartTop").addEventListener("click",restartQuiz);
+$("againBtn").addEventListener("click",restartQuiz);
+
+$("closeResultBtn").addEventListener("click",() => {
+  playClick();
+  $("resultModal").classList.remove("show");
+  $("reference").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+$("resultModal").addEventListener("click",event => {
+  if (event.target===$("resultModal")) {
+    $("resultModal").classList.remove("show");
+  }
+});
+
+$("themeBtn").addEventListener("click",() => {
+  playClick();
+  document.documentElement.classList.toggle("light");
+
+  const isLight = document.documentElement.classList.contains("light");
+
+  $("themeBtn").title = isLight
+    ? "تفعيل المظهر الداكن"
+    : "تفعيل المظهر الفاتح";
+
+  showToast(isLight ? "تم تفعيل المظهر الفاتح" : "تم تفعيل المظهر الداكن");
+});
+
+$("soundBtn").addEventListener("click",() => {
+  soundEnabled = !soundEnabled;
+
+  $("soundIcon").innerHTML = soundEnabled
+    ? `<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/>`
+    : `<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/>`;
+
+  $("soundBtn").title = soundEnabled ? "إيقاف الأصوات" : "تشغيل الأصوات";
+
+  if (soundEnabled) playClick();
+
+  showToast(soundEnabled ? "تم تشغيل المؤثرات الصوتية" : "تم إيقاف المؤثرات الصوتية");
+});
+
+document.addEventListener("keydown",event => {
+  if (event.key==="Escape") {
+    $("resultModal").classList.remove("show");
+  }
+
+  if (event.key==="ArrowLeft" && answers[current]!==undefined) {
+    nextQuestion();
+  }
+
+  if (event.key==="ArrowRight" && current>0) {
+    stopAutoAdvance();
+    playClick();
+    current--;
+    renderQuestion();
+  }
+});
+
+/* Disable context menu and drag selection for the interface. */
+document.addEventListener("contextmenu",event => {
+  if (!event.target.closest("input,textarea")) {
+    event.preventDefault();
+  }
+});
+
+document.addEventListener("dragstart",event => {
+  event.preventDefault();
+});
+
+/* Live timer, updated once per second. */
+setInterval(() => {
+  if (!startedAt || quizFinished) return;
+
+  const elapsed = formatTime(elapsedSeconds());
+  document.title = `QUIZ-TAQ | ${elapsed}`;
+},1000);
+
+/* Launch */
+questions = createQuestions();
+startedAt = Date.now();
+
+renderRelations();
+renderQuestion();
+updateStats();
+</script>
+</body>
+</html>
